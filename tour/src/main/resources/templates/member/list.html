@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>회원 목록</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>body { background-color: #f8f9fa; }</style>
+</head>
+<body>
+<nav class="navbar navbar-dark bg-dark mb-4">
+    <div class="container"><a class="navbar-brand" th:href="@{/}">✈️ Tour Project</a></div>
+</nav>
+
+<div class="container">
+    <div class="card shadow-sm border-0">
+        <div class="card-body p-4">
+            <h2 class="card-title mb-4">👥 회원 목록</h2>
+            <div class="table-responsive">
+                <table class="table table-hover align-middle">
+                    <thead class="table-light">
+                    <tr>
+                        <th>ID</th>
+                        <th>아이디</th>
+                        <th>이름</th>
+                        <th>이메일</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="member : ${list}">
+                        <td th:text="${member.id}">1</td>
+                        <td th:text="${member.username}">user</td>
+                        <td th:text="${member.name}">홍길동</td>
+                        <td th:text="${member.email}">test@test.com</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

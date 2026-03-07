@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>투어 프로젝트 메인</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        /* 약간의 여백 조정을 위한 커스텀 CSS */
+        body { background-color: #f8f9fa; }
+        .hero-section { padding: 4rem 2rem; background-color: #ffffff; border-bottom: 1px solid #dee2e6; }
+    </style>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container">
+        <a class="navbar-brand" th:href="@{/}">✈️ Tour Project</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto align-items-center">
+
+                <li class="nav-item" th:if="${session.loginMember == null}">
+                    <a class="nav-link" th:href="@{/member/login}">로그인</a>
+                </li>
+                <li class="nav-item" th:if="${session.loginMember == null}">
+                    <a class="btn btn-primary btn-sm ms-2" th:href="@{/member/new}">회원가입</a>
+                </li>
+
+                <li class="nav-item" th:if="${session.loginMember != null}">
+                        <span class="nav-link text-light">
+                            <strong th:text="${session.loginMember.name}">사용자</strong>님, 환영합니다!
+                        </span>
+                </li>
+                <li class="nav-item" th:if="${session.loginMember != null}">
+                    <a class="btn btn-outline-light btn-sm ms-3" th:href="@{/member/logout}">로그아웃</a>
+                </li>
+
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<header class="hero-section text-center mb-5">
+    <div class="container">
+        <h1 class="fw-bolder mb-3">투어 프로젝트</h1>
+        <p class="lead text-muted mb-0">다양한 여행지를 탐색하고, 사람들과 생생한 리뷰를 공유해 보세요.</p>
+    </div>
+</header>
+
+<div class="container">
+    <div class="row justify-content-center">
+
+        <div class="col-md-5 mb-4">
+            <div class="card h-100 shadow-sm border-0">
+                <div class="card-body text-center p-5">
+                    <h2 class="card-title h4 mb-3">🗺️ 투어 구경하기</h2>
+                    <p class="card-text text-muted mb-4">새로운 여행지를 발견하고 상세 정보와 리뷰를 확인해 보세요.</p>
+                    <a class="btn btn-primary w-100" th:href="@{/tour/list}">투어 목록 보기</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-5 mb-4">
+            <div class="card h-100 shadow-sm border-0">
+                <div class="card-body text-center p-5">
+                    <h2 class="card-title h4 mb-3">👥 회원 목록</h2>
+                    <p class="card-text text-muted mb-4">투어 프로젝트와 함께하고 있는 멋진 회원님들을 확인해 보세요.</p>
+                    <a class="btn btn-outline-secondary w-100" th:href="@{/member/list}">회원 목록 보기</a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
