@@ -78,9 +78,12 @@ public class MemberController {
 
         try {
             memberService.join(dto);
-            return "redirect:/login";
+            return "redirect:/";
         } catch (IllegalArgumentException e) {
             model.addAttribute("errorMsg", e.getMessage());
+            return "board/signup";
+        } catch (Exception e) {
+            model.addAttribute("errorMsg", "회원가입 중 오류가 발생했습니다. 잠시 후 다시 시도해주세요.");
             return "board/signup";
         }
     }
