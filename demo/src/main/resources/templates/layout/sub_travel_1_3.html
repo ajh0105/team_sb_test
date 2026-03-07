@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>부산 여행 - BUSAN TRAVEL</title>
+    <link rel="stylesheet" th:href="@{/css/common/font.css}">
+    <link rel="stylesheet" th:href="@{/css/common/chapter.css}">
+    <link rel="stylesheet" th:href="@{/css/common/footer.css}">
+    <link rel="stylesheet" th:href="@{/css/common/sub_tr_1.css}">
+</head>
+<body class="ch01">
+<header id="hd">
+    <div class="hd_container">
+        <a th:href="@{/}" class="logo">
+            <img th:src="@{/images/busanlogo.png}" alt="부산광역시 로고">
+        </a>
+
+        <nav class="gnb">
+            <ul class="menu">
+                <li>
+                    <a th:href="@{/sub_area_1}">부산 지역</a>
+                    <ul class="sub">
+                        <li><a th:href="@{/sub_area_1}">행정구역</a></li>
+                        <li><a th:href="@{/sub_area_2}">부산 상징</a></li>
+                        <li><a th:href="@{/sub_area_3}">미래 비전</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a th:href="@{/sub_travel_1}">부산 여행</a>
+                    <ul class="sub">
+                        <li><a th:href="@{/sub_travel_1}">추천 여행</a></li>
+                        <li><a th:href="@{/sub_travel_2}">해양 & 테마 추천</a></li>
+                        <li><a th:href="@{/sub_travel_3}">가이드북 & 지도</a></li>
+                        <li><a th:href="@{/sub_travel_4}">여행 공유</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a th:href="@{/sub_history_1}">부산 역사</a>
+                    <ul class="sub">
+                        <li><a th:href="@{/sub_history_1}">선사시대</a></li>
+                        <li><a th:href="@{/sub_history_2}">조선시대</a></li>
+                        <li><a th:href="@{/sub_history_3}">개항/근대</a></li>
+                        <li><a th:href="@{/sub_history_4}">현대/글로벌</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a th:href="@{/sub_news_1}">부산 소식</a>
+                    <ul class="sub">
+                        <li><a th:href="@{/sub_news_1}">부산 주요 현안</a></li>
+                        <li><a th:href="@{/sub_news_2}">오늘의 부산</a></li>
+                        <li><a th:href="@{/sub_news_3}">부산 문화·라이프</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a th:href="@{/sub_commu_1}">커뮤니티</a>
+                    <ul class="sub">
+                        <li><a th:href="@{/sub_commu_1}">자유게시판</a></li>
+                        <li><a th:href="@{/sub_commu_2}">Q&A</a></li>
+                        <li><a th:href="@{/sub_commu_3}">관광불편신고</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </nav>
+
+        <div class="tnb">
+            <a th:href="@{/login}">로그인</a>
+            <a th:href="@{/signup}">회원가입</a>
+        </div>
+    </div>
+</header>
+
+<section class="sub_visual">
+    <h2>부산 추천 여행 코스</h2>
+    <p>다양한 여행 코스를 즐겨보세요~!</p>
+</section>
+
+<div class="content_wrap">
+    <div class="main_container">
+        <aside class="lnb">
+            <h2 class="lnb_tit">부산 여행</h2>
+            <ul>
+                <li><a th:href="@{/sub_travel_1}">당일치기</a></li>
+                <li><a th:href="@{/sub_travel_1_2}">1박 2일</a></li>
+                <li class="on"><a th:href="@{/sub_travel_1_3}">2박 3일</a></li>
+                <li><a th:href="@{/sub_travel_1_4}">3박 4일</a></li>
+            </ul>
+        </aside>
+
+        <section class="travel_content">
+            <h3 class="travel_txt">Z세대 원픽! K컬처 체험 2박3일 코스</h3>
+            <p class="travel_txt">풍성한 한가위를 맞아 온 가족이 함께 즐길 수 있는 부산 여행 코스를 소개합니다.</p>
+            <p class="travel_txt_2">
+                <span class="highlight">K컬처 체험 코스 추천</span><br>
+                1일차 : 뮤지엄원 → 요트투어<br>
+                2일차 : 라이언홀리데이 인 부산 → 코리아쿠킹클래스 밥상 인 부산 → 호댄스 스튜디오<br>
+                3일차 : 아이엠부산 → 포셋 → 다온나루
+            </p>
+
+            <div class="travel_top_img">
+                <img th:src="@{/images/travel_main_1_3.jpg}" alt="2박 3일 대표 이미지">
+            </div>
+
+            <p class="travel_txt_2_2">1일차 투어</p>
+            <div class="travel_grid">
+                <div class="travel_card">
+                    <img th:src="@{/images/travel_img12.jpg}" alt="뮤지엄원">
+                    <div class="overlay"><a href="#">뮤지엄원 홈페이지 바로가기</a></div>
+                </div>
+                <p class="travel_txt_3"><span class="highlight">"뮤지엄원"</span> 8천만 개의 LED가 설치된 미디어 아트 전문 현대 미술관으로 초현실적인 예술 경험을 제공합니다.</p>
+
+                <div class="travel_card">
+                    <img th:src="@{/images/travel_img13.jpg}" alt="요트투어">
+                    <div class="overlay"><a href="#">요트투어 홈페이지 바로가기</a></div>
+                </div>
+                <p class="travel_txt_3"><span class="highlight">"요트투어"</span> 해운대와 광안리 일대를 운행하며 눈부신 마천루 조망을 감상할 수 있는 야경 투어를 추천합니다.</p>
+            </div>
+
+            <p class="travel_txt_2_2">2일차 투어</p>
+            <div class="travel_grid">
+                <div class="travel_card">
+                    <img th:src="@{/images/travel_img14.jpg}" alt="라이언홀리데이">
+                    <div class="overlay"><a href="#">라이언홀리데이 홈페이지 바로가기</a></div>
+                </div>
+                <p class="travel_txt_3"><span class="highlight">"라이언홀리데이 인 부산"</span> 카카오프렌즈 캐릭터와 함께 다양한 미디어 콘텐츠 및 디저트를 즐길 수 있는 체험숍입니다.</p>
+
+                <div class="travel_card">
+                    <img th:src="@{/images/travel_img15.jpg}" alt="밥상 인 부산">
+                    <div class="overlay"><a href="#">밥상 인 부산 홈페이지 바로가기</a></div>
+                </div>
+                <p class="travel_txt_3"><span class="highlight">"코리아쿠킹클래스 밥상 인 부산"</span> 김치, 사찰음식, 다도 등 한식을 직접 만들고 맛보는 다채로운 K-푸드 프로그램을 운영합니다.</p>
+
+                <div class="travel_card">
+                    <img th:src="@{/images/travel_img16.jpg}" alt="호댄스">
+                    <div class="overlay"><a href="#">호댄스 홈페이지 바로가기</a></div>
+                </div>
+                <p class="travel_txt_3"><span class="highlight">"호댄스"</span> K팝 댄스를 배우고 싶은 관광객과 지망생들을 위한 체계적인 시스템을 갖춘 댄스 스튜디오입니다.</p>
+            </div>
+
+            <p class="travel_txt_2_2">3일차 투어</p>
+            <div class="travel_grid">
+                <div class="travel_card">
+                    <img th:src="@{/images/travel_img17.jpg}" alt="아이엠부산">
+                    <div class="overlay"><a href="#">아이엠부산 홈페이지 바로가기</a></div>
+                </div>
+                <p class="travel_txt_3"><span class="highlight">"아이엠부산"</span> 부산의 여러 브랜드가 협력하여 선보이는 시그니처 제품들을 한곳에서 만날 수 있는 편집숍입니다.</p>
+
+                <div class="travel_card">
+                    <img th:src="@{/images/travel_img18.jpg}" alt="포셋">
+                    <div class="overlay"><a href="#">포셋 홈페이지 바로가기</a></div>
+                </div>
+                <p class="travel_txt_3"><span class="highlight">"포셋"</span> 오랜 역사를 간직한 건물 속 수많은 엽서 작품들이 진열된 공간으로, 기록의 즐거움을 느낄 수 있는 곳입니다.</p>
+
+                <div class="travel_card">
+                    <img th:src="@{/images/travel_img19.jpg}" alt="다온나루">
+                    <div class="overlay"><a href="#">다온나루 홈페이지 바로가기</a></div>
+                </div>
+                <p class="travel_txt_3"><span class="highlight">"다온나루"</span> 한옥 인테리어의 정수를 보여주는 카페로, 전통차와 한국적 디저트를 즐기며 여운을 만끽할 수 있습니다.</p>
+            </div>
+        </section> </div> </div> <footer id="ft">
+    <div class="ft_container">
+        <div class="ft_left">
+            <div class="f_logo">
+                <img th:src="@{/images/mix_logo_11.png}" alt="부산광역시 로고">
+            </div>
+            <p class="f_address">(우 47545) 부산광역시 연제구 중앙대로 1001(연산동)</p>
+            <div class="f_links">
+                <a href="#">시청 찾아오시는 길</a>
+                <a href="#">주차안내</a>
+                <a href="#">이용안내</a>
+            </div>
+        </div>
+        <div class="ft_center">
+            <nav class="fnb">
+                <a href="#">개인정보처리방침</a>
+                <a href="#">이메일무단수집거부</a>
+                <a href="#">저작권정책</a>
+            </nav>
+            <p class="copyright">Copyright ⓒ 2026 BUSAN METROPOLITAN CITY. All Rights Reserved.</p>
+        </div>
+        <div class="ft_right">
+            <a href="https://www.instagram.com/busancity">
+                <img th:src="@{/icon/Instagram.png}" alt="부산시 인스타그램">
+                <span>인스타</span>
+            </a>
+            <a href="https://www.facebook.com/BusanCity">
+                <img th:src="@{/icon/facebook1.png}" alt="부산시 페이스북">
+                <span>페이스북</span>
+            </a>
+            <a href="https://www.youtube.com/@Busan_is_good">
+                <img th:src="@{/icon/youtube1.png}" alt="부산시 유튜브">
+                <span>유튜브</span>
+            </a>
+        </div>
+    </div>
+</footer>
+</body>
+</html>

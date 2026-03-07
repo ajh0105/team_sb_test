@@ -1,0 +1,42 @@
+spring:
+  application:
+    name: demo
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/busan
+    username: postgres
+    password: 1004
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+
+  thymeleaf:
+    cache: false
+    check-template-location: true
+    prefix: classpath:/templates/
+    suffix: .html
+    encoding: UTF-8
+
+  devtools:
+    livereload:
+      enabled: true
+
+server:
+  port: 8201
+  servlet:
+    session:
+      timeout: 30m
+      cookie:
+        name: BOARDSESSION
+        http-only: true
+
+logging:
+  level:
+    org.hibernate.SQL: DEBUG
+    org.hibernate.type.descriptor.sql.BasicBinder: TRACE
+    com.example.demo: DEBUG

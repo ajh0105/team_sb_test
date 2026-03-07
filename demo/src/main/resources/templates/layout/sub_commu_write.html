@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>커뮤니티 - 글쓰기</title>
+    <link rel="stylesheet" th:href="@{/css/common/font.css}">
+    <link rel="stylesheet" th:href="@{/css/common/chapter.css}">
+    <link rel="stylesheet" th:href="@{/css/common/footer.css}">
+    <link rel="stylesheet" th:href="@{/css/common/sub_commu_write.css}">
+</head>
+<body class="ch01">
+<header id="hd">
+    <div class="hd_container">
+        <a th:href="@{/}" class="logo">
+            <img th:src="@{/images/busanlogo.png}" alt="부산광역시 로고">
+        </a>
+
+        <nav class="gnb">
+            <ul class="menu">
+                <li>
+                    <a th:href="@{/sub_area_1}">부산 지역</a>
+                    <ul class="sub">
+                        <li><a th:href="@{/sub_area_1}">행정구역</a></li>
+                        <li><a th:href="@{/sub_area_2}">부산 상징</a></li>
+                        <li><a th:href="@{/sub_area_3}">미래 비전</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a th:href="@{/sub_travel_1}">부산 여행</a>
+                    <ul class="sub">
+                        <li><a th:href="@{/sub_travel_1}">추천 여행</a></li>
+                        <li><a th:href="@{/sub_travel_2}">해양 & 테마 추천</a></li>
+                        <li><a th:href="@{/sub_travel_3}">가이드북 & 지도</a></li>
+                        <li><a th:href="@{/sub_travel_4}">여행 공유</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a th:href="@{/sub_history_1}">부산 역사</a>
+                    <ul class="sub">
+                        <li><a th:href="@{/sub_history_1}">선사시대</a></li>
+                        <li><a th:href="@{/sub_history_2}">조선시대</a></li>
+                        <li><a th:href="@{/sub_history_3}">개항/근대</a></li>
+                        <li><a th:href="@{/sub_history_4}">현대/글로벌</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a th:href="@{/sub_news_1}">부산 소식</a>
+                    <ul class="sub">
+                        <li><a th:href="@{/sub_news_1}">부산 주요 현안</a></li>
+                        <li><a th:href="@{/sub_news_2}">오늘의 부산</a></li>
+                        <li><a th:href="@{/sub_news_3}">부산 문화·라이프</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a th:href="@{/sub_commu_1}">커뮤니티</a>
+                    <ul class="sub">
+                        <li><a th:href="@{/sub_commu_1}">자유게시판</a></li>
+                        <li><a th:href="@{/sub_commu_2}">Q&A</a></li>
+                        <li><a th:href="@{/sub_commu_3}">관광불편신고</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </nav>
+
+        <div class="tnb">
+            <a th:href="@{/login}">로그인</a>
+            <a th:href="@{/signup}">회원가입</a>
+        </div>
+    </div>
+</header>
+
+<section class="sub_visual">
+    <h2>커뮤니티</h2>
+    <p>자유게시판</p>
+</section>
+
+<div class="content_wrap">
+    <div class="main_container">
+        <aside class="lnb">
+            <h2 class="lnb_tit">커뮤니티</h2>
+            <ul>
+                <li class="on"><a th:href="@{/sub_commu_1}">자유게시판</a></li>
+                <li><a th:href="@{/sub_commu_2}">Q&A</a></li>
+                <li><a th:href="@{/sub_commu_3}">관광불편신고</a></li>
+            </ul>
+        </aside>
+
+        <section class="write_content">
+            <h3 class="write_title">글쓰기</h3>
+
+            <form th:action="@{/sub_commu_write}" method="post">
+                <div class="write_form">
+
+                    <div class="write_row">
+                        <div class="write_label">제목:</div>
+                        <div class="write_input">
+                            <input type="text" name="title" required placeholder="제목을 입력하세요." />
+                        </div>
+                    </div>
+
+                    <div class="write_row">
+                        <div class="write_label">카테고리:</div>
+                        <div class="write_input">
+                            <select name="category">
+                                <option value="FREE">자유게시판</option>
+                                <option value="QNA">Q&amp;A</option>
+                                <option value="REVIEW">관광불편신고</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="write_row">
+                        <div class="write_label">비밀번호:</div>
+                        <div class="write_input">
+                            <input type="password" name="password" required placeholder="비밀번호 4자리 이상" />
+                        </div>
+                    </div>
+
+                    <div class="write_row write_row_content">
+                        <div class="write_label">내용:</div>
+                        <div class="write_input">
+                            <textarea name="content" required placeholder="내용을 입력해 주세요."></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="write_actions">
+                    <a th:href="@{/sub_commu_1}" class="btn_gray">목록보기</a>
+                    <button type="submit" class="btn_gray" style="cursor: pointer; border: none;">저장하기</button>
+                </div>
+            </form>
+
+        </section>
+    </div>
+</div>
+
+<footer id="ft">
+    <div class="ft_container">
+        <div class="ft_left">
+            <div class="f_logo">
+                <img th:src="@{/images/mix_logo_11.png}" alt="부산광역시 로고">
+            </div>
+            <p class="f_address">(우 47545) 부산광역시 연제구 중앙대로 1001(연산동)</p>
+            <div class="f_links">
+                <a href="#">시청 찾아오시는 길</a>
+                <a href="#">주차안내</a>
+                <a href="#">이용안내</a>
+            </div>
+        </div>
+        <div class="ft_center">
+            <nav class="fnb">
+                <a href="#">개인정보처리방침</a>
+                <a href="#">이메일무단수집거부</a>
+                <a href="#">저작권정책</a>
+            </nav>
+            <p class="copyright">
+                Copyright ⓒ 2026 BUSAN METROPOLITAN CITY. All Rights Reserved.
+            </p>
+        </div>
+        <div class="ft_right">
+            <a href="https://www.instagram.com/busancity">
+                <img th:src="@{/icon/Instagram.png}" alt="부산시 공식 인스타그램">
+                <span>인스타그램</span>
+            </a>
+            <a href="https://www.facebook.com/BusanCity">
+                <img th:src="@{/icon/facebook1.png}" alt="부산시 공식 페이스북">
+                <span>페이스북</span>
+            </a>
+            <a href="https://www.youtube.com/@Busan_is_good">
+                <img th:src="@{/icon/youtube1.png}" alt="부산시 공식 유튜브">
+                <span>유튜브</span>
+            </a>
+        </div>
+    </div>
+</footer>
+</body>
+</html>

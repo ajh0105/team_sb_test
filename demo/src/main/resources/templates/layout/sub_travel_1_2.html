@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>부산 여행 - BUSAN TRAVEL</title>
+    <link rel="stylesheet" th:href="@{/css/common/font.css}">
+    <link rel="stylesheet" th:href="@{/css/common/chapter.css}">
+    <link rel="stylesheet" th:href="@{/css/common/footer.css}">
+    <link rel="stylesheet" th:href="@{/css/common/sub_tr_1.css}">
+</head>
+<body class="ch01">
+<header id="hd">
+    <div class="hd_container">
+        <a th:href="@{/}" class="logo">
+            <img th:src="@{/images/busanlogo.png}" alt="부산광역시 로고">
+        </a>
+
+        <nav class="gnb">
+            <ul class="menu">
+                <li>
+                    <a th:href="@{/sub_area_1}">부산 지역</a>
+                    <ul class="sub">
+                        <li><a th:href="@{/sub_area_1}">행정구역</a></li>
+                        <li><a th:href="@{/sub_area_2}">부산 상징</a></li>
+                        <li><a th:href="@{/sub_area_3}">미래 비전</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a th:href="@{/sub_travel_1}">부산 여행</a>
+                    <ul class="sub">
+                        <li><a th:href="@{/sub_travel_1}">추천 여행</a></li>
+                        <li><a th:href="@{/sub_travel_2}">해양 & 테마 추천</a></li>
+                        <li><a th:href="@{/sub_travel_3}">가이드북 & 지도</a></li>
+                        <li><a th:href="@{/sub_travel_4}">여행 공유</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a th:href="@{/sub_history_1}">부산 역사</a>
+                    <ul class="sub">
+                        <li><a th:href="@{/sub_history_1}">선사시대</a></li>
+                        <li><a th:href="@{/sub_history_2}">조선시대</a></li>
+                        <li><a th:href="@{/sub_history_3}">개항/근대</a></li>
+                        <li><a th:href="@{/sub_history_4}">현대/글로벌</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a th:href="@{/sub_news_1}">부산 소식</a>
+                    <ul class="sub">
+                        <li><a th:href="@{/sub_news_1}">부산 주요 현안</a></li>
+                        <li><a th:href="@{/sub_news_2}">오늘의 부산</a></li>
+                        <li><a th:href="@{/sub_news_3}">부산 문화·라이프</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a th:href="@{/sub_commu_1}">커뮤니티</a>
+                    <ul class="sub">
+                        <li><a th:href="@{/sub_commu_1}">자유게시판</a></li>
+                        <li><a th:href="@{/sub_commu_2}">Q&A</a></li>
+                        <li><a th:href="@{/sub_commu_3}">관광불편신고</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </nav>
+
+        <div class="tnb">
+            <a th:href="@{/login}">로그인</a>
+            <a th:href="@{/signup}">회원가입</a>
+        </div>
+    </div>
+</header>
+
+<section class="sub_visual">
+    <h2>부산 추천 여행 코스</h2>
+    <p>다양한 여행 코스를 즐겨보세요~!</p>
+</section>
+
+<div class="content_wrap">
+    <div class="main_container">
+        <aside class="lnb">
+            <h2 class="lnb_tit">부산 여행</h2>
+            <ul>
+                <li><a th:href="@{/sub_travel_1}">당일치기</a></li>
+                <li class="on"><a th:href="@{/sub_travel_1_2}">1박 2일</a></li>
+                <li><a th:href="@{/sub_travel_1_3}">2박 3일</a></li>
+                <li><a th:href="@{/sub_travel_1_4}">3박 4일</a></li>
+            </ul>
+        </aside>
+
+        <section class="travel_content">
+            <h3 class="travel_txt">추석에 떠나는 "부산 가족여행" 1박2일 코스</h3>
+            <p class="travel_txt">풍성한 한가위를 맞아 온 가족이 함께 즐길 수 있는 부산 여행 코스를 소개합니다.</p>
+            <p class="travel_txt_2">
+                <span class="highlight">해돋이부터 야경까지, 푸짐한 1박 2일 코스</span><br>
+                1일차 : 해운대 블루라인파크 해변열차 → 카페 윤 → 금수복국 해운대 본점 → 더베이101 요트투어<br>
+                2일차 : 영도하늘전망대 → 빨간등대 영도본점 → 부산시티투어
+            </p>
+
+            <div class="travel_top_img">
+                <img th:src="@{/images/travel_main_1_2.jpg}" alt="1박 2일 대표 이미지">
+            </div>
+
+            <p class="travel_txt_2_2">1일차 - 기장 해돋이와 해운대 바다의 낭만</p>
+            <div class="travel_grid">
+                <div class="travel_card">
+                    <img th:src="@{/images/travel_img05.jpg}" alt="여행 이미지 5">
+                    <div class="overlay"><a href="#">해운대 블루라인파크 바로가기</a></div>
+                </div>
+                <p class="travel_txt_3"><span class="highlight">"해운대 블루라인파크"</span> 미포~송정을 잇는 해변열차로 부산 바다 풍경을 한눈에 담을 수 있습니다.</p>
+
+                <div class="travel_card">
+                    <img th:src="@{/images/travel_img06.jpg}" alt="여행 이미지 6">
+                    <div class="overlay"><a href="#">카페 윤 바로가기</a></div>
+                </div>
+                <p class="travel_txt_3"><span class="highlight">"카페 윤"</span> 멋진 오션뷰와 함께 시그니처 커피를 즐길 수 있는 기장의 핫플레이스입니다.</p>
+
+                <div class="travel_card">
+                    <img th:src="@{/images/travel_img07.jpg}" alt="여행 이미지 7">
+                    <div class="overlay"><a href="#">금수복국 바로가기</a></div>
+                </div>
+                <p class="travel_txt_3"><span class="highlight">"금수복국 해운대 본점"</span> 부산 별미 복국을 맛볼 수 있는 대표 맛집으로 가족 식사에 제격입니다.</p>
+
+                <div class="travel_card">
+                    <img th:src="@{/images/travel_img08.jpg}" alt="여행 이미지 8">
+                    <div class="overlay"><a href="#">더베이101 요트투어 바로가기</a></div>
+                </div>
+                <p class="travel_txt_3"><span class="highlight">"더베이101 요트투어"</span> 화려한 마린시티의 야경을 바다 위에서 즐기며 낭만적인 밤을 완성합니다.</p>
+            </div>
+
+            <p class="travel_txt_2_2">2일차 - 영도 전망과 도심 투어로 마무리</p>
+            <div class="travel_grid">
+                <div class="travel_card">
+                    <img th:src="@{/images/travel_img09.jpg}" alt="여행 이미지 9">
+                    <div class="overlay"><a href="#">영도하늘전망대 바로가기</a></div>
+                </div>
+                <p class="travel_txt_3"><span class="highlight">"영도하늘전망대"</span> 바다 위 스카이워크에서 탁 트인 풍경을 배경으로 가족사진을 남기기 좋습니다.</p>
+
+                <div class="travel_card">
+                    <img th:src="@{/images/travel_img10.jpg}" alt="여행 이미지 10">
+                    <div class="overlay"><a href="#">빨간등대 영도본점 바로가기</a></div>
+                </div>
+                <p class="travel_txt_3"><span class="highlight">"빨간등대 영도본점"</span> 전 좌석 오션뷰에서 신선한 해산물 요리를 즐기며 연휴를 마무리하세요.</p>
+
+                <div class="travel_card">
+                    <img th:src="@{/images/travel_img11.jpg}" alt="여행 이미지 11">
+                    <div class="overlay"><a href="#">부산시티투어 바로가기</a></div>
+                </div>
+                <p class="travel_txt_3"><span class="highlight">"부산시티투어"</span> 2층 버스를 타고 부산의 주요 명소를 편리하게 둘러볼 수 있는 코스입니다.</p>
+            </div>
+        </section> </div> </div> <footer id="ft">
+    <div class="ft_container">
+        <div class="ft_left">
+            <div class="f_logo">
+                <img th:src="@{/images/mix_logo_11.png}" alt="부산광역시 로고">
+            </div>
+            <p class="f_address">(우 47545) 부산광역시 연제구 중앙대로 1001(연산동)</p>
+            <div class="f_links">
+                <a href="#">시청 찾아오시는 길</a>
+                <a href="#">주차안내</a>
+                <a href="#">이용안내</a>
+            </div>
+        </div>
+        <div class="ft_center">
+            <nav class="fnb">
+                <a href="#">개인정보처리방침</a>
+                <a href="#">이메일무단수집거부</a>
+                <a href="#">저작권정책</a>
+            </nav>
+            <p class="copyright">Copyright ⓒ 2026 BUSAN METROPOLITAN CITY. All Rights Reserved.</p>
+        </div>
+        <div class="ft_right">
+            <a href="https://www.instagram.com/busancity">
+                <img th:src="@{/icon/Instagram.png}" alt="부산시 인스타그램">
+                <span>인스타</span>
+            </a>
+            <a href="https://www.facebook.com/BusanCity">
+                <img th:src="@{/icon/facebook1.png}" alt="부산시 페이스북">
+                <span>페이스북</span>
+            </a>
+            <a href="https://www.youtube.com/@Busan_is_good">
+                <img th:src="@{/icon/youtube1.png}" alt="부산시 유튜브">
+                <span>유튜브</span>
+            </a>
+        </div>
+    </div>
+</footer>
+</body>
+</html>

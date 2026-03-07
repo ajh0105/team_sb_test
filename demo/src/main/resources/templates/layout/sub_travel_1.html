@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>부산 여행 - BUSAN TRAVEL</title>
+    <link rel="stylesheet" th:href="@{/css/common/font.css}">
+    <link rel="stylesheet" th:href="@{/css/common/chapter.css}">
+    <link rel="stylesheet" th:href="@{/css/common/footer.css}">
+    <link rel="stylesheet" th:href="@{/css/common/sub_tr_1.css}">
+</head>
+<body class="ch01">
+<header id="hd">
+    <div class="hd_container">
+        <a th:href="@{/}" class="logo">
+            <img th:src="@{/images/busanlogo.png}" alt="부산광역시 로고">
+        </a>
+
+        <nav class="gnb">
+            <ul class="menu">
+                <li>
+                    <a th:href="@{/sub_area_1}">부산 지역</a>
+                    <ul class="sub">
+                        <li><a th:href="@{/sub_area_1}">행정구역</a></li>
+                        <li><a th:href="@{/sub_area_2}">부산 상징</a></li>
+                        <li><a th:href="@{/sub_area_3}">미래 비전</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a th:href="@{/sub_travel_1}">부산 여행</a>
+                    <ul class="sub">
+                        <li><a th:href="@{/sub_travel_1}">추천 여행</a></li>
+                        <li><a th:href="@{/sub_travel_2}">해양 & 테마 추천</a></li>
+                        <li><a th:href="@{/sub_travel_3}">가이드북 & 지도</a></li>
+                        <li><a th:href="@{/sub_travel_4}">여행 공유</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a th:href="@{/sub_history_1}">부산 역사</a>
+                    <ul class="sub">
+                        <li><a th:href="@{/sub_history_1}">선사시대</a></li>
+                        <li><a th:href="@{/sub_history_2}">조선시대</a></li>
+                        <li><a th:href="@{/sub_history_3}">개항/근대</a></li>
+                        <li><a th:href="@{/sub_history_4}">현대/글로벌</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a th:href="@{/sub_news_1}">부산 소식</a>
+                    <ul class="sub">
+                        <li><a th:href="@{/sub_news_1}">부산 주요 현안</a></li>
+                        <li><a th:href="@{/sub_news_2}">오늘의 부산</a></li>
+                        <li><a th:href="@{/sub_news_3}">부산 문화·라이프</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a th:href="@{/sub_commu_1}">커뮤니티</a>
+                    <ul class="sub">
+                        <li><a th:href="@{/sub_commu_1}">자유게시판</a></li>
+                        <li><a th:href="@{/sub_commu_2}">Q&A</a></li>
+                        <li><a th:href="@{/sub_commu_3}">관광불편신고</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </nav>
+
+        <div class="tnb">
+            <a th:href="@{/login}">로그인</a>
+            <a th:href="@{/signup}">회원가입</a>
+        </div>
+    </div>
+</header>
+
+<section class="sub_visual">
+    <h2>부산 추천 여행 코스</h2>
+    <p>다양한 여행 코스를 즐겨보세요~!</p>
+</section>
+
+<div class="content_wrap">
+    <div class="main_container">
+        <aside class="lnb">
+            <h2 class="lnb_tit">부산 여행</h2>
+            <ul>
+                <li class="on"><a th:href="@{/sub_travel_1}">당일치기</a></li>
+                <li><a th:href="@{/sub_travel_1_2}">1박 2일</a></li>
+                <li><a th:href="@{/sub_travel_1_3}">2박 3일</a></li>
+                <li><a th:href="@{/sub_travel_1_4}">3박 4일</a></li>
+            </ul>
+        </aside>
+
+        <section class="travel_content">
+            <h3 class="travel_txt">
+                "겨울빛 따라 영도에서 광복로까지", 로컬 감성 물씬 당일 추천코스
+            </h3>
+            <p class="travel_txt">겨울을 맞아 부산 광복로에 ‘겨울빛 트리축제’가 열렸습니다! 더욱 화려해진 광복로와 함께, 영도에서 광복로까지 빛나는 부산여행 즐겨봐요~!</p>
+            <p class="travel_txt_2"> <span class="highlight">추천코스</span> 꼬쇼네 → 아델라베일리 부산 → 로칼 → 광복로 겨울빛 트리축제</p>
+
+            <div class="travel_top_img">
+                <img th:src="@{/images/travel_main_1.jpg}" alt="당일치기 대표 이미지">
+            </div>
+
+            <div class="travel_grid">
+                <div class="travel_card">
+                    <img th:src="@{/images/travel_img01.jpg}" alt="여행 이미지 1">
+                    <div class="overlay">
+                        <a href="#">꼬쇼네 홈페이지 바로가기</a>
+                    </div>
+                </div>
+                <p class="travel_txt_3"> <span class="highlight">"꼬쇼네"</span> 마스코트 강아지 ‘꼬쇼’와 함께 유럽풍의 예쁜 인테리어로 유명한 영도 오션뷰 카페입니다.</p>
+
+                <div class="travel_card">
+                    <img th:src="@{/images/travel_img02.jpg}" alt="여행 이미지 2">
+                    <div class="overlay">
+                        <a href="#">아델라베일리 부산 홈페이지 바로가기</a>
+                    </div>
+                </div>
+                <p class="travel_txt_3"> <span class="highlight">"아델라베일리 부산"</span> 24층 높이에서 펼쳐지는 탁 트인 전망! 영도대교 전경을 감상할 수 있는 레스토랑입니다.</p>
+
+                <div class="travel_card">
+                    <img th:src="@{/images/travel_img03.jpg}" alt="여행 이미지 3">
+                    <div class="overlay">
+                        <a href="#">로칼 홈페이지 바로가기</a>
+                    </div>
+                </div>
+                <p class="travel_txt_3"> <span class="highlight">"로칼"</span> 영도 복합문화공간 AREA6에 입점한 향수 공방으로 부산의 명소를 테마로 한 제품을 선보입니다.</p>
+
+                <div class="travel_card">
+                    <img th:src="@{/images/travel_img04.jpg}" alt="여행 이미지 4">
+                    <div class="overlay">
+                        <a href="#">광복로 트리축제 홈페이지 바로가기</a>
+                    </div>
+                </div>
+                <p class="travel_txt_3"> <span class="highlight">"광복로 겨울빛 트리축제"</span> 화려한 트리가 광복로를 수놓는 성대한 축제를 즐기러 남포동으로 갑니다.</p>
+            </div>
+        </section> </div> </div> <footer id="ft">
+    <div class="ft_container">
+        <div class="ft_left">
+            <div class="f_logo">
+                <img th:src="@{/images/mix_logo_11.png}" alt="부산광역시 로고">
+            </div>
+            <p class="f_address">
+                (우 47545) 부산광역시 연제구 중앙대로 1001(연산동)
+            </p>
+            <div class="f_links">
+                <a href="#">시청 찾아오시는 길</a>
+                <a href="#">주차안내</a>
+                <a href="#">이용안내</a>
+            </div>
+        </div>
+
+        <div class="ft_center">
+            <nav class="fnb">
+                <a href="#">개인정보처리방침</a>
+                <a href="#">이메일무단수집거부</a>
+                <a href="#">저작권정책</a>
+            </nav>
+            <p class="copyright">
+                Copyright ⓒ 2026 BUSAN METROPOLITAN CITY. All Rights Reserved.
+            </p>
+        </div>
+
+        <div class="ft_right">
+            <a href="https://www.instagram.com/busancity">
+                <img th:src="@{/icon/Instagram.png}" alt="부산시 공식 인스타그램">
+                <span>인스타</span>
+            </a>
+            <a href="https://www.facebook.com/BusanCity">
+                <img th:src="@{/icon/facebook1.png}" alt="부산시 공식 페이스북">
+                <span>페이스북</span>
+            </a>
+            <a href="https://www.youtube.com/@Busan_is_good">
+                <img th:src="@{/icon/youtube1.png}" alt="부산시 공식 유튜브">
+                <span>유튜브</span>
+            </a>
+        </div>
+    </div>
+</footer>
+</body>
+</html>
