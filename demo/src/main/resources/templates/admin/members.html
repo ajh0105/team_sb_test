@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>회원 관리 - 관리자</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body { background-color: #f0f2f5; }
+        .sidebar { min-height: 100vh; background: #2c3e50; color: white; }
+        .sidebar a { color: #bdc3c7; text-decoration: none; display: block; padding: 12px 20px; }
+        .sidebar a:hover { background: #34495e; color: white; }
+        .sidebar .active { background: #3498db; color: white; }
+        .sidebar h4 { padding: 20px; margin: 0; border-bottom: 1px solid #34495e; font-size: 16px; }
+        .topbar { background: white; padding: 15px 25px; border-bottom: 1px solid #e0e0e0; display: flex; justify-content: space-between; align-items: center; }
+        .badge-admin { background: #e74c3c; color: white; padding: 2px 8px; border-radius: 10px; font-size: 11px; }
+        .badge-user { background: #3498db; color: white; padding: 2px 8px; border-radius: 10px; font-size: 11px; }
+    </style>
+</head>
+<body>
+<div class="d-flex">
+    <div class="sidebar" style="width: 220px; min-width: 220px;">
+        <h4>관리자 메뉴</h4>
+        <a th:href="@{/admin}">대시보드</a>
+        <a th:href="@{/admin/members}" class="active">회원 관리</a>
+        <a th:href="@{/admin/boards}">게시글 관리</a>
+        <hr style="border-color: #34495e; margin: 10px 20px;">
+        <a th:href="@{/}">사이트로 이동</a>
+        <a th:href="@{/logout}">로그아웃</a>
+    </div>
+
+    <div class="flex-grow-1">
+        <div class="topbar">
+            <h5 class="mb-0">회원 관리</h5>
+            <span class="text-muted">총 <strong th:text="${members.size()}"></strong>명</span>
+        </div>
+
+        <div class="p-4">
+            <div class="card border-0 shadow-sm">
+                <div class="card-body p-0">
+                    <table class="table table-hover mb-0">
+                        <thead class="table-dark">
+                        <tr>
+                            <th>ID</th>
+                            <th>이름</th>
+                            <th>이메일</th>
+                            <th>전화번호</th>
+                            <th>권한</th>
+                            <th>가입일</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:if="${#lists.isEmpty(members)}">
+                            <td colspan="6" class="text-center py-4 text-muted">등록된 회원이 없습니다.</td>
+                        </tr>
+                        <tr th:each="member : ${members}">
+                            <td th:text="${member.id}"></td>
+                            <td th:text="${member.name}"></td>
+                            <td th:text="${member.email}"></td>
+                            <td th:text="${member.phone}"></td>
+                            <td>
+                                <span th:class="${member.role.name() == 'ADMIN'} ? 'badge-admin' : 'badge-user'"
+                                      th:text="${member.role.name()}"></span>
+                            </td>
+                            <td th:text="${#temporals.format(member.createdAt, 'yyyy-MM-dd')}"></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>커뮤니티 - 글쓰기</title>
+    <link rel="stylesheet" th:href="@{/css/common/font.css}">
+    <link rel="stylesheet" th:href="@{/css/common/chapter.css}">
+    <link rel="stylesheet" th:href="@{/css/common/footer.css}">
+    <link rel="stylesheet" th:href="@{/css/common/sub_commu_ch01.css}">
+    <link rel="stylesheet" th:href="@{/css/common/sub_commu_write.css}">
+    <style>
+        .form_row { margin-bottom: 16px; }
+        .form_row label { display: block; font-weight: 600; margin-bottom: 6px; font-size: 14px; }
+        .form_input { width: 100%; padding: 8px 12px; border: 1px solid #ccc; border-radius: 4px; font-size: 14px; box-sizing: border-box; }
+        .form_textarea { width: 100%; padding: 10px 12px; border: 1px solid #ccc; border-radius: 4px; font-size: 14px; resize: vertical; box-sizing: border-box; }
+        .form_btns { display: flex; justify-content: flex-end; gap: 10px; margin-top: 20px; }
+        .btn_cancel { padding: 8px 20px; background: #888; color: white; border-radius: 4px; text-decoration: none; font-size: 14px; }
+        .btn_write { padding: 8px 20px; background: #1a56a0; color: white; border: none; border-radius: 4px; font-size: 14px; cursor: pointer; }
+    </style>
+</head>
+<body class="ch01">
+<header id="hd">
+    <div class="hd_container">
+        <a th:href="@{/}" class="logo">
+            <img th:src="@{/images/busanlogo.png}" alt="부산광역시 로고">
+        </a>
+        <nav class="gnb">
+            <ul class="menu">
+                <li>
+                    <a th:href="@{/sub_area_1}">부산 지역</a>
+                    <ul class="sub">
+                        <li><a th:href="@{/sub_area_1}">행정구역 소개</a></li>
+                        <li><a th:href="@{/sub_area_2}">부산 상징</a></li>
+                        <li><a th:href="@{/sub_area_3}">도시기본계획</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a th:href="@{/sub_travel_1}">부산 여행</a>
+                    <ul class="sub">
+                        <li><a th:href="@{/sub_travel_1}">추천 여행</a></li>
+                        <li><a th:href="@{/sub_travel_2}">해양 &amp; 테마 추천</a></li>
+                        <li><a th:href="@{/sub_travel_3}">가이드북 &amp; 지도</a></li>
+                        <li><a th:href="@{/sub_travel_4}">여행 공유</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a th:href="@{/sub_history_1}">부산 역사</a>
+                    <ul class="sub">
+                        <li><a th:href="@{/sub_history_1}">선사시대</a></li>
+                        <li><a th:href="@{/sub_history_2}">조선시대</a></li>
+                        <li><a th:href="@{/sub_history_3}">개항/근대</a></li>
+                        <li><a th:href="@{/sub_history_4}">현대/글로벌</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a th:href="@{/sub_news_1}">부산 소식</a>
+                    <ul class="sub">
+                        <li><a th:href="@{/sub_news_1}">부산 주요 현안</a></li>
+                        <li><a th:href="@{/sub_news_2}">오늘의 부산</a></li>
+                        <li><a th:href="@{/sub_news_3}">부산 문화·라이프</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a th:href="@{/community/free}">커뮤니티</a>
+                    <ul class="sub">
+                        <li><a th:href="@{/community/free}">자유게시판</a></li>
+                        <li><a th:href="@{/community/qna}">Q&amp;A</a></li>
+                        <li><a th:href="@{/community/report}">관광불편신고</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </nav>
+        <div class="tnb">
+            <th:block th:if="${session.loginMember == null}">
+                <a th:href="@{/login}">로그인</a>
+                <a th:href="@{/signup}">회원가입</a>
+            </th:block>
+            <th:block th:if="${session.loginMember != null}">
+                <span th:text="${'반갑습니다 ' + session.loginMember.name + ' 회원님'}"></span>
+                <a th:href="@{/admin}" th:if="${session.loginMember.role.name() == 'ADMIN'}">관리자</a>
+                <a th:href="@{/logout}">로그아웃</a>
+            </th:block>
+        </div>
+    </div>
+</header>
+
+<section class="sub_visual">
+    <h2>커뮤니티</h2>
+    <p th:text="${boardType == 'FREE'} ? '자유게시판' : (${boardType == 'QNA'} ? 'Q&amp;A' : '관광불편신고')">글쓰기</p>
+</section>
+
+<div class="content_wrap">
+    <div class="main_container">
+        <aside class="lnb">
+            <h2 class="lnb_tit">커뮤니티</h2>
+            <ul>
+                <li th:class="${boardType == 'FREE'} ? 'on'"><a th:href="@{/community/free}">자유게시판</a></li>
+                <li th:class="${boardType == 'QNA'} ? 'on'"><a th:href="@{/community/qna}">Q&amp;A</a></li>
+                <li th:class="${boardType == 'REPORT'} ? 'on'"><a th:href="@{/community/report}">관광불편신고</a></li>
+            </ul>
+        </aside>
+        <section class="board_content">
+            <h3 class="board_title"
+                th:text="${boardType == 'FREE'} ? '자유게시판 글쓰기' : (${boardType == 'QNA'} ? 'Q&amp;A 질문하기' : '관광불편 신고하기')">
+                글쓰기
+            </h3>
+
+            <div th:if="${errorMsg}" style="color:red; margin-bottom:15px;" th:text="${errorMsg}"></div>
+
+            <form th:action="@{/community/write}" th:object="${boardFormDto}" method="post" class="write_form">
+                <input type="hidden" name="boardType" th:value="${boardType}">
+
+                <div class="form_row">
+                    <label for="title">제목</label>
+                    <input type="text" id="title" th:field="*{title}" placeholder="제목을 입력하세요" class="form_input">
+                    <span th:if="${#fields.hasErrors('title')}" th:errors="*{title}" style="color:red; font-size:12px; display:block;"></span>
+                </div>
+
+                <div class="form_row">
+                    <label for="content">내용</label>
+                    <textarea id="content" th:field="*{content}" rows="12" placeholder="내용을 입력하세요" class="form_textarea"></textarea>
+                    <span th:if="${#fields.hasErrors('content')}" th:errors="*{content}" style="color:red; font-size:12px; display:block;"></span>
+                </div>
+
+                <div class="form_row" th:if="${boardType == 'REPORT'}">
+                    <label>
+                        <input type="checkbox" th:field="*{secret}"> 비밀글로 작성
+                    </label>
+                </div>
+
+                <div class="form_btns">
+                    <a th:href="${boardType == 'QNA'} ? '/community/qna' : (${boardType == 'REPORT'} ? '/community/report' : '/community/free')"
+                       class="btn_cancel">취소</a>
+                    <button type="submit" class="btn_write">등록하기</button>
+                </div>
+            </form>
+        </section>
+    </div>
+</div>
+
+<footer id="ft">
+    <div class="ft_container">
+        <div class="ft_left">
+            <div class="f_logo">
+                <img th:src="@{/images/mix_logo_11.png}" alt="부산광역시 로고">
+            </div>
+            <p class="f_address">(우 47545) 부산광역시 연제구 중앙대로 1001(연산동)</p>
+            <div class="f_links">
+                <a href="#">시청 찾아오시는 길</a>
+                <a href="#">주차안내</a>
+                <a href="#">이용안내</a>
+            </div>
+        </div>
+        <div class="ft_center">
+            <nav class="fnb">
+                <a href="#">개인정보처리방침</a>
+                <a href="#">이메일무단수집거부</a>
+                <a href="#">저작권정책</a>
+            </nav>
+            <p class="copyright">Copyright ⓒ 2026 BUSAN METROPOLITAN CITY. All Rights Reserved.</p>
+        </div>
+        <div class="ft_right">
+            <a href="https://www.instagram.com/busancity">
+                <img th:src="@{/icon/Instagram.png}" alt="부산시 공식 인스타그램">
+                <span>인스타그램</span>
+            </a>
+            <a href="https://www.facebook.com/BusanCity">
+                <img th:src="@{/icon/facebook1.png}" alt="부산시 공식 페이스북">
+                <span>페이스북</span>
+            </a>
+            <a href="https://www.youtube.com/@Busan_is_good">
+                <img th:src="@{/icon/youtube1.png}" alt="부산시 공식 유튜브">
+                <span>유튜브</span>
+            </a>
+        </div>
+    </div>
+</footer>
+</body>
+</html>

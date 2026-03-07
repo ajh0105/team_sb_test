@@ -3,11 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>로그인 - BUSAN LOGIN</title>
+    <title>커뮤니티 - Q&A</title>
     <link rel="stylesheet" th:href="@{/css/common/font.css}">
     <link rel="stylesheet" th:href="@{/css/common/chapter.css}">
     <link rel="stylesheet" th:href="@{/css/common/footer.css}">
-    <link rel="stylesheet" th:href="@{/css/common/login.css}">
+    <link rel="stylesheet" th:href="@{/css/common/sub_commu_ch01.css}">
+    <style>
+        .status { padding: 3px 8px; border-radius: 3px; font-size: 12px; font-weight: bold; display: inline-block; }
+        .status.waiting { background: #fff3e0; color: #ef6c00; }
+        .status.complete { background: #e8f5e9; color: #2e7d32; }
+    </style>
 </head>
 <body class="ch01">
 <header id="hd">
@@ -15,23 +20,22 @@
         <a th:href="@{/}" class="logo">
             <img th:src="@{/images/busanlogo.png}" alt="부산광역시 로고">
         </a>
-
         <nav class="gnb">
             <ul class="menu">
                 <li>
                     <a th:href="@{/sub_area_1}">부산 지역</a>
                     <ul class="sub">
-                        <li><a th:href="@{/sub_area_1}">행정구역</a></li>
+                        <li><a th:href="@{/sub_area_1}">행정구역 소개</a></li>
                         <li><a th:href="@{/sub_area_2}">부산 상징</a></li>
-                        <li><a th:href="@{/sub_area_3}">미래 비전</a></li>
+                        <li><a th:href="@{/sub_area_3}">도시기본계획</a></li>
                     </ul>
                 </li>
                 <li>
                     <a th:href="@{/sub_travel_1}">부산 여행</a>
                     <ul class="sub">
                         <li><a th:href="@{/sub_travel_1}">추천 여행</a></li>
-                        <li><a th:href="@{/sub_travel_2}">해양 & 테마 추천</a></li>
-                        <li><a th:href="@{/sub_travel_3}">가이드북 & 지도</a></li>
+                        <li><a th:href="@{/sub_travel_2}">해양 &amp; 테마 추천</a></li>
+                        <li><a th:href="@{/sub_travel_3}">가이드북 &amp; 지도</a></li>
                         <li><a th:href="@{/sub_travel_4}">여행 공유</a></li>
                     </ul>
                 </li>
@@ -53,16 +57,15 @@
                     </ul>
                 </li>
                 <li>
-                    <a th:href="@{/sub_commu_1}">커뮤니티</a>
+                    <a th:href="@{/community/free}">커뮤니티</a>
                     <ul class="sub">
-                        <li><a th:href="@{/sub_commu_1}">자유게시판</a></li>
-                        <li><a th:href="@{/sub_commu_2}">Q&A</a></li>
-                        <li><a th:href="@{/sub_commu_3}">관광불편신고</a></li>
+                        <li><a th:href="@{/community/free}">자유게시판</a></li>
+                        <li><a th:href="@{/community/qna}">Q&amp;A</a></li>
+                        <li><a th:href="@{/community/report}">관광불편신고</a></li>
                     </ul>
                 </li>
             </ul>
         </nav>
-
         <div class="tnb">
             <th:block th:if="${session.loginMember == null}">
                 <a th:href="@{/login}">로그인</a>
@@ -70,29 +73,68 @@
             </th:block>
             <th:block th:if="${session.loginMember != null}">
                 <span th:text="${'반갑습니다 ' + session.loginMember.name + ' 회원님'}"></span>
+                <a th:href="@{/admin}" th:if="${session.loginMember.role.name() == 'ADMIN'}">관리자</a>
                 <a th:href="@{/logout}">로그아웃</a>
             </th:block>
         </div>
     </div>
 </header>
 
-<main class="page-wrap">
-    <div class="container">
-        <div class="login-image">
-            <img th:src="@{/images/login.jpg}" alt="로그인 이미지">
-        </div>
-        <form class="login-form" th:action="@{/login}" th:object="${loginDto}" method="post">
-            <h2>로그인</h2>
-            <div th:if="${errorMsg}" class="error-msg" style="color:red; margin-bottom:10px;" th:text="${errorMsg}"></div>
-            <input type="email" th:field="*{email}" placeholder="이메일" required>
-            <span th:if="${#fields.hasErrors('email')}" th:errors="*{email}" style="color:red; font-size:12px;"></span>
-            <input type="password" th:field="*{password}" placeholder="비밀번호" required>
-            <span th:if="${#fields.hasErrors('password')}" th:errors="*{password}" style="color:red; font-size:12px;"></span>
-            <button type="submit">로그인</button>
-            <p>계정이 없으신가요? <a th:href="@{/signup}">회원가입</a></p>
-        </form>
+<section class="sub_visual">
+    <h2>커뮤니티</h2>
+    <p>Q&amp;A</p>
+</section>
+
+<div class="content_wrap">
+    <div class="main_container">
+        <aside class="lnb">
+            <h2 class="lnb_tit">커뮤니티</h2>
+            <ul>
+                <li><a th:href="@{/community/free}">자유게시판</a></li>
+                <li class="on"><a th:href="@{/community/qna}">Q&amp;A</a></li>
+                <li><a th:href="@{/community/report}">관광불편신고</a></li>
+            </ul>
+        </aside>
+        <section class="board_content">
+            <h3 class="board_title">Q&amp;A</h3>
+            <table class="board_table">
+                <thead>
+                <tr>
+                    <th class="col-no">No.</th>
+                    <th class="col-title">질문 제목</th>
+                    <th class="col-status">상태</th>
+                    <th class="col-writer">작성자</th>
+                    <th class="col-date">작성일</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:if="${#lists.isEmpty(boards)}">
+                    <td colspan="5" style="text-align:center; padding:30px;">등록된 질문이 없습니다.</td>
+                </tr>
+                <tr th:each="board, stat : ${boards}">
+                    <td th:text="${stat.count}"></td>
+                    <td class="txt-left">
+                        <a th:href="@{/community/{id}(id=${board.id})}" th:text="${board.title}"></a>
+                    </td>
+                    <td>
+                        <span th:class="${board.qnaStatus == '답변완료'} ? 'status complete' : 'status waiting'"
+                              th:text="${board.qnaStatus}"></span>
+                    </td>
+                    <td th:text="${board.member.name}"></td>
+                    <td th:text="${#temporals.format(board.createdAt, 'yyyy-MM-dd')}"></td>
+                </tr>
+                </tbody>
+            </table>
+
+            <div class="board_write">
+                <a th:href="@{/community/write(type='QNA')}" class="btn_write"
+                   th:if="${session.loginMember != null}">질문하기</a>
+                <a th:href="@{/login}" class="btn_write"
+                   th:if="${session.loginMember == null}">로그인 후 질문하기</a>
+            </div>
+        </section>
     </div>
-</main>
+</div>
 
 <footer id="ft">
     <div class="ft_container">

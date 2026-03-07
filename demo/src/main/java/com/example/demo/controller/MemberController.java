@@ -3,6 +3,7 @@ package com.example.demo.controller;
 import com.example.demo.dto.LoginDto;
 import com.example.demo.dto.MemberFormDto;
 import com.example.demo.entity.Member;
+import com.example.demo.entity.Role;
 import com.example.demo.service.MemberService;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
@@ -27,6 +28,10 @@ public class MemberController {
     // --- 41개 서브페이지 통합 처리 (templates/layout/ 아래) ---
     @GetMapping("/{pageName}")
     public String dynamicSubPage(@PathVariable String pageName) {
+        // 커뮤니티 페이지는 BoardController로 리다이렉트
+        if ("sub_commu_1".equals(pageName)) return "redirect:/community/free";
+        if ("sub_commu_2".equals(pageName)) return "redirect:/community/qna";
+        if ("sub_commu_3".equals(pageName)) return "redirect:/community/report";
         if (pageName.startsWith("sub_")) {
             return "layout/" + pageName;
         }
@@ -53,6 +58,9 @@ public class MemberController {
         try {
             Member loginMember = memberService.login(dto);
             session.setAttribute("loginMember", loginMember);
+            if (loginMember.getRole() == Role.ADMIN) {
+                return "redirect:/admin";
+            }
             return "redirect:/index";
         } catch (IllegalArgumentException e) {
             model.addAttribute("errorMsg", e.getMessage());

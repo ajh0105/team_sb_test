@@ -65,8 +65,16 @@
         </nav>
 
         <div class="tnb">
-            <a th:href="@{/login}">로그인</a>
-            <a th:href="@{/signup}">회원가입</a>
+            <th:block th:if="${session.loginMember == null}">
+                <a th:href="@{/login}">로그인</a>
+                <a th:href="@{/signup}">회원가입</a>
+            </th:block>
+            <th:block th:if="${session.loginMember != null}">
+                <span th:if="${session.loginMember.role.name() == 'ADMIN'}" style="color:#c00; font-weight:bold;">관리자</span>
+                <span th:text="${'반갑습니다 ' + session.loginMember.name + ' 회원님'}"></span>
+                <a th:href="@{/admin}" th:if="${session.loginMember.role.name() == 'ADMIN'}">관리자 페이지</a>
+                <a th:href="@{/logout}">로그아웃</a>
+            </th:block>
         </div>
     </div>
 </header>
