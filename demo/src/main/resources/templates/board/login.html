@@ -75,10 +75,13 @@
         <div class="login-image">
             <img th:src="@{/images/login.jpg}" alt="로그인 이미지">
         </div>
-        <form class="login-form" th:action="@{/login}" method="post">
+        <form class="login-form" th:action="@{/login}" th:object="${loginDto}" method="post">
             <h2>로그인</h2>
-            <input type="text" name="username" placeholder="아이디" required>
-            <input type="password" name="password" placeholder="비밀번호" required>
+            <div th:if="${errorMsg}" class="error-msg" style="color:red; margin-bottom:10px;" th:text="${errorMsg}"></div>
+            <input type="email" th:field="*{email}" placeholder="이메일" required>
+            <span th:if="${#fields.hasErrors('email')}" th:errors="*{email}" style="color:red; font-size:12px;"></span>
+            <input type="password" th:field="*{password}" placeholder="비밀번호" required>
+            <span th:if="${#fields.hasErrors('password')}" th:errors="*{password}" style="color:red; font-size:12px;"></span>
             <button type="submit">로그인</button>
             <p>계정이 없으신가요? <a th:href="@{/signup}">회원가입</a></p>
         </form>

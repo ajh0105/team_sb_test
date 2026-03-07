@@ -15,8 +15,10 @@ public class WebConfig implements WebMvcConfigurer {
                 .addPathPatterns("/**") // 모든 경로를 일단 감시하되
                 .excludePathPatterns(
                         "/", "/index", "/login", "/signup", "/logout",
+                        "/check-email",     // 이메일 중복 체크 Ajax
                         "/sub_*",           // MemberController에서 처리하는 서브페이지들 제외
                         "/css/**", "/js/**", "/images/**", "/icon/**",
+                        "/fonts/**",        // 폰트 정적 리소스
                         "/error", "/favicon.ico"
                 );
     }

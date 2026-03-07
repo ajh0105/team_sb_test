@@ -76,26 +76,33 @@
             <p>부산의 역사를 함께 기록할 회원을 모집합니다.</p>
         </div>
 
-        <form th:action="@{/signup}" method="post">
+        <form th:action="@{/signup}" th:object="${memberFormDto}" method="post">
+            <!-- 서버 오류 메시지 -->
+            <div th:if="${errorMsg}" class="error-msg" style="color:red; margin-bottom:10px;" th:text="${errorMsg}"></div>
+
             <div class="form_section">
-                <label for="email">이메일 계정</label>
-                <div class="input_group">
-                    <input type="email" id="email" name="email"
-                           placeholder="example@busan.com"
-                           pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
-                           required>
-
-                    <input type="checkbox" id="check_trigger" class="hidden_check">
-                    <label for="check_trigger" class="form_btn">중복확인</label>
-
-                    <span class="custom_alert">중복 확인이 완료되었습니다!</span>
-                </div>
+                <label for="name">이름</label>
+                <input type="text" id="name" th:field="*{name}" placeholder="이름을 입력하세요" required>
+                <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}" style="color:red; font-size:12px;"></span>
             </div>
 
             <div class="form_section">
-                <label for="pw">비밀번호</label>
-                <input type="password" id="pw" name="pw" placeholder="8~16자 입력" minlength="8" maxlength="16" required>
-                <p class="guide_txt">※ 영문, 숫자 포함 8자 이상 입력해 주세요.</p>
+                <label for="email">이메일 계정</label>
+                <div class="input_group">
+                    <input type="email" id="email" th:field="*{email}"
+                           placeholder="example@busan.com"
+                           required>
+                    <button type="button" class="form_btn" onclick="checkEmail()">중복확인</button>
+                    <span id="emailCheckMsg" class="custom_alert"></span>
+                </div>
+                <span th:if="${#fields.hasErrors('email')}" th:errors="*{email}" style="color:red; font-size:12px;"></span>
+            </div>
+
+            <div class="form_section">
+                <label for="password">비밀번호</label>
+                <input type="password" id="password" th:field="*{password}" placeholder="6자 이상 입력" minlength="6" required>
+                <p class="guide_txt">※ 영문, 숫자 포함 6자 이상 입력해 주세요.</p>
+                <span th:if="${#fields.hasErrors('password')}" th:errors="*{password}" style="color:red; font-size:12px;"></span>
             </div>
 
             <div class="form_section">
@@ -104,17 +111,13 @@
             </div>
 
             <div class="form_section">
-                <label for="phone">휴대폰 번호 인증</label>
+                <label for="phone">휴대폰 번호</label>
                 <div class="input_group">
-                    <input type="tel" id="phone" name="phone"
+                    <input type="tel" id="phone" th:field="*{phone}"
                            pattern="010-[0-9]{4}-[0-9]{4}"
                            placeholder="010-0000-0000" required>
-
-                    <input type="checkbox" id="phone_check_trigger" class="hidden_check">
-                    <label for="phone_check_trigger" class="form_btn">인증요청</label>
-
-                    <span class="custom_alert phone_alert">휴대폰 메시지를 보냈다! 1분 안에 입력해주세요.</span>
                 </div>
+                <span th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}" style="color:red; font-size:12px;"></span>
             </div>
 
             <div class="agree_box">
@@ -136,6 +139,32 @@
 
             <button type="submit" class="submit_btn">가입 완료</button>
         </form>
+
+        <script>
+            function checkEmail() {
+                const email = document.getElementById('email').value;
+                if (!email) { alert('이메일을 입력하세요.'); return; }
+                fetch('/check-email?email=' + encodeURIComponent(email))
+                    .then(res => res.json())
+                    .then(available => {
+                        const msg = document.getElementById('emailCheckMsg');
+                        if (available) {
+                            msg.textContent = '사용 가능한 이메일입니다.';
+                            msg.style.color = 'green';
+                        } else {
+                            msg.textContent = '이미 사용 중인 이메일입니다.';
+                            msg.style.color = 'red';
+                        }
+                        msg.style.display = 'inline';
+                    });
+            }
+
+            // 전체 동의 체크박스 연동
+            document.getElementById('all_agree').addEventListener('change', function() {
+                document.getElementById('agree1').checked = this.checked;
+                document.getElementById('agree2').checked = this.checked;
+            });
+        </script>
 
         <p class="login_link">이미 계정이 있으신가요? <a th:href="@{/login}">로그인</a></p>
     </div>
