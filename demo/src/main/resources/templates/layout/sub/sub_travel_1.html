@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>부산 여행 - BUSAN TRAVEL</title>
+    <link rel="stylesheet" th:href="@{/css/common/font.css}">
+    <link rel="stylesheet" th:href="@{/css/common/chapter.css}">
+    <link rel="stylesheet" th:href="@{/css/common/footer.css}">
+    <link rel="stylesheet" th:href="@{/css/common/sub_tr_1.css}">
+</head>
+<body class="ch01">
+<header th:replace="~{layout/header :: header}"></header>
+
+<section class="sub_visual">
+    <h2>부산 추천 여행 코스</h2>
+    <p>다양한 여행 코스를 즐겨보세요~!</p>
+</section>
+
+<div class="content_wrap">
+    <div class="main_container">
+        <aside class="lnb">
+            <h2 class="lnb_tit">부산 여행</h2>
+            <ul>
+                <li class="on"><a th:href="@{/sub_travel_1}">당일치기</a></li>
+                <li><a th:href="@{/sub_travel_1_2}">1박 2일</a></li>
+                <li><a th:href="@{/sub_travel_1_3}">2박 3일</a></li>
+                <li><a th:href="@{/sub_travel_1_4}">3박 4일</a></li>
+            </ul>
+        </aside>
+
+        <section class="travel_content">
+            <h3 class="travel_txt">
+                "겨울빛 따라 영도에서 광복로까지", 로컬 감성 물씬 당일 추천코스
+            </h3>
+            <p class="travel_txt">겨울을 맞아 부산 광복로에 ‘겨울빛 트리축제’가 열렸습니다! 더욱 화려해진 광복로와 함께, 영도에서 광복로까지 빛나는 부산여행 즐겨봐요~!</p>
+            <p class="travel_txt_2"> <span class="highlight">추천코스</span> 꼬쇼네 → 아델라베일리 부산 → 로칼 → 광복로 겨울빛 트리축제</p>
+
+            <div class="travel_top_img">
+                <img th:src="@{/images/travel_main_1.jpg}" alt="당일치기 대표 이미지">
+            </div>
+
+            <div class="travel_grid">
+                <div class="travel_card">
+                    <img th:src="@{/images/travel_img01.jpg}" alt="여행 이미지 1">
+                    <div class="overlay">
+                        <a href="#">꼬쇼네 홈페이지 바로가기</a>
+                    </div>
+                </div>
+                <p class="travel_txt_3"> <span class="highlight">"꼬쇼네"</span> 마스코트 강아지 ‘꼬쇼’와 함께 유럽풍의 예쁜 인테리어로 유명한 영도 오션뷰 카페입니다.</p>
+
+                <div class="travel_card">
+                    <img th:src="@{/images/travel_img02.jpg}" alt="여행 이미지 2">
+                    <div class="overlay">
+                        <a href="#">아델라베일리 부산 홈페이지 바로가기</a>
+                    </div>
+                </div>
+                <p class="travel_txt_3"> <span class="highlight">"아델라베일리 부산"</span> 24층 높이에서 펼쳐지는 탁 트인 전망! 영도대교 전경을 감상할 수 있는 레스토랑입니다.</p>
+
+                <div class="travel_card">
+                    <img th:src="@{/images/travel_img03.jpg}" alt="여행 이미지 3">
+                    <div class="overlay">
+                        <a href="#">로칼 홈페이지 바로가기</a>
+                    </div>
+                </div>
+                <p class="travel_txt_3"> <span class="highlight">"로칼"</span> 영도 복합문화공간 AREA6에 입점한 향수 공방으로 부산의 명소를 테마로 한 제품을 선보입니다.</p>
+
+                <div class="travel_card">
+                    <img th:src="@{/images/travel_img04.jpg}" alt="여행 이미지 4">
+                    <div class="overlay">
+                        <a href="#">광복로 트리축제 홈페이지 바로가기</a>
+                    </div>
+                </div>
+                <p class="travel_txt_3"> <span class="highlight">"광복로 겨울빛 트리축제"</span> 화려한 트리가 광복로를 수놓는 성대한 축제를 즐기러 남포동으로 갑니다.</p>
+            </div>
+        </section> </div> </div> <footer th:replace="~{layout/footer :: footer}"></footer>
+</body>
+</html>

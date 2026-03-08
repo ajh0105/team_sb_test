@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>부산 여행 - BUSAN TRAVEL</title>
+    <link rel="stylesheet" th:href="@{/css/common/font.css}">
+    <link rel="stylesheet" th:href="@{/css/common/chapter.css}">
+    <link rel="stylesheet" th:href="@{/css/common/footer.css}">
+    <link rel="stylesheet" th:href="@{/css/common/sub_tr_3.css}">
+</head>
+<body class="ch01">
+<header th:replace="~{layout/header :: header}"></header>
+
+<section class="sub_visual">
+    <h2>가이드북 & 지도</h2>
+    <p>부산 여행에 필요한 가이드북/지도 자료를 다운로드할 수 있습니다.</p>
+</section>
+
+<div class="content_wrap">
+    <div class="main_container">
+        <aside class="lnb">
+            <h2 class="lnb_tit">가이드북 & 지도</h2>
+            <ul>
+                <li class="on"><a th:href="@{/sub_travel_3}">한국어</a></li>
+                <li><a th:href="@{/sub_travel_3_2}">영어</a></li>
+                <li><a th:href="@{/sub_travel_3_3}">일본어</a></li>
+                <li><a th:href="@{/sub_travel_3_4}">중국어</a></li>
+            </ul>
+        </aside>
+
+        <section class="guide_basic" id="top">
+            <div class="guide_title">
+                <img th:src="@{/images/travel_main_3.png}" alt="가이드북 & 지도">
+            </div>
+
+            <div class="guide_grid">
+                <article class="guide_card">
+                    <div class="thumb">
+                        <img th:src="@{/images/thumb_01.jpg}" alt="부산관광지도">
+                    </div>
+                    <h3 class="guide_name">부산관광지도</h3>
+                    <a class="down_btn" th:href="@{/download/busan_map_1.pdf}" download>다운로드</a>
+                </article>
+
+                <article class="guide_card">
+                    <div class="thumb">
+                        <img th:src="@{/images/thumb_02.jpg}" alt="테마로 즐기는 부산여행">
+                    </div>
+                    <h3 class="guide_name">테마로 즐기는 부산여행</h3>
+                    <a class="down_btn" th:href="@{/download/busan_map_2.pdf}" download>다운로드</a>
+                </article>
+
+                <article class="guide_card">
+                    <div class="thumb">
+                        <img th:src="@{/images/thumb_03.jpg}" alt="큰글씨 부산관광지도">
+                    </div>
+                    <h3 class="guide_name">큰글씨로 보는 부산관광지도</h3>
+                    <a class="down_btn" th:href="@{/download/busan_map_3.pdf}" download>다운로드</a>
+                </article>
+
+                <article class="guide_card">
+                    <div class="thumb">
+                        <img th:src="@{/images/thumb_04.jpg}" alt="부산여행 15곳">
+                    </div>
+                    <h3 class="guide_name">꼭 가봐야 할 부산여행 15곳</h3>
+                    <a class="down_btn" th:href="@{/download/busan_map_4.pdf}" download>다운로드</a>
+                </article>
+
+                <article class="guide_card">
+                    <div class="thumb">
+                        <img th:src="@{/images/thumb_05.jpg}" alt="부산 럭셔리 관광">
+                    </div>
+                    <h3 class="guide_name">부산 럭셔리 관광</h3>
+                    <a class="down_btn" th:href="@{/download/busan_map_5.pdf}" download>다운로드</a>
+                </article>
+
+                <article class="guide_card">
+                    <div class="thumb">
+                        <img th:src="@{/images/thumb_06.jpg}" alt="부산의 맛">
+                    </div>
+                    <h3 class="guide_name">2025 부산의 맛</h3>
+                    <a class="down_btn" th:href="@{/download/busan_map_6.pdf}" download>다운로드</a>
+                </article>
+            </div>
+        </section> </div> </div> <footer th:replace="~{layout/footer :: footer}"></footer>
+</body>
+</html>

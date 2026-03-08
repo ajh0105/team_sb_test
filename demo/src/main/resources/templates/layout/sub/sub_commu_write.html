@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>커뮤니티 - 글쓰기</title>
+    <link rel="stylesheet" th:href="@{/css/common/font.css}">
+    <link rel="stylesheet" th:href="@{/css/common/chapter.css}">
+    <link rel="stylesheet" th:href="@{/css/common/footer.css}">
+    <link rel="stylesheet" th:href="@{/css/common/sub_commu_write.css}">
+</head>
+<body class="ch01">
+<header th:replace="~{layout/header :: header}"></header>
+
+<section class="sub_visual">
+    <h2>커뮤니티</h2>
+    <p>자유게시판</p>
+</section>
+
+<div class="content_wrap">
+    <div class="main_container">
+        <aside class="lnb">
+            <h2 class="lnb_tit">커뮤니티</h2>
+            <ul>
+                <li class="on"><a th:href="@{/sub_commu_1}">자유게시판</a></li>
+                <li><a th:href="@{/sub_commu_2}">Q&A</a></li>
+                <li><a th:href="@{/sub_commu_3}">관광불편신고</a></li>
+            </ul>
+        </aside>
+
+        <section class="write_content">
+            <h3 class="write_title">글쓰기</h3>
+
+            <form th:action="@{/sub_commu_write}" method="post">
+                <div class="write_form">
+
+                    <div class="write_row">
+                        <div class="write_label">제목:</div>
+                        <div class="write_input">
+                            <input type="text" name="title" required placeholder="제목을 입력하세요." />
+                        </div>
+                    </div>
+
+                    <div class="write_row">
+                        <div class="write_label">카테고리:</div>
+                        <div class="write_input">
+                            <select name="category">
+                                <option value="FREE">자유게시판</option>
+                                <option value="QNA">Q&amp;A</option>
+                                <option value="REVIEW">관광불편신고</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="write_row">
+                        <div class="write_label">비밀번호:</div>
+                        <div class="write_input">
+                            <input type="password" name="password" required placeholder="비밀번호 4자리 이상" />
+                        </div>
+                    </div>
+
+                    <div class="write_row write_row_content">
+                        <div class="write_label">내용:</div>
+                        <div class="write_input">
+                            <textarea name="content" required placeholder="내용을 입력해 주세요."></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="write_actions">
+                    <a th:href="@{/sub_commu_1}" class="btn_gray">목록보기</a>
+                    <button type="submit" class="btn_gray" style="cursor: pointer; border: none;">저장하기</button>
+                </div>
+            </form>
+
+        </section>
+    </div>
+</div>
+
+<footer th:replace="~{layout/footer :: footer}"></footer>
+</body>
+</html>

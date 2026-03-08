@@ -25,7 +25,7 @@ public class MemberController {
         return "index";
     }
 
-    // --- 41개 서브페이지 통합 처리 (templates/layout/ 아래) ---
+    // --- 서브페이지 통합 처리 (templates/layout/sub/ 아래) ---
     @GetMapping("/{pageName}")
     public String dynamicSubPage(@PathVariable String pageName) {
         // 커뮤니티 페이지는 BoardController로 리다이렉트
@@ -33,7 +33,7 @@ public class MemberController {
         if ("sub_commu_2".equals(pageName)) return "redirect:/community/qna";
         if ("sub_commu_3".equals(pageName)) return "redirect:/community/report";
         if (pageName.startsWith("sub_")) {
-            return "layout/" + pageName;
+            return "layout/sub/" + pageName;
         }
         return "index";
     }

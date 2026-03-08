@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>부산 여행 - BUSAN TRAVEL</title>
+    <link rel="stylesheet" th:href="@{/css/common/font.css}">
+    <link rel="stylesheet" th:href="@{/css/common/chapter.css}">
+    <link rel="stylesheet" th:href="@{/css/common/footer.css}">
+    <link rel="stylesheet" th:href="@{/css/common/sub_tr_3.css}">
+</head>
+<body class="ch01">
+<header th:replace="~{layout/header :: header}"></header>
+
+<section class="sub_visual">
+    <h2>Guidebook & Map</h2>
+    <p>You can download guidebook/map materials needed for your Busan trip.</p>
+</section>
+
+<div class="content_wrap">
+    <div class="main_container">
+        <aside class="lnb">
+            <h2 class="lnb_tit">Guidebook & Map</h2>
+            <ul>
+                <li><a th:href="@{/sub_travel_3}">한국어</a></li>
+                <li class="on"><a th:href="@{/sub_travel_3_2}">영어</a></li>
+                <li><a th:href="@{/sub_travel_3_3}">일본어</a></li>
+                <li><a th:href="@{/sub_travel_3_4}">중국어</a></li>
+            </ul>
+        </aside>
+
+        <section class="guide_basic" id="top">
+            <div class="guide_title">
+                <img th:src="@{/images/travel_main_3.png}" alt="Guidebook & Map">
+            </div>
+
+            <div class="guide_grid">
+                <article class="guide_card">
+                    <div class="thumb">
+                        <img th:src="@{/images/thumb_11.jpg}" alt="BUSAN TOUR MAP">
+                    </div>
+                    <h3 class="guide_name">BUSAN TOUR MAP</h3>
+                    <a class="down_btn" th:href="@{/download/busan_map_7.pdf}" download>Download</a>
+                </article>
+
+                <article class="guide_card">
+                    <div class="thumb">
+                        <img th:src="@{/images/thumb_12.jpg}" alt="A Trip to Busan With Various Themes">
+                    </div>
+                    <h3 class="guide_name">A Trip to Busan With Various Themes</h3>
+                    <a class="down_btn" th:href="@{/download/busan_map_8.pdf}" download>Download</a>
+                </article>
+
+                <article class="guide_card">
+                    <div class="thumb">
+                        <img th:src="@{/images/thumb_13.jpg}" alt="Busan Tourist Map in Large Letters">
+                    </div>
+                    <h3 class="guide_name">Busan Tourist Map in Large Letters</h3>
+                    <a class="down_btn" th:href="@{/download/busan_map_9.pdf}" download>Download</a>
+                </article>
+
+                <article class="guide_card">
+                    <div class="thumb">
+                        <img th:src="@{/images/thumb_14.jpg}" alt="MUST-VISIT Hot places in Busan">
+                    </div>
+                    <h3 class="guide_name">MUST-VISIT Hot places in Busan</h3>
+                    <a class="down_btn" th:href="@{/download/busan_map_10.pdf}" download>Download</a>
+                </article>
+
+                <article class="guide_card">
+                    <div class="thumb">
+                        <img th:src="@{/images/thumb_05.jpg}" alt="Luxury Travel in BUSAN">
+                    </div>
+                    <h3 class="guide_name">Luxury Travel in BUSAN</h3>
+                    <a class="down_btn" th:href="@{/download/busan_map_11.pdf}" download>Download</a>
+                </article>
+
+                <article class="guide_card">
+                    <div class="thumb">
+                        <img th:src="@{/images/thumb_06.jpg}" alt="2025 Taste of Busan">
+                    </div>
+                    <h3 class="guide_name">2025 Taste of Busan</h3>
+                    <a class="down_btn" th:href="@{/download/busan_map_12.pdf}" download>Download</a>
+                </article>
+            </div>
+        </section> </div> </div> <footer th:replace="~{layout/footer :: footer}"></footer>
+</body>
+</html>

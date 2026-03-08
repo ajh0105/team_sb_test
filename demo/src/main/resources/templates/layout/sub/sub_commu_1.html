@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>커뮤니티 - 자유게시판</title>
+    <link rel="stylesheet" th:href="@{/css/common/font.css}">
+    <link rel="stylesheet" th:href="@{/css/common/chapter.css}">
+    <link rel="stylesheet" th:href="@{/css/common/footer.css}">
+    <link rel="stylesheet" th:href="@{/css/common/sub_commu_ch01.css}">
+</head>
+<body class="ch01">
+<header th:replace="~{layout/header :: header}"></header>
+
+<section class="sub_visual">
+    <h2>커뮤니티</h2>
+    <p>자유게시판</p>
+</section>
+
+<div class="content_wrap">
+    <div class="main_container">
+        <aside class="lnb">
+            <h2 class="lnb_tit">커뮤니티</h2>
+            <ul>
+                <li class="on"><a th:href="@{/sub_commu_1}">자유게시판</a></li>
+                <li><a th:href="@{/sub_commu_2}">Q&A</a></li>
+                <li><a th:href="@{/sub_commu_3}">관광불편신고</a></li>
+            </ul>
+        </aside>
+        <section class="board_content">
+            <h3 class="board_title">자유게시판</h3>
+            <table class="board_table">
+                <thead>
+                <tr>
+                    <th class="col-no">No.</th>
+                    <th class="col-title">글 제목</th>
+                    <th class="col-writer">작성자</th>
+                    <th class="col-date">작성일</th>
+                    <th class="col-view">조회수</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>10</td>
+                    <td class="txt-left"><a th:href="@{/board_view/10}">광안대교 야경 명당 추천해주세요!</a></td>
+                    <td>부산지킴이</td>
+                    <td>2026-03-07</td>
+                    <td>142</td>
+                </tr>
+                <tr>
+                    <td>9</td>
+                    <td class="txt-left"><a th:href="@{/board_view/9}">영도 흰여울마을 카페 정보 공유합니다.</a></td>
+                    <td>여행작가</td>
+                    <td>2026-03-06</td>
+                    <td>89</td>
+                </tr>
+                <tr>
+                    <td>8</td>
+                    <td class="txt-left"><a th:href="@{/board_view/8}">오늘 자갈치시장 사람 정말 많네요.</a></td>
+                    <td>해산물조아</td>
+                    <td>2026-03-05</td>
+                    <td>210</td>
+                </tr>
+                <tr>
+                    <td>7</td>
+                    <td class="txt-left"><a th:href="@{/board_view/7}">서면 전포카페거리 주말 나들이 후기</a></td>
+                    <td>커피홀릭</td>
+                    <td>2026-03-04</td>
+                    <td>67</td>
+                </tr>
+                <tr>
+                    <td>6</td>
+                    <td class="txt-left"><a th:href="@{/board_view/6}">부산역 근처 밀면 맛집 순위 TOP3</a></td>
+                    <td>미식가</td>
+                    <td>2026-03-03</td>
+                    <td>315</td>
+                </tr>
+                <tr>
+                    <td>5</td>
+                    <td class="txt-left"><a th:href="@{/board_view/5}">해운대 드론쇼 취소됐나요?</a></td>
+                    <td>궁금이</td>
+                    <td>2026-03-02</td>
+                    <td>54</td>
+                </tr>
+                <tr>
+                    <td>4</td>
+                    <td class="txt-left"><a th:href="@{/board_view/4}">동백섬 산책로 공사 현황</a></td>
+                    <td>산책인</td>
+                    <td>2026-03-01</td>
+                    <td>32</td>
+                </tr>
+                <tr>
+                    <td>3</td>
+                    <td class="txt-left"><a th:href="@{/board_view/3}">부산 시티투어 버스 야경 코스 후기</a></td>
+                    <td>나홀로여행</td>
+                    <td>2026-02-28</td>
+                    <td>198</td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td class="txt-left"><a th:href="@{/board_view/2}">감천문화마을 교복 체험 대여비 얼마인가요?</a></td>
+                    <td>학생여행자</td>
+                    <td>2026-02-27</td>
+                    <td>120</td>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td class="txt-left"><a th:href="@{/board_view/1}">부산 역사 탐방 서포터즈 모집 공고</a></td>
+                    <td>관리자</td>
+                    <td>2026-02-26</td>
+                    <td>450</td>
+                </tr>
+                </tbody>
+            </table>
+
+            <div class="board_paging">
+                <a th:href="@{/sub_commu_1}">|&lt;</a>
+                <a href="#">&lt;</a>
+                <a th:href="@{/sub_commu_1}" class="on">1</a>
+                <a th:href="@{/sub_commu_1_2}">2</a>
+                <a href="#">&gt;</a>
+                <a href="#">&gt;|</a>
+            </div>
+            <div class="board_write">
+                <a th:href="@{/sub_commu_write}" class="btn_write">글쓰기</a>
+            </div>
+        </section>
+    </div>
+</div>
+
+<footer th:replace="~{layout/footer :: footer}"></footer>
+</body>
+</html>

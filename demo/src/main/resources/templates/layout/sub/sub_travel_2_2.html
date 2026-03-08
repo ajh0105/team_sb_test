@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>부산 여행 - BUSAN TRAVEL</title>
+    <link rel="stylesheet" th:href="@{/css/common/font.css}">
+    <link rel="stylesheet" th:href="@{/css/common/chapter.css}">
+    <link rel="stylesheet" th:href="@{/css/common/footer.css}">
+    <link rel="stylesheet" th:href="@{/css/common/sub_tr_2.css}">
+</head>
+<body class="ch01">
+<header th:replace="~{layout/header :: header}"></header>
+
+<section class="sub_visual">
+    <h2>부산에서만 즐길 수 있는 체험을 즐겨보세요!</h2>
+    <p>다양한 체험 코스를 즐겨보세요~!</p>
+</section>
+
+<div class="content_wrap">
+    <div class="main_container">
+        <aside class="lnb">
+            <h2 class="lnb_tit">해양 & 테마 체험</h2>
+            <ul>
+                <li><a th:href="@{/sub_travel_2}">해양 & 테마</a></li>
+                <li class="on"><a th:href="@{/sub_travel_2_2}">이색 체험</a></li>
+                <li><a th:href="@{/sub_travel_2_3}">역사 & 문화</a></li>
+            </ul>
+        </aside>
+
+        <section class="travel_content">
+            <h3 class="travel_txt">부산 "e스포츠 경기장", 새로운 차원의 스포츠를 만나다!</h3>
+            <p class="travel_txt">부산 e스포츠경기장</p>
+
+            <div class="travel_top_img">
+                <div class="travel_card_1">
+                    <img th:src="@{/images/travel_main_2_3.jpg}" alt="e스포츠 경기장 대표 이미지">
+                    <div class="overlay">
+                        <a href="#">예약하러 가기</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="travel_grid">
+                <div class="travel_card">
+                    <img th:src="@{/images/travel_img29.jpg}" alt="경기장 내부 1">
+                </div>
+                <div class="travel_card">
+                    <img th:src="@{/images/travel_img30.jpg}" alt="경기장 내부 2">
+                </div>
+                <p class="travel_txt_3">부산이스포츠경기장(BRENA)은 서면에 위치한 e스포츠 경기장으로, 누구나 e스포츠를 직접 보고 체험할 수 있는 공간입니다.
+                    대형 e스포츠 대회부터 아마추어 리그까지 다양한 경기가 열리며, 프로 선수들의 훈련 및 연구 공간도 마련되어 있어 e스포츠를 좋아하는 누구나 방문하기 좋습니다.<br>
+                    330석 규모의 주경기장과 펍(PUB)형 관람 공간을 통해 색다른 관람을 경험할 수 있습니다.</p>
+
+                <div class="travel_card">
+                    <img th:src="@{/images/travel_img31.jpg}" alt="체험 프로그램 1">
+                </div>
+                <div class="travel_card">
+                    <img th:src="@{/images/travel_img32.jpg}" alt="체험 프로그램 2">
+                </div>
+                <p class="travel_txt_3">단순한 경기 관람을 넘어 내부 시설을 탐방하는 ‘BRENA 투어 프로그램’과 직접 다양한 게임을 플레이해볼 수 있는 'e스포츠 종목 체험 프로그램'을 운영하고 있습니다.
+                    색다른 스포츠 경험을 원한다면, 부산이스포츠 경기장에서 특별한 열기를 느껴보세요!</p>
+            </div>
+
+            <div class="info_box">
+                <h3 class="info_title">이용안내</h3>
+                <div class="info_card">
+                    <div class="info_grid">
+                        <ul class="info_list">
+                            <li><strong>주소</strong> 부산광역시 부산진구 중앙대로 672 삼정타워 15, 16층</li>
+                            <li><strong>홈페이지</strong> <a href="http://www.brena.or.kr" target="_blank">www.brena.or.kr</a></li>
+                        </ul>
+                        <div class="info_divider"></div>
+                        <ul class="info_list">
+                            <li><strong>전화번호</strong> 051-1004-1004</li>
+                            <li><strong>운영 시간</strong> 화요일~일요일 11:00~20:00</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section> </div> </div> <footer th:replace="~{layout/footer :: footer}"></footer>
+</body>
+</html>

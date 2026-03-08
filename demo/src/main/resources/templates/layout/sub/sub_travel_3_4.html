@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>부산 여행 - BUSAN TRAVEL</title>
+    <link rel="stylesheet" th:href="@{/css/common/font.css}">
+    <link rel="stylesheet" th:href="@{/css/common/chapter.css}">
+    <link rel="stylesheet" th:href="@{/css/common/footer.css}">
+    <link rel="stylesheet" th:href="@{/css/common/sub_tr_3.css}">
+</head>
+<body class="ch01">
+<header th:replace="~{layout/header :: header}"></header>
+
+<section class="sub_visual">
+    <h2>指南 & 地图</h2>
+    <p>您可以下载釜山旅行所需的指南/地图资料。</p>
+</section>
+
+<div class="content_wrap">
+    <div class="main_container">
+        <aside class="lnb">
+            <h2 class="lnb_tit">指南 & 地图</h2>
+            <ul>
+                <li><a th:href="@{/sub_travel_3}">한국어</a></li>
+                <li><a th:href="@{/sub_travel_3_2}">영어</a></li>
+                <li><a th:href="@{/sub_travel_3_3}">일본어</a></li>
+                <li class="on"><a th:href="@{/sub_travel_3_4}">중국어</a></li>
+            </ul>
+        </aside>
+
+        <section class="guide_basic" id="top">
+            <div class="guide_title">
+                <img th:src="@{/images/travel_main_3.png}" alt="指南 & 地图">
+            </div>
+
+            <div class="guide_grid">
+                <article class="guide_card">
+                    <div class="thumb">
+                        <img th:src="@{/images/thumb_31.jpg}" alt="釜山旅游地图">
+                    </div>
+                    <h3 class="guide_name">釜山旅游地图</h3>
+                    <a class="down_btn" th:href="@{/download/busan_map_19.pdf}" download>下载</a>
+                </article>
+
+                <article class="guide_card">
+                    <div class="thumb">
+                        <img th:src="@{/images/thumb_32.jpg}" alt="享受不同主题的 釜山旅行">
+                    </div>
+                    <h3 class="guide_name">享受不同主题的 釜山旅行</h3>
+                    <a class="down_btn" th:href="@{/download/busan_map_20.pdf}" download>下载</a>
+                </article>
+
+                <article class="guide_card">
+                    <div class="thumb">
+                        <img th:src="@{/images/thumb_33.jpg}" alt="乘坐都市铁路 开启 釜山之旅">
+                    </div>
+                    <h3 class="guide_name">乘坐都市铁路 开启 釜山之旅</h3>
+                    <a class="down_btn" th:href="@{/download/busan_map_21.pdf}" download>下载</a>
+                </article>
+
+                <article class="guide_card">
+                    <div class="thumb">
+                        <img th:src="@{/images/thumb_34.jpg}" alt="15处釜山 必游景点">
+                    </div>
+                    <h3 class="guide_name">15处釜山 必游景点</h3>
+                    <a class="down_btn" th:href="@{/download/busan_map_22.pdf}" download>下载</a>
+                </article>
+
+                <article class="guide_card">
+                    <div class="thumb">
+                        <img th:src="@{/images/thumb_35.jpg}" alt="釜山广域市指定中国游客专业餐厅">
+                    </div>
+                    <h3 class="guide_name">釜山指定中国游客专业餐厅</h3>
+                    <a class="down_btn" th:href="@{/download/busan_map_23.pdf}" download>下载</a>
+                </article>
+
+                <article class="guide_card">
+                    <div class="thumb">
+                        <img th:src="@{/images/thumb_36.jpg}" alt="2025 釜山味道">
+                    </div>
+                    <h3 class="guide_name">2025 釜山味道</h3>
+                    <a class="down_btn" th:href="@{/download/busan_map_24.pdf}" download>下载</a>
+                </article>
+            </div>
+        </section> </div> </div> <footer th:replace="~{layout/footer :: footer}"></footer>
+</body>
+</html>

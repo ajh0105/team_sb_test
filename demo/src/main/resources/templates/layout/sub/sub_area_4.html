@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Title명을 입력하세요.</title>
+    <link rel="stylesheet" href="css/font.css">
+    <link rel="stylesheet" href="css/chapter.css">
+    <link rel="stylesheet" href="css/footer.css">
+</head>
+<body class="ch01"> 
+    <header th:replace="~{layout/header :: header}"></header>
+
+    <section class="sub_visual">
+        <h2>부산시 행정구역</h2>
+        <p>- 시·군·구 -</p>
+    </section>
+    <div class="contain_wrap">
+
+    </div>
+    
+    <div class="content_wrap">
+        <div class="main_container">
+            <aside class="lnb">
+                <h2 class="lnb_tit">부산 지역</h2>
+                <ul>
+                    <li><a href="sub_area_1.html">행정경계</a></li>
+                    <li><a href="sub_area_2.html">부산 상징</a></li>
+                    <li class="on"><a href="sub_area_3.html">도시기본계획</a></li>
+                    <li><a href="#">컨텐츠명</a></li>
+                </ul>
+            </aside>
+            <!--이 영역 안에 서브페이지 컨텐츠 코드 넣으세요-->
+            
+        </div>
+        <footer th:replace="~{layout/footer :: footer}"></footer>
+</body>
+</html>

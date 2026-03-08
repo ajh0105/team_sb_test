@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>부산 여행 - BUSAN TRAVEL</title>
+    <link rel="stylesheet" th:href="@{/css/common/font.css}">
+    <link rel="stylesheet" th:href="@{/css/common/chapter.css}">
+    <link rel="stylesheet" th:href="@{/css/common/footer.css}">
+    <link rel="stylesheet" th:href="@{/css/common/sub_tr_1.css}">
+</head>
+<body class="ch01">
+<header th:replace="~{layout/header :: header}"></header>
+
+<section class="sub_visual">
+    <h2>부산 추천 여행 코스</h2>
+    <p>다양한 여행 코스를 즐겨보세요~!</p>
+</section>
+
+<div class="content_wrap">
+    <div class="main_container">
+        <aside class="lnb">
+            <h2 class="lnb_tit">부산 여행</h2>
+            <ul>
+                <li><a th:href="@{/sub_travel_1}">당일치기</a></li>
+                <li><a th:href="@{/sub_travel_1_2}">1박 2일</a></li>
+                <li><a th:href="@{/sub_travel_1_3}">2박 3일</a></li>
+                <li class="on"><a th:href="@{/sub_travel_1_4}">3박 4일 이상</a></li>
+            </ul>
+        </aside>
+
+        <section class="travel_content">
+            <h3 class="travel_txt">"부산에서 1주일 살기"</h3>
+            <p class="travel_txt_2">
+                <span class="highlight">
+                    <img th:src="@{/images/travel_loding.jpg}" alt="로딩중">
+                </span>
+            </p>
+
+            <div class="travel_top_img">
+                <img th:src="@{/images/travel_main_1_4.jpg}" alt="3박 4일 이상 대표 이미지">
+            </div>
+
+            <div class="travel_info_ready" style="padding: 50px 0; text-align: center; color: #666;">
+                <p>상세 여행 코스 업데이트 준비 중입니다.</p>
+            </div>
+        </section> </div> </div> <footer th:replace="~{layout/footer :: footer}"></footer>
+</body>
+</html>
