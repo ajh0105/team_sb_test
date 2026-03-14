@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Chapter 8 - Thymeleaf | 학습 가이드</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+<div class="layout">
+  <nav class="sidebar" id="sidebar">
+    <div class="sidebar-logo"><div class="logo-icon">🌱</div><h1>Spring Boot<br>학습 가이드</h1><p>초급자를 위한 단계별 완전정복</p></div>
+    <div class="sidebar-nav">
+      <div class="nav-section-title">시작하기</div>
+      <a href="index.html">🏠 홈 (학습 목차)</a><a href="quiz.html">🎯 챕터별 퀴즈</a>
+      <div class="nav-section-title">챕터별 학습</div>
+      <a href="ch1.html"><span class="ch-num">01</span> Spring Boot 기초</a>
+      <a href="ch2.html"><span class="ch-num">02</span> Entity / 도메인</a>
+      <a href="ch3.html"><span class="ch-num">03</span> Repository</a>
+      <a href="ch4.html"><span class="ch-num">04</span> Service</a>
+      <a href="ch5.html"><span class="ch-num">05</span> Controller</a>
+      <a href="ch6.html"><span class="ch-num">06</span> DTO 패턴</a>
+      <a href="ch7.html"><span class="ch-num">07</span> 설정 & 보안</a>
+      <a href="ch8.html" class="active"><span class="ch-num">08</span> Thymeleaf</a>
+      <a href="ch9.html"><span class="ch-num">09</span> Lombok & 유틸리티</a>
+      <a href="ch10.html"><span class="ch-num">10</span> 종합 정리</a>
+    </div>
+    <div class="sidebar-footer">Team SB Study © 2025</div>
+  </nav>
+  <div class="sidebar-overlay" id="overlay"></div>
+
+  <main class="main-content">
+    <div class="topbar">
+      <div class="topbar-left">
+        <button class="hamburger" id="hamburger"><svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button>
+        <span class="topbar-breadcrumb"><a href="index.html">홈</a> › <strong>Chapter 8. Thymeleaf</strong></span>
+      </div>
+      <a href="quiz.html?ch=8" class="nav-btn primary" style="padding:8px 16px;font-size:13px;">🎯 퀴즈 풀기</a>
+    </div>
+
+    <div class="page-content">
+      <div class="chapter-hero">
+        <div class="badge">📖 Chapter 08</div>
+        <h1>🖥️ Thymeleaf 템플릿 엔진</h1>
+        <p>Spring Boot의 기본 HTML 템플릿 엔진, Thymeleaf의 주요 속성을 실제 코드로 배웁니다. th:text, th:href, th:if, th:each 완전 정복!</p>
+        <div class="hero-meta">
+          <span>⏱️ 예상 학습 시간: 45분</span>
+          <span>📝 핵심 속성: 10개+</span>
+          <span>🎯 퀴즈: 50문제</span>
+        </div>
+      </div>
+
+      <!-- 1. Thymeleaf란? -->
+      <div class="section">
+        <h2 class="section-title"><span class="icon">❓</span> 1. Thymeleaf란?</h2>
+        <div class="card">
+          <p>Thymeleaf는 Spring Boot의 기본 HTML 템플릿 엔진입니다. Java에서 처리한 데이터를 HTML에 동적으로 표시할 수 있습니다.</p>
+        </div>
+        <div class="callout callout-info">
+          <span class="callout-icon">📁</span>
+          <div class="callout-content">
+            <h4>파일 위치</h4>
+            <p>모든 Thymeleaf HTML 파일은 <code>src/main/resources/templates/</code> 폴더에 위치합니다.<br>
+            Controller에서 <code>return "tour/list"</code>를 반환하면 <code>templates/tour/list.html</code> 파일을 렌더링합니다.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2. 기본 문법 -->
+      <div class="section">
+        <h2 class="section-title"><span class="icon">📝</span> 2. 핵심 속성 (th:*)</h2>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>속성</th><th>역할</th><th>예시</th></tr></thead>
+            <tbody>
+              <tr><td><code>th:text</code></td><td>텍스트 표시</td><td><code>&lt;h1 th:text="${tour.name}"&gt;&lt;/h1&gt;</code></td></tr>
+              <tr><td><code>th:href</code></td><td>링크 URL 동적 생성</td><td><code>&lt;a th:href="@{/tour/detail/{id}(id=${tour.id})}"&gt;</code></td></tr>
+              <tr><td><code>th:src</code></td><td>이미지 경로 동적 설정</td><td><code>&lt;img th:src="@{/images/{img}(img=${tour.thumb})}"&gt;</code></td></tr>
+              <tr><td><code>th:action</code></td><td>폼 전송 URL 설정</td><td><code>&lt;form th:action="@{/tour/new}" method="post"&gt;</code></td></tr>
+              <tr><td><code>th:object</code></td><td>폼 바인딩 객체 지정</td><td><code>&lt;form th:object="${tourFormDto}"&gt;</code></td></tr>
+              <tr><td><code>th:field</code></td><td>폼 필드 바인딩</td><td><code>&lt;input th:field="*{name}"&gt;</code></td></tr>
+              <tr><td><code>th:if</code></td><td>조건부 표시</td><td><code>&lt;div th:if="${loginMember != null}"&gt;</code></td></tr>
+              <tr><td><code>th:unless</code></td><td>조건 반대 (if not)</td><td><code>&lt;div th:unless="${loginMember != null}"&gt;</code></td></tr>
+              <tr><td><code>th:each</code></td><td>반복</td><td><code>&lt;tr th:each="tour : ${list}"&gt;</code></td></tr>
+              <tr><td><code>th:switch</code></td><td>switch 조건</td><td><code>&lt;div th:switch="${user.role}"&gt;</code></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- 3. th:text, th:href -->
+      <div class="section">
+        <h2 class="section-title"><span class="icon">🔤</span> 3. th:text & th:href</h2>
+        <div class="card">
+          <div class="code-wrapper">
+            <div class="code-title"><span class="dot dot-red"></span><span class="dot dot-yellow"></span><span class="dot dot-green"></span>텍스트 & 링크 예시</div>
+            <pre><code>&lt;!-- th:text: 텍스트 출력 --&gt;
+&lt;h2 th:text="${tour.name}"&gt;기본값(Thymeleaf 처리 전)&lt;/h2&gt;
+&lt;!-- 결과: &lt;h2&gt;청도 와인 터널&lt;/h2&gt; --&gt;
+
+&lt;!-- 문자열 합치기 --&gt;
+&lt;p th:text="|평점: ${tour.avgRating}점|"&gt;&lt;/p&gt;
+&lt;!-- 결과: &lt;p&gt;평점: 4.5점&lt;/p&gt; --&gt;
+
+&lt;!-- th:href: URL 생성 --&gt;
+&lt;!-- @{경로(파라미터=값)} 형식 --&gt;
+&lt;a th:href="@{/tour/detail/{id}(id=${tour.id})}"&gt;상세보기&lt;/a&gt;
+&lt;!-- 결과: &lt;a href="/tour/detail/3"&gt;상세보기&lt;/a&gt; --&gt;
+
+&lt;!-- 이미지 --&gt;
+&lt;img th:src="@{/images/{img}(img=${tour.thumb})}" alt="썸네일" /&gt;</code></pre>
+          </div>
+        </div>
+      </div>
+
+      <!-- 4. th:each (반복) -->
+      <div class="section">
+        <h2 class="section-title"><span class="icon">🔁</span> 4. th:each — 반복문</h2>
+        <div class="card">
+          <div class="code-wrapper">
+            <div class="code-title"><span class="dot dot-red"></span><span class="dot dot-yellow"></span><span class="dot dot-green"></span>반복문 예시 (목록 출력)</div>
+            <pre><code>&lt;!-- th:each="변수 : ${컬렉션}" --&gt;
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;&lt;th&gt;이름&lt;/th&gt;&lt;th&gt;카테고리&lt;/th&gt;&lt;th&gt;평점&lt;/th&gt;&lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr th:each="tour : ${list}"&gt;   &lt;!-- list의 각 항목을 tour 변수에 --&gt;
+      &lt;td th:text="${tour.name}"&gt;&lt;/td&gt;
+      &lt;td th:text="${tour.category}"&gt;&lt;/td&gt;
+      &lt;td th:text="${tour.avgRating}"&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;!-- 반복 상태 변수 활용 --&gt;
+&lt;tr th:each="tour, stat : ${list}"&gt;
+  &lt;td th:text="${stat.index}"&gt;&lt;/td&gt;   &lt;!-- 0, 1, 2... --&gt;
+  &lt;td th:text="${stat.count}"&gt;&lt;/td&gt;   &lt;!-- 1, 2, 3... --&gt;
+  &lt;td th:text="${stat.last}"&gt;&lt;/td&gt;    &lt;!-- 마지막이면 true --&gt;
+&lt;/tr&gt;</code></pre>
+          </div>
+        </div>
+      </div>
+
+      <!-- 5. th:if/unless -->
+      <div class="section">
+        <h2 class="section-title"><span class="icon">❓</span> 5. th:if / th:unless — 조건문</h2>
+        <div class="card">
+          <div class="code-wrapper">
+            <div class="code-title"><span class="dot dot-red"></span><span class="dot dot-yellow"></span><span class="dot dot-green"></span>조건문 예시</div>
+            <pre><code>&lt;!-- 로그인 상태에 따라 다른 UI 표시 --&gt;
+&lt;div th:if="${session.loginMember != null}"&gt;
+  &lt;span th:text="${session.loginMember.name}"&gt;&lt;/span&gt;님, 환영합니다!
+  &lt;a href="/member/logout"&gt;로그아웃&lt;/a&gt;
+&lt;/div&gt;
+
+&lt;div th:unless="${session.loginMember != null}"&gt;
+  &lt;a href="/member/login"&gt;로그인&lt;/a&gt;
+  &lt;a href="/member/new"&gt;회원가입&lt;/a&gt;
+&lt;/div&gt;
+
+&lt;!-- 관리자만 보이는 버튼 --&gt;
+&lt;a th:if="${session.loginMember?.role?.name() == 'ADMIN'}"
+   th:href="@{/tour/new}"&gt;관광지 등록&lt;/a&gt;
+
+&lt;!-- null 안전 접근: ?. 사용 --&gt;
+&lt;p th:text="${user?.name ?: '비회원'}"&gt;&lt;/p&gt;</code></pre>
+          </div>
+        </div>
+      </div>
+
+      <!-- 6. Form 처리 -->
+      <div class="section">
+        <h2 class="section-title"><span class="icon">📋</span> 6. 폼(Form) 처리</h2>
+        <div class="card">
+          <div class="code-wrapper">
+            <div class="code-title"><span class="dot dot-red"></span><span class="dot dot-yellow"></span><span class="dot dot-green"></span>Form 예시</div>
+            <pre><code>&lt;!-- th:object로 폼 객체 지정 --&gt;
+&lt;form th:action="@{/member/new}" method="post"
+      th:object="${memberFormDto}"&gt;
+
+  &lt;!-- th:field로 필드 자동 바인딩 --&gt;
+  &lt;!-- name, id, value 속성이 자동 설정됨 --&gt;
+  &lt;input type="text" th:field="*{username}"
+         placeholder="아이디 입력" /&gt;
+
+  &lt;input type="password" th:field="*{password}" /&gt;
+
+  &lt;!-- 검증 오류 메시지 표시 --&gt;
+  &lt;p th:if="${#fields.hasErrors('username')}"
+     th:errors="*{username}"
+     style="color:red"&gt;
+  &lt;/p&gt;
+
+  &lt;!-- select box --&gt;
+  &lt;select th:field="*{category}"&gt;
+    &lt;option th:each="cat : ${categories}"
+            th:value="${cat}"
+            th:text="${cat}"&gt;
+    &lt;/option&gt;
+  &lt;/select&gt;
+
+  &lt;button type="submit"&gt;등록&lt;/button&gt;
+&lt;/form&gt;</code></pre>
+          </div>
+        </div>
+        <div class="callout callout-tip">
+          <span class="callout-icon">💡</span>
+          <div class="callout-content">
+            <h4>th:field vs th:value 차이</h4>
+            <p><code>th:field="*{name}"</code>: name, id, value 속성이 <strong>모두 자동</strong> 설정됨. 검증 오류도 처리됨<br>
+            <code>th:value="${dto.name}"</code>: value 속성만 설정됨<br>
+            폼 처리 시에는 <code>th:field</code>를 사용하는 것이 올바른 방법입니다!</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 7. 세션/CSRF -->
+      <div class="section">
+        <h2 class="section-title"><span class="icon">🔐</span> 7. 세션 접근 & CSRF</h2>
+        <div class="card">
+          <div class="code-wrapper">
+            <div class="code-title"><span class="dot dot-red"></span><span class="dot dot-yellow"></span><span class="dot dot-green"></span>세션 및 CSRF 처리</div>
+            <pre><code>&lt;!-- 세션 변수 접근 --&gt;
+&lt;span th:text="${session.loginMember.name}"&gt;&lt;/span&gt;
+
+&lt;!-- 모델 변수 접근 --&gt;
+&lt;p th:text="${errorMessage}"&gt;&lt;/p&gt;
+
+&lt;!-- 조건부 CSS 클래스 추가 --&gt;
+&lt;li th:class="${tour.category == 'FOOD'} ? 'active' : ''"&gt;
+
+&lt;!-- URL 파라미터 여러 개 --&gt;
+&lt;a th:href="@{/review/edit/{id}(id=${review.id}, tourId=${tour.id})}"&gt;
+  수정
+&lt;/a&gt;
+&lt;!-- 결과: /review/edit/5?tourId=3 --&gt;</code></pre>
+          </div>
+        </div>
+      </div>
+
+      <!-- 8. 요약 -->
+      <div class="section">
+        <h2 class="section-title"><span class="icon">✅</span> 8. 챕터 핵심 요약</h2>
+        <div class="card">
+          <ul style="padding-left:20px;line-height:2;font-size:15px;">
+            <li>Thymeleaf HTML은 <code>templates/</code> 폴더에 위치</li>
+            <li><code>th:text="${변수}"</code>: 텍스트 출력</li>
+            <li><code>th:href="@{/path(param=${값})}"</code>: 동적 URL 생성</li>
+            <li><code>th:each="item : ${list}"</code>: 반복문</li>
+            <li><code>th:if="${조건}"</code>: 조건부 표시</li>
+            <li><code>th:object="${dto}"</code> + <code>th:field="*{field}"</code>: 폼 바인딩</li>
+            <li><code>th:errors="*{field}"</code>: 검증 오류 메시지 표시</li>
+            <li><code>${session.loginMember}</code>: 세션 변수 접근</li>
+          </ul>
+        </div>
+      </div>
+
+      <div style="text-align:center;padding:20px 0;">
+        <a href="quiz.html?ch=8" class="quiz-link-btn">🎯 Chapter 8 퀴즈 풀러 가기 (50문제)</a>
+      </div>
+      <div class="chapter-nav">
+        <a href="ch7.html" class="nav-btn">← Chapter 7: 설정 & 보안</a>
+        <a href="ch9.html" class="nav-btn primary">Chapter 9: Lombok & 유틸리티 →</a>
+      </div>
+    </div>
+  </main>
+</div>
+<script src="nav.js"></script>
+</body>
+</html>

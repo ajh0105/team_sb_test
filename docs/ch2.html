@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Chapter 2 - Entity / 도메인 | 학습 가이드</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+<div class="layout">
+  <nav class="sidebar" id="sidebar">
+    <div class="sidebar-logo"><div class="logo-icon">🌱</div><h1>Spring Boot<br>학습 가이드</h1><p>초급자를 위한 단계별 완전정복</p></div>
+    <div class="sidebar-nav">
+      <div class="nav-section-title">시작하기</div>
+      <a href="index.html">🏠 홈 (학습 목차)</a><a href="quiz.html">🎯 챕터별 퀴즈</a>
+      <div class="nav-section-title">챕터별 학습</div>
+      <a href="ch1.html"><span class="ch-num">01</span> Spring Boot 기초</a>
+      <a href="ch2.html" class="active"><span class="ch-num">02</span> Entity / 도메인</a>
+      <a href="ch3.html"><span class="ch-num">03</span> Repository</a>
+      <a href="ch4.html"><span class="ch-num">04</span> Service</a>
+      <a href="ch5.html"><span class="ch-num">05</span> Controller</a>
+      <a href="ch6.html"><span class="ch-num">06</span> DTO 패턴</a>
+      <a href="ch7.html"><span class="ch-num">07</span> 설정 & 보안</a>
+      <a href="ch8.html"><span class="ch-num">08</span> Thymeleaf</a>
+      <a href="ch9.html"><span class="ch-num">09</span> Lombok & 유틸리티</a>
+      <a href="ch10.html"><span class="ch-num">10</span> 종합 정리</a>
+    </div>
+    <div class="sidebar-footer">Team SB Study © 2025</div>
+  </nav>
+  <div class="sidebar-overlay" id="overlay"></div>
+
+  <main class="main-content">
+    <div class="topbar">
+      <div class="topbar-left">
+        <button class="hamburger" id="hamburger"><svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button>
+        <span class="topbar-breadcrumb"><a href="index.html">홈</a> › <strong>Chapter 2. Entity / 도메인</strong></span>
+      </div>
+      <a href="quiz.html?ch=2" class="nav-btn primary" style="padding:8px 16px;font-size:13px;">🎯 퀴즈 풀기</a>
+    </div>
+
+    <div class="page-content">
+      <div class="chapter-hero">
+        <div class="badge">📖 Chapter 02</div>
+        <h1>🗃️ Entity / 도메인</h1>
+        <p>데이터베이스 테이블을 Java 클래스로 표현하는 방법 (JPA Entity)을 배웁니다. 어노테이션 한 줄 한 줄의 의미를 이해합니다.</p>
+        <div class="hero-meta">
+          <span>⏱️ 예상 학습 시간: 50분</span>
+          <span>📝 핵심 어노테이션: 12개</span>
+          <span>🎯 퀴즈: 50문제</span>
+        </div>
+      </div>
+
+      <!-- 1. JPA란? -->
+      <div class="section">
+        <h2 class="section-title"><span class="icon">❓</span> 1. JPA란 무엇인가?</h2>
+        <div class="card">
+          <p><strong>JPA (Java Persistence API)</strong>는 Java에서 데이터베이스를 쉽게 다룰 수 있게 해주는 표준 기술입니다.</p>
+          <br>
+          <p>기존에는 SQL을 직접 작성해야 했지만, JPA를 사용하면 <strong>Java 클래스(Entity)와 DB 테이블을 연결</strong>하여 SQL 없이도 DB 조작이 가능합니다.</p>
+        </div>
+        <div class="flow-diagram">
+          <div class="flow-box">Java 클래스 (Entity)</div>
+          <div class="flow-arrow">↔</div>
+          <div class="flow-box">JPA (Hibernate)</div>
+          <div class="flow-arrow">↔</div>
+          <div class="flow-box">DB 테이블</div>
+        </div>
+        <div class="callout callout-info">
+          <span class="callout-icon">💡</span>
+          <div class="callout-content">
+            <h4>Hibernate = JPA 구현체</h4>
+            <p>JPA는 표준 인터페이스이고, <strong>Hibernate</strong>가 실제 구현체입니다. Spring Boot에서 <code>spring-boot-starter-data-jpa</code>를 추가하면 Hibernate가 자동으로 사용됩니다.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2. @Entity 기본 -->
+      <div class="section">
+        <h2 class="section-title"><span class="icon">🏷️</span> 2. @Entity 핵심 어노테이션</h2>
+        <div class="code-wrapper">
+          <div class="code-title"><span class="dot dot-red"></span><span class="dot dot-yellow"></span><span class="dot dot-green"></span>Tour.java — 관광지 엔티티 전체 코드</div>
+          <pre><code><span class="kw">package</span> com.example.tour.domain;
+
+<span class="kw">import</span> jakarta.persistence.*;
+<span class="kw">import</span> lombok.*;
+<span class="kw">import</span> java.util.ArrayList;
+<span class="kw">import</span> java.util.List;
+
+<span class="an">@Entity</span>                  <span class="cm">// ① 이 클래스가 DB 테이블과 연결됨을 선언</span>
+<span class="an">@Table</span>(name = <span class="st">"tour"</span>)   <span class="cm">// ② DB 테이블 이름 지정 (기본값: 클래스명 소문자)</span>
+<span class="an">@Getter</span>                  <span class="cm">// ③ Lombok: 모든 필드의 getter 자동 생성</span>
+<span class="an">@Setter</span>                  <span class="cm">// ④ Lombok: 모든 필드의 setter 자동 생성</span>
+<span class="an">@NoArgsConstructor</span>       <span class="cm">// ⑤ Lombok: 기본 생성자 자동 생성 (JPA 필수!)</span>
+<span class="an">@AllArgsConstructor</span>      <span class="cm">// ⑥ Lombok: 모든 필드를 인수로 받는 생성자</span>
+<span class="an">@Builder</span>                 <span class="cm">// ⑦ Lombok: 빌더 패턴 자동 생성</span>
+<span class="kw">public class</span> <span class="cl">Tour</span> <span class="kw">extends</span> <span class="cl">BaseEntity</span> {  <span class="cm">// ⑧ BaseEntity 상속 (createdAt 포함)</span>
+
+    <span class="an">@Id</span>                                    <span class="cm">// ⑨ 기본키(PK) 필드</span>
+    <span class="an">@GeneratedValue</span>(strategy = GenerationType.<span class="cl">IDENTITY</span>)  <span class="cm">// ⑩ AUTO INCREMENT</span>
+    <span class="kw">private</span> Long id;
+
+    <span class="an">@Enumerated</span>(EnumType.<span class="cl">STRING</span>)          <span class="cm">// ⑪ Enum을 문자열로 저장</span>
+    <span class="an">@Column</span>(nullable = <span class="kw">false</span>)
+    <span class="kw">private</span> <span class="cl">TourCategory</span> category;
+
+    <span class="an">@Column</span>(nullable = <span class="kw">false</span>, length = <span class="nm">100</span>)  <span class="cm">// ⑫ NOT NULL, 최대 100자</span>
+    <span class="kw">private</span> String name;
+
+    <span class="kw">private</span> String thumb;      <span class="cm">// 썸네일 이미지 파일명</span>
+    <span class="kw">private</span> String address;
+    <span class="kw">private</span> String tel;
+
+    <span class="an">@Column</span>(columnDefinition = <span class="st">"TEXT"</span>)   <span class="cm">// TEXT 타입으로 저장</span>
+    <span class="kw">private</span> String comment;
+
+    <span class="an">@Column</span>(name = <span class="st">"traffic_map"</span>)        <span class="cm">// DB 컬럼명 직접 지정</span>
+    <span class="kw">private</span> String trafficMap;
+
+    <span class="an">@Column</span>(name = <span class="st">"tour_map"</span>)
+    <span class="kw">private</span> String tourMap;
+
+    <span class="an">@Column</span>(name = <span class="st">"food_map"</span>)
+    <span class="kw">private</span> String foodMap;
+
+    <span class="an">@Column</span>(name = <span class="st">"bed_map"</span>)
+    <span class="kw">private</span> String bedMap;
+
+    <span class="cm">// Tour와 Review의 관계: 한 관광지에 여러 리뷰 (1:N)</span>
+    <span class="an">@OneToMany</span>(mappedBy = <span class="st">"tour"</span>,           <span class="cm">// Review.tour 필드가 관계의 주인</span>
+            cascade = CascadeType.<span class="cl">ALL</span>,       <span class="cm">// Tour 삭제 시 Review도 삭제</span>
+            orphanRemoval = <span class="kw">true</span>)            <span class="cm">// 관계 끊기면 고아 객체 삭제</span>
+    <span class="kw">private</span> List&lt;<span class="cl">Review</span>&gt; reviews = <span class="kw">new</span> ArrayList&lt;&gt;();
+}</code></pre>
+        </div>
+
+        <div class="annotation-grid">
+          <div class="annotation-card">
+            <code>@Entity</code>
+            <p>이 Java 클래스가 JPA 엔티티임을 선언합니다. JPA가 이 클래스를 DB 테이블과 연결하여 관리합니다.</p>
+          </div>
+          <div class="annotation-card">
+            <code>@Table(name = "tour")</code>
+            <p>매핑할 DB 테이블 이름을 지정합니다. 생략하면 클래스명을 소문자로 변환한 이름이 사용됩니다.</p>
+          </div>
+          <div class="annotation-card">
+            <code>@Id</code>
+            <p>해당 필드가 기본키(Primary Key)임을 나타냅니다. 모든 Entity는 반드시 @Id 필드가 있어야 합니다.</p>
+          </div>
+          <div class="annotation-card">
+            <code>@GeneratedValue</code>
+            <p>기본키 자동 생성 전략 설정. <code>IDENTITY</code>는 DB의 AUTO_INCREMENT를 사용합니다. (1, 2, 3...)</p>
+          </div>
+          <div class="annotation-card">
+            <code>@Column</code>
+            <p>필드와 DB 컬럼을 매핑. <code>nullable=false</code>, <code>length=100</code>, <code>name="컬럼명"</code> 등의 옵션 설정 가능</p>
+          </div>
+          <div class="annotation-card">
+            <code>@Enumerated(STRING)</code>
+            <p>Enum 타입을 DB에 저장할 방식 지정. STRING은 "FOOD", "CULTURE" 같은 문자열로 저장. ORDINAL은 0,1,2 숫자로 저장 (비권장)</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 3. BaseEntity -->
+      <div class="section">
+        <h2 class="section-title"><span class="icon">🏗️</span> 3. BaseEntity — 공통 필드 상속</h2>
+        <div class="card">
+          <p>여러 Entity에서 공통으로 사용하는 필드(예: 생성일시)를 한 곳에 모아서 상속으로 재사용합니다.</p>
+          <div class="code-wrapper">
+            <div class="code-title"><span class="dot dot-red"></span><span class="dot dot-yellow"></span><span class="dot dot-green"></span>BaseEntity.java</div>
+            <pre><code><span class="an">@Getter</span>
+<span class="an">@MappedSuperclass</span>   <span class="cm">// ← 이 클래스 자체는 테이블이 아닌 부모 클래스임을 선언</span>
+<span class="kw">public abstract class</span> <span class="cl">BaseEntity</span> {
+
+    <span class="an">@CreatedDate</span>
+    <span class="an">@Column</span>(name = <span class="st">"created_at"</span>, nullable = <span class="kw">false</span>)
+    <span class="kw">private</span> LocalDateTime createdAt;
+
+    <span class="an">@PrePersist</span>   <span class="cm">// ← DB에 저장되기 전에 자동 실행되는 메서드</span>
+    <span class="kw">public void</span> <span class="mt">prePersist</span>() {
+        <span class="kw">this</span>.createdAt = LocalDateTime.<span class="mt">now</span>();  <span class="cm">// 현재 시간 자동 저장</span>
+    }
+}</code></pre>
+          </div>
+        </div>
+
+        <div class="annotation-grid">
+          <div class="annotation-card">
+            <code>@MappedSuperclass</code>
+            <p>JPA에서 부모 클래스의 필드를 자식 클래스의 테이블에 포함시킵니다. BaseEntity 자체는 테이블이 만들어지지 않습니다.</p>
+          </div>
+          <div class="annotation-card">
+            <code>@PrePersist</code>
+            <p>JPA가 Entity를 DB에 저장하기 직전에 자동으로 호출됩니다. 생성 시간 자동 설정에 활용합니다.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 4. 관계 매핑 -->
+      <div class="section">
+        <h2 class="section-title"><span class="icon">🔗</span> 4. 관계 매핑 (Relationship Mapping)</h2>
+
+        <div class="card">
+          <div class="card-title">① @OneToMany — 1:N 관계 (Tour ↔ Review)</div>
+          <p>하나의 Tour(관광지)에 여러 개의 Review(리뷰)가 달릴 수 있습니다.</p>
+          <div class="code-wrapper">
+            <div class="code-title"><span class="dot dot-red"></span><span class="dot dot-yellow"></span><span class="dot dot-green"></span>Tour.java — 1:N 관계</div>
+            <pre><code><span class="cm">// Tour 클래스 (1 쪽)</span>
+<span class="an">@OneToMany</span>(
+    mappedBy = <span class="st">"tour"</span>,        <span class="cm">// Review 클래스의 'tour' 필드가 FK를 관리</span>
+    cascade = CascadeType.<span class="cl">ALL</span>, <span class="cm">// Tour 삭제 시 연관된 Review도 함께 삭제</span>
+    orphanRemoval = <span class="kw">true</span>       <span class="cm">// reviews 목록에서 제거되면 Review DB도 삭제</span>
+)
+<span class="kw">private</span> List&lt;<span class="cl">Review</span>&gt; reviews = <span class="kw">new</span> ArrayList&lt;&gt;();</code></pre>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">② @ManyToOne — N:1 관계 (Review ↔ Tour)</div>
+          <div class="code-wrapper">
+            <div class="code-title"><span class="dot dot-red"></span><span class="dot dot-yellow"></span><span class="dot dot-green"></span>Review.java — N:1 관계</div>
+            <pre><code><span class="cm">// Review 클래스 (N 쪽) — DB에 실제 외래키(FK) 컬럼이 생성됨</span>
+<span class="an">@ManyToOne</span>(fetch = FetchType.<span class="cl">LAZY</span>)   <span class="cm">// 지연 로딩: Review를 조회할 때 Tour는 아직 로딩 안 함</span>
+<span class="an">@JoinColumn</span>(name = <span class="st">"tour_id"</span>, nullable = <span class="kw">false</span>)  <span class="cm">// DB 컬럼명: tour_id</span>
+<span class="kw">private</span> <span class="cl">Tour</span> tour;
+
+<span class="an">@ManyToOne</span>(fetch = FetchType.<span class="cl">LAZY</span>)
+<span class="an">@JoinColumn</span>(name = <span class="st">"member_id"</span>, nullable = <span class="kw">false</span>)
+<span class="kw">private</span> <span class="cl">Member</span> member;</code></pre>
+          </div>
+        </div>
+
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>어노테이션</th><th>관계</th><th>예시</th><th>FK 위치</th></tr></thead>
+            <tbody>
+              <tr><td><code>@OneToMany</code></td><td>1:N</td><td>Tour(1) : Review(N)</td><td>N 쪽</td></tr>
+              <tr><td><code>@ManyToOne</code></td><td>N:1</td><td>Review(N) : Tour(1)</td><td>N 쪽 (이 쪽에 FK 컬럼 생성)</td></tr>
+              <tr><td><code>@OneToOne</code></td><td>1:1</td><td>User(1) : Profile(1)</td><td>한쪽에</td></tr>
+              <tr><td><code>@ManyToMany</code></td><td>N:M</td><td>Student(N) : Course(M)</td><td>중간 테이블</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="annotation-grid">
+          <div class="annotation-card">
+            <code>fetch = FetchType.LAZY</code>
+            <p><strong>지연 로딩</strong>: Review를 조회할 때 연관된 Tour는 즉시 DB에서 가져오지 않습니다. 실제로 <code>review.getTour()</code>를 호출할 때 쿼리가 실행됩니다. 성능 최적화에 중요!</p>
+          </div>
+          <div class="annotation-card">
+            <code>fetch = FetchType.EAGER</code>
+            <p><strong>즉시 로딩</strong>: 연관 객체를 항상 함께 로딩합니다. 불필요한 쿼리가 많이 실행될 수 있어 일반적으로 LAZY를 권장합니다.</p>
+          </div>
+          <div class="annotation-card">
+            <code>cascade = ALL</code>
+            <p>부모 엔티티의 상태 변화를 자식에게 전파. ALL = 저장,수정,삭제,병합 모두 전파. Tour를 삭제하면 그 Tour의 모든 Review도 자동 삭제됩니다.</p>
+          </div>
+          <div class="annotation-card">
+            <code>@JoinColumn</code>
+            <p>FK(외래 키) 컬럼 이름을 지정합니다. <code>name="tour_id"</code>이면 review 테이블에 <code>tour_id</code> 컬럼이 생성됩니다.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 5. Member, Review Entity -->
+      <div class="section">
+        <h2 class="section-title"><span class="icon">👤</span> 5. Member & Review 엔티티</h2>
+        <div class="card">
+          <div class="card-title">Member.java</div>
+          <div class="code-wrapper">
+            <div class="code-title"><span class="dot dot-red"></span><span class="dot dot-yellow"></span><span class="dot dot-green"></span>Member.java</div>
+            <pre><code><span class="an">@Entity</span>
+<span class="an">@Table</span>(name = <span class="st">"member"</span>)
+<span class="an">@Getter</span> <span class="an">@Setter</span>
+<span class="an">@NoArgsConstructor</span> <span class="an">@AllArgsConstructor</span> <span class="an">@Builder</span>
+<span class="kw">public class</span> <span class="cl">Member</span> <span class="kw">extends</span> <span class="cl">BaseEntity</span> {
+
+    <span class="an">@Id</span>
+    <span class="an">@GeneratedValue</span>(strategy = GenerationType.<span class="cl">IDENTITY</span>)
+    <span class="kw">private</span> Long id;
+
+    <span class="an">@Column</span>(nullable = <span class="kw">false</span>, unique = <span class="kw">true</span>, length = <span class="nm">50</span>)  <span class="cm">// unique=true: 중복 불가</span>
+    <span class="kw">private</span> String username;
+
+    <span class="an">@Column</span>(nullable = <span class="kw">false</span>)
+    <span class="kw">private</span> String password;
+
+    <span class="an">@Column</span>(nullable = <span class="kw">false</span>, length = <span class="nm">50</span>)
+    <span class="kw">private</span> String name;
+
+    <span class="an">@Column</span>(unique = <span class="kw">true</span>)  <span class="cm">// 이메일도 중복 불가</span>
+    <span class="kw">private</span> String email;
+
+    <span class="an">@Enumerated</span>(EnumType.<span class="cl">STRING</span>)
+    <span class="an">@Column</span>(nullable = <span class="kw">false</span>)
+    <span class="kw">private</span> <span class="cl">MemberRole</span> role = <span class="cl">MemberRole</span>.<span class="cl">USER</span>;  <span class="cm">// 기본값: USER</span>
+}</code></pre>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">Review.java</div>
+          <div class="code-wrapper">
+            <div class="code-title"><span class="dot dot-red"></span><span class="dot dot-yellow"></span><span class="dot dot-green"></span>Review.java</div>
+            <pre><code><span class="an">@Entity</span>
+<span class="an">@Table</span>(name = <span class="st">"review"</span>)
+<span class="an">@Getter</span> <span class="an">@Setter</span> <span class="an">@NoArgsConstructor</span> <span class="an">@AllArgsConstructor</span> <span class="an">@Builder</span>
+<span class="kw">public class</span> <span class="cl">Review</span> <span class="kw">extends</span> <span class="cl">BaseEntity</span> {
+
+    <span class="an">@Id</span>
+    <span class="an">@GeneratedValue</span>(strategy = GenerationType.<span class="cl">IDENTITY</span>)
+    <span class="kw">private</span> Long id;
+
+    <span class="an">@ManyToOne</span>(fetch = FetchType.<span class="cl">LAZY</span>)
+    <span class="an">@JoinColumn</span>(name = <span class="st">"tour_id"</span>, nullable = <span class="kw">false</span>)
+    <span class="kw">private</span> <span class="cl">Tour</span> tour;   <span class="cm">// 어떤 관광지의 리뷰인지</span>
+
+    <span class="an">@ManyToOne</span>(fetch = FetchType.<span class="cl">LAZY</span>)
+    <span class="an">@JoinColumn</span>(name = <span class="st">"member_id"</span>, nullable = <span class="kw">false</span>)
+    <span class="kw">private</span> <span class="cl">Member</span> member;  <span class="cm">// 누가 쓴 리뷰인지</span>
+
+    <span class="an">@Column</span>(nullable = <span class="kw">false</span>, columnDefinition = <span class="st">"TEXT"</span>)
+    <span class="kw">private</span> String comment;
+
+    <span class="an">@Column</span>(name = <span class="st">"star_rate"</span>, nullable = <span class="kw">false</span>)
+    <span class="kw">private</span> Double starRate;   <span class="cm">// 별점 1~5</span>
+}</code></pre>
+          </div>
+        </div>
+      </div>
+
+      <!-- 6. Enum -->
+      <div class="section">
+        <h2 class="section-title"><span class="icon">🏷️</span> 6. Enum 타입</h2>
+        <div class="card">
+          <p>Enum은 <strong>미리 정해진 상수 목록</strong>을 표현합니다. DB에 문자열로 저장되어 가독성이 좋습니다.</p>
+          <div class="code-wrapper">
+            <div class="code-title"><span class="dot dot-red"></span><span class="dot dot-yellow"></span><span class="dot dot-green"></span>TourCategory.java & MemberRole.java</div>
+            <pre><code><span class="cm">// 관광지 카테고리</span>
+<span class="kw">public enum</span> <span class="cl">TourCategory</span> {
+    <span class="cl">FOOD</span>,      <span class="cm">// 음식점</span>
+    <span class="cl">STAY</span>,      <span class="cm">// 숙박</span>
+    <span class="cl">CULTURE</span>,   <span class="cm">// 문화</span>
+    <span class="cl">NATURE</span>     <span class="cm">// 자연</span>
+}
+
+<span class="cm">// 회원 권한</span>
+<span class="kw">public enum</span> <span class="cl">MemberRole</span> {
+    <span class="cl">USER</span>,   <span class="cm">// 일반 사용자</span>
+    <span class="cl">ADMIN</span>   <span class="cm">// 관리자</span>
+}
+
+<span class="cm">// Demo 프로젝트 게시판 타입</span>
+<span class="kw">public enum</span> <span class="cl">BoardType</span> {
+    <span class="cl">FREE</span>,    <span class="cm">// 자유게시판</span>
+    <span class="cl">QNA</span>,     <span class="cm">// Q&amp;A 게시판</span>
+    <span class="cl">REPORT</span>   <span class="cm">// 관광불편신고</span>
+}</code></pre>
+          </div>
+        </div>
+        <div class="callout callout-tip">
+          <span class="callout-icon">💡</span>
+          <div class="callout-content">
+            <h4>왜 Enum을 쓸까?</h4>
+            <p>문자열 직접 사용 시: <code>"FOOD"</code>, <code>"food"</code>, <code>"음식점"</code> 등 오타 위험<br>
+            Enum 사용 시: <code>TourCategory.FOOD</code>로 타입 안전하게 사용 가능. 컴파일 시 오류 발견 가능!</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 7. 요약 -->
+      <div class="section">
+        <h2 class="section-title"><span class="icon">✅</span> 7. 챕터 핵심 요약</h2>
+        <div class="card">
+          <ul style="padding-left:20px;line-height:2;font-size:15px;">
+            <li>JPA = Java 클래스로 DB를 다루는 기술</li>
+            <li><code>@Entity</code> + <code>@Table</code>: 클래스를 DB 테이블과 연결</li>
+            <li><code>@Id</code> + <code>@GeneratedValue(IDENTITY)</code>: AUTO INCREMENT 기본키</li>
+            <li><code>@Column</code>: 컬럼 속성 설정 (nullable, length, name...)</li>
+            <li><code>@Enumerated(STRING)</code>: Enum을 문자열로 DB에 저장</li>
+            <li><code>@OneToMany</code> + <code>@ManyToOne</code>: 테이블 간 관계 표현</li>
+            <li><code>FetchType.LAZY</code>: 성능을 위한 지연 로딩 사용 권장</li>
+            <li><code>@MappedSuperclass</code>: 공통 필드(createdAt)를 부모 클래스로 분리</li>
+          </ul>
+        </div>
+      </div>
+
+      <div style="text-align:center;padding:20px 0;">
+        <a href="quiz.html?ch=2" class="quiz-link-btn">🎯 Chapter 2 퀴즈 풀러 가기 (50문제)</a>
+      </div>
+      <div class="chapter-nav">
+        <a href="ch1.html" class="nav-btn">← Chapter 1: Spring Boot 기초</a>
+        <a href="ch3.html" class="nav-btn primary">Chapter 3: Repository →</a>
+      </div>
+    </div>
+  </main>
+</div>
+<script src="nav.js"></script>
+</body>
+</html>
