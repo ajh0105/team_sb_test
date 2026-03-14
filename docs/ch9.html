@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Chapter 9 - Lombok & 유틸리티 | 학습 가이드</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+<div class="layout">
+  <nav class="sidebar" id="sidebar">
+    <div class="sidebar-logo"><div class="logo-icon">🌱</div><h1>Spring Boot<br>학습 가이드</h1><p>초급자를 위한 단계별 완전정복</p></div>
+    <div class="sidebar-nav">
+      <div class="nav-section-title">시작하기</div>
+      <a href="index.html">🏠 홈 (학습 목차)</a><a href="quiz.html">🎯 챕터별 퀴즈</a>
+      <div class="nav-section-title">챕터별 학습</div>
+      <a href="ch1.html"><span class="ch-num">01</span> Spring Boot 기초</a>
+      <a href="ch2.html"><span class="ch-num">02</span> Entity / 도메인</a>
+      <a href="ch3.html"><span class="ch-num">03</span> Repository</a>
+      <a href="ch4.html"><span class="ch-num">04</span> Service</a>
+      <a href="ch5.html"><span class="ch-num">05</span> Controller</a>
+      <a href="ch6.html"><span class="ch-num">06</span> DTO 패턴</a>
+      <a href="ch7.html"><span class="ch-num">07</span> 설정 & 보안</a>
+      <a href="ch8.html"><span class="ch-num">08</span> Thymeleaf</a>
+      <a href="ch9.html" class="active"><span class="ch-num">09</span> Lombok & 유틸리티</a>
+      <a href="ch10.html"><span class="ch-num">10</span> 종합 정리</a>
+    </div>
+    <div class="sidebar-footer">Team SB Study © 2025</div>
+  </nav>
+  <div class="sidebar-overlay" id="overlay"></div>
+
+  <main class="main-content">
+    <div class="topbar">
+      <div class="topbar-left">
+        <button class="hamburger" id="hamburger"><svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button>
+        <span class="topbar-breadcrumb"><a href="index.html">홈</a> › <strong>Chapter 9. Lombok & 유틸리티</strong></span>
+      </div>
+      <a href="quiz.html?ch=9" class="nav-btn primary" style="padding:8px 16px;font-size:13px;">🎯 퀴즈 풀기</a>
+    </div>
+
+    <div class="page-content">
+      <div class="chapter-hero">
+        <div class="badge">📖 Chapter 09</div>
+        <h1>🛠️ Lombok & 유틸리티</h1>
+        <p>Lombok으로 반복 코드를 없애는 법, 파일 업로드 처리(UUID), RatingUtil, ValidationUtil까지 실용적인 내용을 배웁니다.</p>
+        <div class="hero-meta">
+          <span>⏱️ 예상 학습 시간: 35분</span>
+          <span>📝 핵심 어노테이션: 8개</span>
+          <span>🎯 퀴즈: 50문제</span>
+        </div>
+      </div>
+
+      <!-- 1. Lombok이란? -->
+      <div class="section">
+        <h2 class="section-title"><span class="icon">🪄</span> 1. Lombok이란?</h2>
+        <div class="card">
+          <p>Lombok은 Java에서 반복적으로 작성해야 하는 보일러플레이트 코드(getter, setter, 생성자 등)를 어노테이션 하나로 자동 생성해주는 라이브러리입니다.</p>
+        </div>
+        <div class="card">
+          <div class="code-wrapper">
+            <div class="code-title"><span class="dot dot-red"></span><span class="dot dot-yellow"></span><span class="dot dot-green"></span>Lombok 없이 vs Lombok 사용</div>
+            <pre><code><span class="cm">// ❌ Lombok 없이: 수동으로 모두 작성</span>
+<span class="kw">public class</span> <span class="cl">Member</span> {
+    <span class="kw">private</span> Long id;
+    <span class="kw">private</span> String name;
+
+    <span class="kw">public</span> Long <span class="mt">getId</span>() { <span class="kw">return</span> id; }
+    <span class="kw">public void</span> <span class="mt">setId</span>(Long id) { <span class="kw">this</span>.id = id; }
+    <span class="kw">public</span> String <span class="mt">getName</span>() { <span class="kw">return</span> name; }
+    <span class="kw">public void</span> <span class="mt">setName</span>(String name) { <span class="kw">this</span>.name = name; }
+    <span class="kw">public</span> <span class="cl">Member</span>() {}
+    <span class="kw">public</span> <span class="cl">Member</span>(Long id, String name) { <span class="kw">this</span>.id = id; <span class="kw">this</span>.name = name; }
+    <span class="cm">// equals, hashCode, toString ... 계속 ...</span>
+}
+
+<span class="cm">// ✅ Lombok 사용: 단 몇 줄로 끝!</span>
+<span class="an">@Getter</span> <span class="an">@Setter</span> <span class="an">@NoArgsConstructor</span> <span class="an">@AllArgsConstructor</span>
+<span class="kw">public class</span> <span class="cl">Member</span> {
+    <span class="kw">private</span> Long id;
+    <span class="kw">private</span> String name;
+}</code></pre>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2. Lombok 어노테이션 -->
+      <div class="section">
+        <h2 class="section-title"><span class="icon">🏷️</span> 2. 주요 Lombok 어노테이션</h2>
+        <div class="annotation-grid">
+          <div class="annotation-card">
+            <code>@Getter</code>
+            <p>모든 필드의 <code>getXxx()</code> 메서드를 자동 생성합니다. 필드별로 적용할 수도 있습니다.</p>
+          </div>
+          <div class="annotation-card">
+            <code>@Setter</code>
+            <p>모든 필드의 <code>setXxx()</code> 메서드를 자동 생성합니다. Entity보다 DTO에 많이 사용합니다.</p>
+          </div>
+          <div class="annotation-card">
+            <code>@NoArgsConstructor</code>
+            <p>파라미터 없는 기본 생성자를 자동 생성합니다. JPA Entity에 반드시 필요합니다!</p>
+          </div>
+          <div class="annotation-card">
+            <code>@AllArgsConstructor</code>
+            <p>모든 필드를 파라미터로 받는 생성자를 자동 생성합니다.</p>
+          </div>
+          <div class="annotation-card">
+            <code>@RequiredArgsConstructor</code>
+            <p><code>final</code> 또는 <code>@NonNull</code> 필드만 파라미터로 받는 생성자를 생성합니다. Service, Controller의 의존성 주입에 주로 사용합니다.</p>
+          </div>
+          <div class="annotation-card">
+            <code>@Builder</code>
+            <p>빌더 패턴을 자동 생성합니다.<br><code>Tour.builder().name("청도").build()</code>처럼 사용합니다. 가독성 높은 객체 생성에 유용합니다.</p>
+          </div>
+          <div class="annotation-card">
+            <code>@Data</code>
+            <p>@Getter + @Setter + @ToString + @EqualsAndHashCode + @RequiredArgsConstructor의 합본. DTO에서 편리하게 사용합니다. (Entity에는 사용 주의!)</p>
+          </div>
+          <div class="annotation-card">
+            <code>@Slf4j</code>
+            <p>로깅 필드 <code>log</code>를 자동 생성합니다. <code>log.info("메시지: {}", 값)</code>으로 로그를 남길 수 있습니다.</p>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="code-wrapper">
+            <div class="code-title"><span class="dot dot-red"></span><span class="dot dot-yellow"></span><span class="dot dot-green"></span>@Builder 패턴 사용법</div>
+            <pre><code><span class="cm">// @Builder로 생성된 빌더 패턴 사용</span>
+<span class="cl">Tour</span> tour = <span class="cl">Tour</span>.<span class="mt">builder</span>()       <span class="cm">// builder() 호출</span>
+    .<span class="mt">name</span>(<span class="st">"청도 와인 터널"</span>)           <span class="cm">// 필드 설정</span>
+    .<span class="mt">category</span>(<span class="cl">TourCategory</span>.<span class="cl">CULTURE</span>)
+    .<span class="mt">address</span>(<span class="st">"경북 청도군"</span>)
+    .<span class="mt">tel</span>(<span class="st">"054-370-2288"</span>)
+    .<span class="mt">build</span>();                      <span class="cm">// 객체 최종 생성</span>
+
+<span class="cm">// new 연산자 방식과 비교</span>
+<span class="cl">Tour</span> tour2 = <span class="kw">new</span> <span class="cl">Tour</span>(<span class="kw">null</span>, <span class="cl">TourCategory</span>.<span class="cl">CULTURE</span>, <span class="st">"청도 와인 터널"</span>,
+    <span class="kw">null</span>, <span class="st">"경북 청도군"</span>, <span class="st">"054-370-2288"</span>, <span class="kw">null</span>, <span class="kw">null</span>, <span class="kw">null</span>, <span class="kw">null</span>, <span class="kw">null</span>);
+<span class="cm">// 어느 것이 더 읽기 좋나요?</span></code></pre>
+          </div>
+        </div>
+      </div>
+
+      <!-- 3. FileUploadUtil -->
+      <div class="section">
+        <h2 class="section-title"><span class="icon">📁</span> 3. FileUploadUtil — 파일 업로드</h2>
+        <div class="card">
+          <div class="code-wrapper">
+            <div class="code-title"><span class="dot dot-red"></span><span class="dot dot-yellow"></span><span class="dot dot-green"></span>FileUploadUtil.java</div>
+            <pre><code><span class="kw">public class</span> <span class="cl">FileUploadUtil</span> {
+
+    <span class="kw">public static</span> String <span class="mt">saveFile</span>(String uploadDir, <span class="cl">MultipartFile</span> file) <span class="kw">throws</span> IOException {
+
+        <span class="cm">// 1. UUID로 고유한 파일명 생성 (파일명 충돌 방지)</span>
+        String uuid = UUID.<span class="mt">randomUUID</span>().<span class="mt">toString</span>();
+        <span class="cm">// UUID 예시: "a3f4b2c1-1234-5678-abcd-ef0123456789"</span>
+
+        <span class="cm">// 2. 원본 파일 확장자 추출 (.jpg, .png, .pdf ...)</span>
+        String originalFilename = file.<span class="mt">getOriginalFilename</span>();
+        String extension = originalFilename.<span class="mt">substring</span>(originalFilename.<span class="mt">lastIndexOf</span>(<span class="st">"."</span>));
+        <span class="cm">// 예: "photo.jpg" → ".jpg"</span>
+
+        <span class="cm">// 3. 최종 파일명: uuid + 확장자</span>
+        String fileName = uuid + extension;
+        <span class="cm">// 예: "a3f4b2c1-1234-5678-abcd-ef0123456789.jpg"</span>
+
+        <span class="cm">// 4. 저장 경로 생성</span>
+        Path filePath = <span class="cl">Paths</span>.<span class="mt">get</span>(uploadDir + fileName);
+
+        <span class="cm">// 5. 디렉토리 없으면 생성</span>
+        <span class="cl">Files</span>.<span class="mt">createDirectories</span>(filePath.<span class="mt">getParent</span>());
+
+        <span class="cm">// 6. 파일 저장</span>
+        file.<span class="mt">transferTo</span>(filePath.<span class="mt">toFile</span>());
+
+        <span class="kw">return</span> fileName;  <span class="cm">// DB에 저장할 파일명 반환</span>
+    }
+}</code></pre>
+          </div>
+        </div>
+        <div class="callout callout-info">
+          <span class="callout-icon">🎲</span>
+          <div class="callout-content">
+            <h4>UUID란?</h4>
+            <p>UUID (Universally Unique Identifier) = 전 세계에서 유일한 식별자입니다.<br>
+            <code>550e8400-e29b-41d4-a716-446655440000</code> 형식의 32자리 16진수입니다.<br>
+            파일명으로 사용하면 중복 없이 고유한 파일명을 보장할 수 있습니다!</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 4. RatingUtil, ValidationUtil -->
+      <div class="section">
+        <h2 class="section-title"><span class="icon">⭐</span> 4. RatingUtil & ValidationUtil</h2>
+        <div class="card">
+          <div class="code-wrapper">
+            <div class="code-title"><span class="dot dot-red"></span><span class="dot dot-yellow"></span><span class="dot dot-green"></span>RatingUtil.java & ValidationUtil.java</div>
+            <pre><code><span class="cm">// 별점 반올림 유틸리티</span>
+<span class="kw">public class</span> <span class="cl">RatingUtil</span> {
+
+    <span class="kw">public static</span> Double <span class="mt">round</span>(Double value) {
+        <span class="kw">if</span> (value == <span class="kw">null</span>) <span class="kw">return</span> <span class="nm">0.0</span>;
+        <span class="cm">// Math.round(4.567 * 10) = 46, 46 / 10.0 = 4.6</span>
+        <span class="kw">return</span> Math.<span class="mt">round</span>(value * <span class="nm">10</span>) / <span class="nm">10.0</span>;  <span class="cm">// 소수점 1자리 반올림</span>
+    }
+}
+
+<span class="cm">// 별점 유효성 검사 유틸리티</span>
+<span class="kw">public class</span> <span class="cl">ValidationUtil</span> {
+
+    <span class="kw">public static void</span> <span class="mt">validateRating</span>(Double rating) {
+        <span class="kw">if</span> (rating == <span class="kw">null</span> || rating &lt; <span class="nm">1</span> || rating &gt; <span class="nm">5</span>) {
+            <span class="kw">throw new</span> <span class="cl">IllegalArgumentException</span>(<span class="st">"별점은 1~5점 사이여야 합니다."</span>);
+        }
+    }
+}
+
+<span class="cm">// 사용 예시</span>
+Double avg = reviewRepository.<span class="mt">findAverageRating</span>(tourId);
+Double rounded = <span class="cl">RatingUtil</span>.<span class="mt">round</span>(avg);  <span class="cm">// 4.567 → 4.6</span>
+
+<span class="cl">ValidationUtil</span>.<span class="mt">validateRating</span>(dto.<span class="mt">getStarRate</span>());  <span class="cm">// 검증 통과 or 예외</span></code></pre>
+          </div>
+        </div>
+        <div class="callout callout-tip">
+          <span class="callout-icon">🧹</span>
+          <div class="callout-content">
+            <h4>유틸리티 클래스 특징</h4>
+            <ul>
+              <li>인스턴스 생성 없이 사용 (static 메서드)</li>
+              <li>한 가지 목적의 관련 기능들을 모아둠</li>
+              <li>재사용성 높음: 여러 Service에서 공통으로 사용</li>
+              <li>순수 Java 로직 (Spring 의존성 없음)</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- 5. @Slf4j 로깅 -->
+      <div class="section">
+        <h2 class="section-title"><span class="icon">📊</span> 5. 로깅 (@Slf4j)</h2>
+        <div class="card">
+          <div class="code-wrapper">
+            <div class="code-title"><span class="dot dot-red"></span><span class="dot dot-yellow"></span><span class="dot dot-green"></span>로깅 사용 예시</div>
+            <pre><code><span class="an">@Slf4j</span>  <span class="cm">// Lombok이 private static final Logger log = ... 자동 생성</span>
+<span class="kw">public class</span> <span class="cl">LoginCheckInterceptor</span> <span class="kw">implements</span> <span class="cl">HandlerInterceptor</span> {
+
+    <span class="an">@Override</span>
+    <span class="kw">public boolean</span> <span class="mt">preHandle</span>(...) {
+        <span class="cm">// {} = 변수 플레이스홀더</span>
+        log.<span class="mt">info</span>(<span class="st">"미인증 사용자 요청 거부: {}"</span>, requestURI);
+        <span class="cm">// 출력: 2025-01-01 INFO 미인증 사용자 요청 거부: /community/write</span>
+
+        log.<span class="mt">debug</span>(<span class="st">"디버그 메시지"</span>);   <span class="cm">// 개발 상세 로그</span>
+        log.<span class="mt">warn</span>(<span class="st">"경고 메시지"</span>);     <span class="cm">// 주의 필요</span>
+        log.<span class="mt">error</span>(<span class="st">"오류 발생"</span>, e);   <span class="cm">// 예외 포함</span>
+    }
+}
+
+<span class="cm">// application.yml에서 로그 레벨 설정</span>
+<span class="cm">// logging:</span>
+<span class="cm">//   level:</span>
+<span class="cm">//     com.example.demo: DEBUG  ← 해당 패키지만 DEBUG 레벨</span></code></pre>
+          </div>
+        </div>
+      </div>
+
+      <!-- 6. MultipartFile -->
+      <div class="section">
+        <h2 class="section-title"><span class="icon">📤</span> 6. MultipartFile — 파일 수신</h2>
+        <div class="card">
+          <div class="code-wrapper">
+            <div class="code-title"><span class="dot dot-red"></span><span class="dot dot-yellow"></span><span class="dot dot-green"></span>파일 업로드 전체 흐름</div>
+            <pre><code><span class="cm">// 1. HTML form (enctype 설정 필수!)</span>
+<span class="cm">// &lt;form th:action="@{/tour/new}" method="post" enctype="multipart/form-data"&gt;</span>
+<span class="cm">// &lt;input type="file" name="file" /&gt;</span>
+
+<span class="cm">// 2. DTO에서 파일 수신</span>
+<span class="kw">public class</span> <span class="cl">TourFormDto</span> {
+    <span class="kw">private</span> <span class="cl">MultipartFile</span> file;  <span class="cm">// HTML의 name="file"과 일치</span>
+}
+
+<span class="cm">// 3. Service에서 저장</span>
+<span class="kw">public</span> Long <span class="mt">save</span>(<span class="cl">TourFormDto</span> dto) <span class="kw">throws</span> Exception {
+    <span class="cm">// 파일이 있으면 저장</span>
+    <span class="kw">if</span> (dto.<span class="mt">getFile</span>() != <span class="kw">null</span> &amp;&amp; !dto.<span class="mt">getFile</span>().<span class="mt">isEmpty</span>()) {
+        String fileName = <span class="cl">FileUploadUtil</span>.<span class="mt">saveFile</span>(uploadDir, dto.<span class="mt">getFile</span>());
+        tour.<span class="mt">setThumb</span>(fileName);
+    }
+}
+
+<span class="cm">// 4. application.yml 파일 크기 제한</span>
+<span class="cm">// spring.servlet.multipart.max-file-size: 10MB</span>
+<span class="cm">// spring.servlet.multipart.max-request-size: 20MB</span></code></pre>
+          </div>
+        </div>
+      </div>
+
+      <!-- 7. 요약 -->
+      <div class="section">
+        <h2 class="section-title"><span class="icon">✅</span> 7. 챕터 핵심 요약</h2>
+        <div class="card">
+          <ul style="padding-left:20px;line-height:2;font-size:15px;">
+            <li>Lombok: 반복 코드 자동 생성 라이브러리</li>
+            <li><code>@Getter</code>/<code>@Setter</code>: getter/setter 자동 생성</li>
+            <li><code>@NoArgsConstructor</code>: 기본 생성자 (JPA Entity 필수!)</li>
+            <li><code>@RequiredArgsConstructor</code>: final 필드 생성자 (의존성 주입에 활용)</li>
+            <li><code>@Builder</code>: 빌더 패턴으로 가독성 높은 객체 생성</li>
+            <li><code>@Slf4j</code>: 로깅 필드 <code>log</code> 자동 생성</li>
+            <li>파일 업로드: <code>MultipartFile</code> + UUID 파일명으로 중복 방지</li>
+            <li>유틸리티 클래스: static 메서드로 재사용 가능한 기능 모음</li>
+          </ul>
+        </div>
+      </div>
+
+      <div style="text-align:center;padding:20px 0;">
+        <a href="quiz.html?ch=9" class="quiz-link-btn">🎯 Chapter 9 퀴즈 풀러 가기 (50문제)</a>
+      </div>
+      <div class="chapter-nav">
+        <a href="ch8.html" class="nav-btn">← Chapter 8: Thymeleaf</a>
+        <a href="ch10.html" class="nav-btn primary">Chapter 10: 종합 정리 →</a>
+      </div>
+    </div>
+  </main>
+</div>
+<script src="nav.js"></script>
+</body>
+</html>

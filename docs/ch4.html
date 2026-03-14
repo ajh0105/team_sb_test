@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Chapter 4 - Service | 학습 가이드</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+<div class="layout">
+  <nav class="sidebar" id="sidebar">
+    <div class="sidebar-logo"><div class="logo-icon">🌱</div><h1>Spring Boot<br>학습 가이드</h1><p>초급자를 위한 단계별 완전정복</p></div>
+    <div class="sidebar-nav">
+      <div class="nav-section-title">시작하기</div>
+      <a href="index.html">🏠 홈 (학습 목차)</a><a href="quiz.html">🎯 챕터별 퀴즈</a>
+      <div class="nav-section-title">챕터별 학습</div>
+      <a href="ch1.html"><span class="ch-num">01</span> Spring Boot 기초</a>
+      <a href="ch2.html"><span class="ch-num">02</span> Entity / 도메인</a>
+      <a href="ch3.html"><span class="ch-num">03</span> Repository</a>
+      <a href="ch4.html" class="active"><span class="ch-num">04</span> Service</a>
+      <a href="ch5.html"><span class="ch-num">05</span> Controller</a>
+      <a href="ch6.html"><span class="ch-num">06</span> DTO 패턴</a>
+      <a href="ch7.html"><span class="ch-num">07</span> 설정 & 보안</a>
+      <a href="ch8.html"><span class="ch-num">08</span> Thymeleaf</a>
+      <a href="ch9.html"><span class="ch-num">09</span> Lombok & 유틸리티</a>
+      <a href="ch10.html"><span class="ch-num">10</span> 종합 정리</a>
+    </div>
+    <div class="sidebar-footer">Team SB Study © 2025</div>
+  </nav>
+  <div class="sidebar-overlay" id="overlay"></div>
+
+  <main class="main-content">
+    <div class="topbar">
+      <div class="topbar-left">
+        <button class="hamburger" id="hamburger"><svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button>
+        <span class="topbar-breadcrumb"><a href="index.html">홈</a> › <strong>Chapter 4. Service</strong></span>
+      </div>
+      <a href="quiz.html?ch=4" class="nav-btn primary" style="padding:8px 16px;font-size:13px;">🎯 퀴즈 풀기</a>
+    </div>
+
+    <div class="page-content">
+      <div class="chapter-hero">
+        <div class="badge">📖 Chapter 04</div>
+        <h1>⚙️ Service 계층</h1>
+        <p>비즈니스 로직을 담당하는 Service 계층을 학습합니다. @Service, @Transactional, 의존성 주입까지 완전 정복!</p>
+        <div class="hero-meta">
+          <span>⏱️ 예상 학습 시간: 45분</span>
+          <span>📝 핵심 어노테이션: 5개</span>
+          <span>🎯 퀴즈: 50문제</span>
+        </div>
+      </div>
+
+      <!-- 1. Service란? -->
+      <div class="section">
+        <h2 class="section-title"><span class="icon">❓</span> 1. Service 계층이란?</h2>
+        <div class="card">
+          <p>Service는 <strong>비즈니스 로직(업무 처리)</strong>을 담당하는 계층입니다. Controller와 Repository 사이에서 실제 애플리케이션의 핵심 기능을 구현합니다.</p>
+        </div>
+        <div class="flow-diagram">
+          <div class="flow-box">Controller<br><small>요청/응답 처리</small></div>
+          <div class="flow-arrow">→</div>
+          <div class="flow-box" style="background:#4a7c26;">Service<br><small>비즈니스 로직</small></div>
+          <div class="flow-arrow">→</div>
+          <div class="flow-box">Repository<br><small>DB 접근</small></div>
+        </div>
+        <div class="callout callout-info">
+          <span class="callout-icon">💡</span>
+          <div class="callout-content">
+            <h4>왜 Service 계층을 분리할까?</h4>
+            <ul>
+              <li><strong>역할 분리</strong>: Controller는 HTTP 처리에만, Service는 비즈니스에만 집중</li>
+              <li><strong>재사용성</strong>: 여러 Controller에서 같은 Service 메서드 호출 가능</li>
+              <li><strong>테스트 용이</strong>: 비즈니스 로직만 독립적으로 테스트 가능</li>
+              <li><strong>트랜잭션 관리</strong>: Service에서 트랜잭션 경계 설정</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2. @Service, @Transactional -->
+      <div class="section">
+        <h2 class="section-title"><span class="icon">🏷️</span> 2. 핵심 어노테이션</h2>
+        <div class="annotation-grid">
+          <div class="annotation-card">
+            <code>@Service</code>
+            <p>이 클래스가 Service 계층 컴포넌트임을 선언합니다. Spring이 자동으로 Bean으로 등록하여 의존성 주입에 사용합니다. <code>@Component</code>의 특화 버전입니다.</p>
+          </div>
+          <div class="annotation-card">
+            <code>@Transactional</code>
+            <p>메서드 또는 클래스 전체를 하나의 트랜잭션으로 묶습니다. 도중에 오류 발생 시 자동 롤백됩니다. 클래스에 붙이면 모든 public 메서드에 적용됩니다.</p>
+          </div>
+          <div class="annotation-card">
+            <code>@Transactional(readOnly = true)</code>
+            <p>읽기 전용 트랜잭션. 데이터를 조회만 할 때 사용합니다. JPA의 더티 체킹(변경 감지)을 비활성화하여 성능이 향상됩니다.</p>
+          </div>
+          <div class="annotation-card">
+            <code>@RequiredArgsConstructor</code>
+            <p>Lombok이 <code>final</code> 필드를 인수로 받는 생성자를 자동 생성합니다. Spring의 <strong>생성자 주입</strong>에 활용됩니다.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 3. TourService -->
+      <div class="section">
+        <h2 class="section-title"><span class="icon">🏖️</span> 3. TourService 전체 분석</h2>
+        <div class="card">
+          <div class="code-wrapper">
+            <div class="code-title"><span class="dot dot-red"></span><span class="dot dot-yellow"></span><span class="dot dot-green"></span>TourService.java — 완전 분석</div>
+            <pre><code><span class="an">@Service</span>                  <span class="cm">// ① Spring Bean으로 등록</span>
+<span class="an">@RequiredArgsConstructor</span>  <span class="cm">// ② final 필드의 생성자 자동 생성 (의존성 주입)</span>
+<span class="an">@Transactional</span>            <span class="cm">// ③ 클래스 전체에 트랜잭션 적용</span>
+<span class="kw">public class</span> <span class="cl">TourService</span> {
+
+    <span class="cm">// final = 반드시 생성자에서 초기화 (불변성 보장)</span>
+    <span class="kw">private final</span> <span class="cl">TourRepository</span> tourRepository;
+    <span class="kw">private final</span> <span class="cl">ReviewRepository</span> reviewRepository;
+    <span class="kw">private final</span> <span class="cl">FileConfig</span> fileConfig;
+
+    <span class="cm">// ——— 관광지 등록 ———</span>
+    <span class="kw">public</span> Long <span class="mt">save</span>(<span class="cl">TourFormDto</span> dto) <span class="kw">throws</span> Exception {
+        <span class="cm">// 1. 파일 업로드 처리</span>
+        String fileName = <span class="cl">FileUploadUtil</span>.<span class="mt">saveFile</span>(fileConfig.uploadDir, dto.<span class="mt">getFile</span>());
+
+        <span class="cm">// 2. DTO → Entity 변환 (Builder 패턴)</span>
+        <span class="cl">Tour</span> tour = <span class="cl">Tour</span>.<span class="mt">builder</span>()
+                .<span class="mt">name</span>(dto.<span class="mt">getName</span>())
+                .<span class="mt">category</span>(dto.<span class="mt">getCategory</span>())
+                .<span class="mt">address</span>(dto.<span class="mt">getAddress</span>())
+                .<span class="mt">tel</span>(dto.<span class="mt">getTel</span>())
+                .<span class="mt">comment</span>(dto.<span class="mt">getComment</span>())
+                .<span class="mt">thumb</span>(fileName)
+                .<span class="mt">build</span>();
+
+        <span class="cm">// 3. DB에 저장 후 ID 반환</span>
+        <span class="kw">return</span> tourRepository.<span class="mt">save</span>(tour).<span class="mt">getId</span>();
+    }
+
+    <span class="cm">// ——— 관광지 수정 ———</span>
+    <span class="kw">public void</span> <span class="mt">update</span>(Long id, <span class="cl">TourFormDto</span> dto) <span class="kw">throws</span> Exception {
+        <span class="cm">// 1. ID로 기존 데이터 조회 (없으면 예외 발생)</span>
+        <span class="cl">Tour</span> tour = tourRepository.<span class="mt">findById</span>(id).<span class="mt">orElseThrow</span>();
+
+        <span class="cm">// 2. 새 파일이 있을 때만 이미지 교체</span>
+        <span class="kw">if</span> (dto.<span class="mt">getFile</span>() != <span class="kw">null</span> &amp;&amp; !dto.<span class="mt">getFile</span>().<span class="mt">isEmpty</span>()) {
+            String fileName = <span class="cl">FileUploadUtil</span>.<span class="mt">saveFile</span>(fileConfig.uploadDir, dto.<span class="mt">getFile</span>());
+            tour.<span class="mt">setThumb</span>(fileName);
+        }
+
+        <span class="cm">// 3. 필드 직접 수정 (Setter 사용)</span>
+        <span class="cm">// ※ @Transactional 덕분에 save() 없이도 자동 저장됨 (더티 체킹)</span>
+        tour.<span class="mt">setName</span>(dto.<span class="mt">getName</span>());
+        tour.<span class="mt">setCategory</span>(dto.<span class="mt">getCategory</span>());
+        tour.<span class="mt">setAddress</span>(dto.<span class="mt">getAddress</span>());
+    }
+
+    <span class="cm">// ——— 관광지 목록 ———</span>
+    <span class="kw">public</span> List&lt;<span class="cl">TourResponseDto</span>&gt; <span class="mt">findAll</span>() {
+        <span class="cm">// Stream + Lambda로 Entity → DTO 변환</span>
+        <span class="kw">return</span> tourRepository.<span class="mt">findAll</span>().<span class="mt">stream</span>().<span class="mt">map</span>(
+                tour -&gt; {
+                    Double avg = reviewRepository.<span class="mt">findAverageRating</span>(tour.<span class="mt">getId</span>());
+                    <span class="kw">return new</span> <span class="cl">TourResponseDto</span>(tour, <span class="cl">RatingUtil</span>.<span class="mt">round</span>(avg));
+                }
+        ).<span class="mt">collect</span>(<span class="cl">Collectors</span>.<span class="mt">toList</span>());
+    }
+
+    <span class="cm">// ——— 관광지 삭제 ———</span>
+    <span class="kw">public void</span> <span class="mt">delete</span>(Long id) {
+        tourRepository.<span class="mt">deleteById</span>(id);
+    }
+}</code></pre>
+          </div>
+        </div>
+
+        <div class="callout callout-tip">
+          <span class="callout-icon">🔄</span>
+          <div class="callout-content">
+            <h4>더티 체킹(Dirty Checking)이란?</h4>
+            <p>JPA는 <code>@Transactional</code> 메서드 안에서 조회한 Entity의 필드 값이 변경되면, 트랜잭션 종료 시 <strong>자동으로 UPDATE 쿼리를 실행</strong>합니다.<br>
+            update() 메서드에서 <code>tourRepository.save(tour)</code>를 호출하지 않아도 자동 저장되는 이유가 바로 더티 체킹입니다!</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 4. MemberService -->
+      <div class="section">
+        <h2 class="section-title"><span class="icon">👤</span> 4. MemberService 분석</h2>
+        <div class="card">
+          <div class="code-wrapper">
+            <div class="code-title"><span class="dot dot-red"></span><span class="dot dot-yellow"></span><span class="dot dot-green"></span>MemberService.java</div>
+            <pre><code><span class="an">@Service</span>
+<span class="an">@RequiredArgsConstructor</span>
+<span class="an">@Transactional</span>
+<span class="kw">public class</span> <span class="cl">MemberService</span> {
+
+    <span class="kw">private final</span> <span class="cl">MemberRepository</span> memberRepository;
+
+    <span class="cm">// 회원 가입</span>
+    <span class="kw">public</span> Long <span class="mt">save</span>(<span class="cl">MemberFormDto</span> dto) {
+        <span class="cl">Member</span> member = <span class="cl">Member</span>.<span class="mt">builder</span>()
+                .<span class="mt">username</span>(dto.<span class="mt">getUsername</span>())
+                .<span class="mt">password</span>(dto.<span class="mt">getPassword</span>())  <span class="cm">// ⚠️ tour 프로젝트: 평문 저장 (보안 취약)</span>
+                .<span class="mt">name</span>(dto.<span class="mt">getName</span>())
+                .<span class="mt">email</span>(dto.<span class="mt">getEmail</span>())
+                .<span class="mt">role</span>(<span class="cl">MemberRole</span>.<span class="cl">USER</span>)
+                .<span class="mt">build</span>();
+        <span class="kw">return</span> memberRepository.<span class="mt">save</span>(member).<span class="mt">getId</span>();
+    }
+
+    <span class="cm">// 목록 조회 (읽기 전용 → 성능 최적화)</span>
+    <span class="an">@Transactional</span>(readOnly = <span class="kw">true</span>)
+    <span class="kw">public</span> List&lt;<span class="cl">Member</span>&gt; <span class="mt">findAll</span>() {
+        <span class="kw">return</span> memberRepository.<span class="mt">findAll</span>();
+    }
+
+    <span class="cm">// 아이디 중복 확인</span>
+    <span class="an">@Transactional</span>(readOnly = <span class="kw">true</span>)
+    <span class="kw">public boolean</span> <span class="mt">existsByUsername</span>(String username) {
+        <span class="kw">return</span> memberRepository.<span class="mt">existsByUsername</span>(username);
+    }
+
+    <span class="cm">// 로그인 처리</span>
+    <span class="an">@Transactional</span>(readOnly = <span class="kw">true</span>)
+    <span class="kw">public</span> <span class="cl">Member</span> <span class="mt">login</span>(String username, String password) {
+        <span class="cm">// 1. 아이디로 회원 조회 (없으면 예외)</span>
+        <span class="cl">Member</span> member = memberRepository.<span class="mt">findByUsername</span>(username)
+                .<span class="mt">orElseThrow</span>(() -&gt; <span class="kw">new</span> <span class="cl">IllegalArgumentException</span>(<span class="st">"존재하지 않는 아이디입니다."</span>));
+
+        <span class="cm">// 2. 비밀번호 확인 (⚠️ 평문 비교 — 실무에서는 BCrypt 사용!)</span>
+        <span class="kw">if</span> (!member.<span class="mt">getPassword</span>().<span class="mt">equals</span>(password)) {
+            <span class="kw">throw new</span> <span class="cl">IllegalArgumentException</span>(<span class="st">"비밀번호가 일치하지 않습니다."</span>);
+        }
+
+        <span class="kw">return</span> member;
+    }
+}</code></pre>
+          </div>
+        </div>
+
+        <div class="callout callout-danger">
+          <span class="callout-icon">🚨</span>
+          <div class="callout-content">
+            <h4>보안 경고: 평문 비밀번호</h4>
+            <p>tour 프로젝트는 비밀번호를 그대로(평문) 저장합니다. 실제 서비스에서는 절대 안 됩니다! Demo 프로젝트처럼 <strong>BCrypt</strong>로 암호화해야 합니다.<br>
+            <code>passwordEncoder.encode(dto.getPassword())</code> → BCrypt 해시로 저장<br>
+            <code>passwordEncoder.matches(입력값, 저장된해시)</code> → 로그인 검증</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 5. 의존성 주입 -->
+      <div class="section">
+        <h2 class="section-title"><span class="icon">💉</span> 5. 의존성 주입 (Dependency Injection)</h2>
+        <div class="card">
+          <p>Service가 Repository를 사용하려면 Repository 객체가 필요합니다. 직접 <code>new</code>로 만들지 않고, Spring이 관리하는 객체를 <strong>주입</strong>받습니다.</p>
+          <div class="code-wrapper">
+            <div class="code-title"><span class="dot dot-red"></span><span class="dot dot-yellow"></span><span class="dot dot-green"></span>3가지 의존성 주입 방법</div>
+            <pre><code><span class="cm">// ❌ 방법1: 직접 생성 (Spring 관리 X, 권장 안 함)</span>
+<span class="kw">private</span> <span class="cl">TourRepository</span> tourRepository = <span class="kw">new</span> <span class="cl">TourRepository</span>();
+
+<span class="cm">// ⚠️ 방법2: @Autowired 필드 주입 (간단하지만 테스트 어려움)</span>
+<span class="an">@Autowired</span>
+<span class="kw">private</span> <span class="cl">TourRepository</span> tourRepository;
+
+<span class="cm">// ✅ 방법3: 생성자 주입 (권장! + Lombok @RequiredArgsConstructor 사용)</span>
+<span class="kw">private final</span> <span class="cl">TourRepository</span> tourRepository;
+
+<span class="an">@RequiredArgsConstructor</span>  <span class="cm">// Lombok이 아래 생성자를 자동 생성</span>
+<span class="kw">public class</span> <span class="cl">TourService</span> {
+    <span class="kw">private final</span> <span class="cl">TourRepository</span> tourRepository;
+    <span class="cm">// Lombok이 생성: public TourService(TourRepository tourRepository) { this.tourRepository = tourRepository; }</span>
+}</code></pre>
+          </div>
+        </div>
+      </div>
+
+      <!-- 6. Stream/Lambda -->
+      <div class="section">
+        <h2 class="section-title"><span class="icon">🌊</span> 6. Stream과 Lambda 이해하기</h2>
+        <div class="card">
+          <p>findAll() 메서드에서 Entity 리스트를 DTO 리스트로 변환할 때 Stream과 Lambda를 사용합니다.</p>
+          <div class="code-wrapper">
+            <div class="code-title"><span class="dot dot-red"></span><span class="dot dot-yellow"></span><span class="dot dot-green"></span>Stream + Lambda 단계별 이해</div>
+            <pre><code><span class="cm">// ① tourRepository.findAll() → List&lt;Tour&gt; 반환</span>
+<span class="cm">// ② .stream() → 리스트를 스트림(흐름)으로 변환</span>
+<span class="cm">// ③ .map(tour → ...) → 각 Tour를 TourResponseDto로 변환</span>
+<span class="cm">// ④ .collect(Collectors.toList()) → 다시 List로 수집</span>
+
+<span class="kw">return</span> tourRepository.<span class="mt">findAll</span>().<span class="mt">stream</span>()
+    .<span class="mt">map</span>(tour -&gt; {
+        Double avg = reviewRepository.<span class="mt">findAverageRating</span>(tour.<span class="mt">getId</span>());
+        <span class="kw">return new</span> <span class="cl">TourResponseDto</span>(tour, <span class="cl">RatingUtil</span>.<span class="mt">round</span>(avg));
+    })
+    .<span class="mt">collect</span>(<span class="cl">Collectors</span>.<span class="mt">toList</span>());
+
+<span class="cm">// for 루프로 동일한 코드 작성 시:</span>
+List&lt;<span class="cl">TourResponseDto</span>&gt; result = <span class="kw">new</span> ArrayList&lt;&gt;();
+<span class="kw">for</span> (<span class="cl">Tour</span> tour : tourRepository.<span class="mt">findAll</span>()) {
+    Double avg = reviewRepository.<span class="mt">findAverageRating</span>(tour.<span class="mt">getId</span>());
+    result.<span class="mt">add</span>(<span class="kw">new</span> <span class="cl">TourResponseDto</span>(tour, <span class="cl">RatingUtil</span>.<span class="mt">round</span>(avg)));
+}
+<span class="kw">return</span> result;</code></pre>
+          </div>
+        </div>
+      </div>
+
+      <!-- 7. 요약 -->
+      <div class="section">
+        <h2 class="section-title"><span class="icon">✅</span> 7. 챕터 핵심 요약</h2>
+        <div class="card">
+          <ul style="padding-left:20px;line-height:2;font-size:15px;">
+            <li><code>@Service</code>: Spring Bean 등록, Controller와 Repository 사이 계층</li>
+            <li><code>@Transactional</code>: 트랜잭션 관리. 오류 시 자동 롤백</li>
+            <li><code>@Transactional(readOnly=true)</code>: 조회 전용. 더티 체킹 비활성화로 성능 향상</li>
+            <li><code>@RequiredArgsConstructor</code> + <code>private final</code>: 생성자 주입 패턴</li>
+            <li>더티 체킹: <code>@Transactional</code> 안에서 Entity 수정하면 save() 없이 자동 UPDATE</li>
+            <li>Builder 패턴: <code>.builder().필드().build()</code>로 Entity 생성</li>
+            <li>실무에서는 비밀번호를 반드시 BCrypt로 암호화해야 함!</li>
+          </ul>
+        </div>
+      </div>
+
+      <div style="text-align:center;padding:20px 0;">
+        <a href="quiz.html?ch=4" class="quiz-link-btn">🎯 Chapter 4 퀴즈 풀러 가기 (50문제)</a>
+      </div>
+      <div class="chapter-nav">
+        <a href="ch3.html" class="nav-btn">← Chapter 3: Repository</a>
+        <a href="ch5.html" class="nav-btn primary">Chapter 5: Controller →</a>
+      </div>
+    </div>
+  </main>
+</div>
+<script src="nav.js"></script>
+</body>
+</html>

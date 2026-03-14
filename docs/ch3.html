@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Chapter 3 - Repository | 학습 가이드</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+<div class="layout">
+  <nav class="sidebar" id="sidebar">
+    <div class="sidebar-logo"><div class="logo-icon">🌱</div><h1>Spring Boot<br>학습 가이드</h1><p>초급자를 위한 단계별 완전정복</p></div>
+    <div class="sidebar-nav">
+      <div class="nav-section-title">시작하기</div>
+      <a href="index.html">🏠 홈 (학습 목차)</a><a href="quiz.html">🎯 챕터별 퀴즈</a>
+      <div class="nav-section-title">챕터별 학습</div>
+      <a href="ch1.html"><span class="ch-num">01</span> Spring Boot 기초</a>
+      <a href="ch2.html"><span class="ch-num">02</span> Entity / 도메인</a>
+      <a href="ch3.html" class="active"><span class="ch-num">03</span> Repository</a>
+      <a href="ch4.html"><span class="ch-num">04</span> Service</a>
+      <a href="ch5.html"><span class="ch-num">05</span> Controller</a>
+      <a href="ch6.html"><span class="ch-num">06</span> DTO 패턴</a>
+      <a href="ch7.html"><span class="ch-num">07</span> 설정 & 보안</a>
+      <a href="ch8.html"><span class="ch-num">08</span> Thymeleaf</a>
+      <a href="ch9.html"><span class="ch-num">09</span> Lombok & 유틸리티</a>
+      <a href="ch10.html"><span class="ch-num">10</span> 종합 정리</a>
+    </div>
+    <div class="sidebar-footer">Team SB Study © 2025</div>
+  </nav>
+  <div class="sidebar-overlay" id="overlay"></div>
+
+  <main class="main-content">
+    <div class="topbar">
+      <div class="topbar-left">
+        <button class="hamburger" id="hamburger"><svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button>
+        <span class="topbar-breadcrumb"><a href="index.html">홈</a> › <strong>Chapter 3. Repository</strong></span>
+      </div>
+      <a href="quiz.html?ch=3" class="nav-btn primary" style="padding:8px 16px;font-size:13px;">🎯 퀴즈 풀기</a>
+    </div>
+
+    <div class="page-content">
+      <div class="chapter-hero">
+        <div class="badge">📖 Chapter 03</div>
+        <h1>🔍 Repository</h1>
+        <p>데이터베이스와 통신하는 계층입니다. SQL을 직접 작성하지 않아도 JpaRepository 인터페이스 하나로 CRUD가 완성됩니다!</p>
+        <div class="hero-meta">
+          <span>⏱️ 예상 학습 시간: 35분</span>
+          <span>📝 핵심 어노테이션: 3개</span>
+          <span>🎯 퀴즈: 50문제</span>
+        </div>
+      </div>
+
+      <!-- 1. Repository란? -->
+      <div class="section">
+        <h2 class="section-title"><span class="icon">❓</span> 1. Repository란?</h2>
+        <div class="card">
+          <p>Repository는 <strong>데이터베이스 접근 계층</strong>입니다. Entity를 DB에 저장, 조회, 수정, 삭제하는 역할을 담당합니다.</p>
+          <br>
+          <p>Spring Data JPA의 <code>JpaRepository</code> 인터페이스를 상속하면, 기본적인 CRUD 메서드가 <strong>자동으로</strong> 만들어집니다!</p>
+        </div>
+        <div class="flow-diagram">
+          <div class="flow-box">Service</div>
+          <div class="flow-arrow">→</div>
+          <div class="flow-box">Repository</div>
+          <div class="flow-arrow">→</div>
+          <div class="flow-box">JPA/Hibernate</div>
+          <div class="flow-arrow">→</div>
+          <div class="flow-box">DB (SQL)</div>
+        </div>
+      </div>
+
+      <!-- 2. JpaRepository -->
+      <div class="section">
+        <h2 class="section-title"><span class="icon">📚</span> 2. JpaRepository 인터페이스</h2>
+        <div class="card">
+          <div class="code-wrapper">
+            <div class="code-title"><span class="dot dot-red"></span><span class="dot dot-yellow"></span><span class="dot dot-green"></span>JpaRepository 기본 구조</div>
+            <pre><code><span class="cm">// JpaRepository&lt;엔티티 타입, 기본키 타입&gt;</span>
+<span class="kw">public interface</span> <span class="cl">TourRepository</span> <span class="kw">extends</span> <span class="cl">JpaRepository</span>&lt;<span class="cl">Tour</span>, Long&gt; {
+    <span class="cm">// 구현 코드 없이 인터페이스만 선언해도 기본 메서드 자동 제공!</span>
+}</code></pre>
+          </div>
+        </div>
+
+        <div class="callout callout-info">
+          <span class="callout-icon">🎁</span>
+          <div class="callout-content">
+            <h4>JpaRepository가 자동 제공하는 메서드들</h4>
+            <ul>
+              <li><code>save(entity)</code> → INSERT 또는 UPDATE</li>
+              <li><code>findById(id)</code> → SELECT WHERE id = ?</li>
+              <li><code>findAll()</code> → SELECT * FROM table</li>
+              <li><code>deleteById(id)</code> → DELETE WHERE id = ?</li>
+              <li><code>count()</code> → SELECT COUNT(*)</li>
+              <li><code>existsById(id)</code> → SELECT EXISTS WHERE id = ?</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- 3. TourRepository -->
+      <div class="section">
+        <h2 class="section-title"><span class="icon">🏖️</span> 3. TourRepository 분석</h2>
+        <div class="card">
+          <div class="code-wrapper">
+            <div class="code-title"><span class="dot dot-red"></span><span class="dot dot-yellow"></span><span class="dot dot-green"></span>TourRepository.java</div>
+            <pre><code><span class="kw">public interface</span> <span class="cl">TourRepository</span> <span class="kw">extends</span> <span class="cl">JpaRepository</span>&lt;<span class="cl">Tour</span>, Long&gt; {
+
+    <span class="cm">// 메서드명으로 쿼리 자동 생성!</span>
+    <span class="cm">// "findBy" + "Category" = "WHERE category = ?" 쿼리 자동 실행</span>
+    List&lt;<span class="cl">Tour</span>&gt; <span class="mt">findByCategory</span>(<span class="cl">TourCategory</span> category);
+}</code></pre>
+          </div>
+        </div>
+        <div class="callout callout-tip">
+          <span class="callout-icon">✨</span>
+          <div class="callout-content">
+            <h4>메서드명 쿼리 생성 규칙</h4>
+            <p>Spring Data JPA는 메서드 이름을 분석하여 자동으로 SQL을 생성합니다!</p>
+            <ul>
+              <li><code>findByName(String name)</code> → <code>WHERE name = ?</code></li>
+              <li><code>findByNameAndCategory()</code> → <code>WHERE name = ? AND category = ?</code></li>
+              <li><code>findByNameContaining()</code> → <code>WHERE name LIKE '%?%'</code></li>
+              <li><code>findAllByOrderByIdDesc()</code> → <code>ORDER BY id DESC</code></li>
+              <li><code>countByBoardType()</code> → <code>SELECT COUNT(*) WHERE board_type = ?</code></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- 4. MemberRepository -->
+      <div class="section">
+        <h2 class="section-title"><span class="icon">👤</span> 4. MemberRepository 분석</h2>
+        <div class="card">
+          <div class="code-wrapper">
+            <div class="code-title"><span class="dot dot-red"></span><span class="dot dot-yellow"></span><span class="dot dot-green"></span>MemberRepository.java</div>
+            <pre><code><span class="kw">public interface</span> <span class="cl">MemberRepository</span> <span class="kw">extends</span> <span class="cl">JpaRepository</span>&lt;<span class="cl">Member</span>, Long&gt; {
+
+    <span class="cm">// username으로 회원 조회 (로그인 시 사용)</span>
+    <span class="cm">// Optional = 결과가 없을 수도 있음 (null 안전)</span>
+    Optional&lt;<span class="cl">Member</span>&gt; <span class="mt">findByUsername</span>(String username);
+
+    <span class="cm">// username 중복 확인 (AJAX)</span>
+    <span class="kw">boolean</span> <span class="mt">existsByUsername</span>(String username);
+}</code></pre>
+          </div>
+        </div>
+
+        <div class="annotation-grid">
+          <div class="annotation-card">
+            <code>Optional&lt;T&gt;</code>
+            <p>결과가 있을 수도, 없을 수도 있는 값을 감싸는 컨테이너입니다. <code>null</code>을 직접 다루는 것보다 안전합니다.<br>
+            <code>.orElseThrow()</code>: 없으면 예외 발생<br>
+            <code>.isPresent()</code>: 존재 여부 확인</p>
+          </div>
+          <div class="annotation-card">
+            <code>boolean existsBy~()</code>
+            <p>특정 조건의 데이터 존재 여부를 확인합니다. <code>existsByUsername("홍길동")</code>은 <code>SELECT EXISTS(SELECT 1 FROM member WHERE username=?)</code> 쿼리를 실행합니다.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 5. ReviewRepository - @Query -->
+      <div class="section">
+        <h2 class="section-title"><span class="icon">⭐</span> 5. ReviewRepository — @Query 분석</h2>
+        <div class="card">
+          <div class="code-wrapper">
+            <div class="code-title"><span class="dot dot-red"></span><span class="dot dot-yellow"></span><span class="dot dot-green"></span>ReviewRepository.java</div>
+            <pre><code><span class="kw">public interface</span> <span class="cl">ReviewRepository</span> <span class="kw">extends</span> <span class="cl">JpaRepository</span>&lt;<span class="cl">Review</span>, Long&gt; {
+
+    <span class="cm">// tourId로 리뷰 목록 조회</span>
+    List&lt;<span class="cl">Review</span>&gt; <span class="mt">findByTourId</span>(Long tourId);
+
+    <span class="cm">// JPQL로 평균 별점 계산 (복잡한 쿼리는 @Query 사용)</span>
+    <span class="an">@Query</span>(<span class="st">"SELECT AVG(r.starRate) FROM Review r WHERE r.tour.id = :tourId"</span>)
+    Double <span class="mt">findAverageRating</span>(<span class="an">@Param</span>(<span class="st">"tourId"</span>) Long tourId);
+
+    <span class="cm">// 별점 내림차순 정렬</span>
+    List&lt;<span class="cl">Review</span>&gt; <span class="mt">findByTourIdOrderByStarRateDesc</span>(Long tourId);
+}</code></pre>
+          </div>
+        </div>
+
+        <div class="annotation-grid">
+          <div class="annotation-card">
+            <code>@Query</code>
+            <p>JPQL(Java Persistence Query Language)을 직접 작성합니다. 메서드명 쿼리로 표현하기 어려운 복잡한 쿼리를 작성할 때 사용합니다.</p>
+          </div>
+          <div class="annotation-card">
+            <code>@Param("tourId")</code>
+            <p>JPQL의 <code>:tourId</code> 파라미터와 메서드 인수를 연결합니다. <code>:paramName</code>과 <code>@Param("paramName")</code>이 매칭됩니다.</p>
+          </div>
+        </div>
+
+        <div class="callout callout-info">
+          <span class="callout-icon">📝</span>
+          <div class="callout-content">
+            <h4>JPQL vs SQL</h4>
+            <p><strong>SQL</strong>: <code>SELECT AVG(star_rate) FROM review WHERE tour_id = ?</code> (DB 테이블명/컬럼명)<br>
+            <strong>JPQL</strong>: <code>SELECT AVG(r.starRate) FROM Review r WHERE r.tour.id = :tourId</code> (Java 클래스명/필드명)</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 6. BoardRepository -->
+      <div class="section">
+        <h2 class="section-title"><span class="icon">💬</span> 6. BoardRepository (Demo 프로젝트)</h2>
+        <div class="card">
+          <div class="code-wrapper">
+            <div class="code-title"><span class="dot dot-red"></span><span class="dot dot-yellow"></span><span class="dot dot-green"></span>BoardRepository.java</div>
+            <pre><code><span class="kw">public interface</span> <span class="cl">BoardRepository</span> <span class="kw">extends</span> <span class="cl">JpaRepository</span>&lt;<span class="cl">Board</span>, Long&gt; {
+
+    <span class="cm">// 게시판 타입으로 조회 + 최신순 정렬</span>
+    List&lt;<span class="cl">Board</span>&gt; <span class="mt">findByBoardTypeOrderByIdDesc</span>(<span class="cl">BoardType</span> boardType);
+
+    <span class="cm">// 게시판 타입별 게시글 수</span>
+    <span class="kw">long</span> <span class="mt">countByBoardType</span>(<span class="cl">BoardType</span> boardType);
+
+    <span class="cm">// 전체 목록 최신순 정렬</span>
+    List&lt;<span class="cl">Board</span>&gt; <span class="mt">findAllByOrderByIdDesc</span>();
+}</code></pre>
+          </div>
+        </div>
+
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>메서드명</th><th>생성되는 쿼리</th></tr></thead>
+            <tbody>
+              <tr><td><code>findByBoardTypeOrderByIdDesc(type)</code></td><td><code>WHERE board_type=? ORDER BY id DESC</code></td></tr>
+              <tr><td><code>countByBoardType(type)</code></td><td><code>SELECT COUNT(*) WHERE board_type=?</code></td></tr>
+              <tr><td><code>findAllByOrderByIdDesc()</code></td><td><code>SELECT * ORDER BY id DESC</code></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- 7. Optional 사용법 -->
+      <div class="section">
+        <h2 class="section-title"><span class="icon">🛡️</span> 7. Optional 올바른 사용법</h2>
+        <div class="card">
+          <div class="code-wrapper">
+            <div class="code-title"><span class="dot dot-red"></span><span class="dot dot-yellow"></span><span class="dot dot-green"></span>Optional 활용 예시</div>
+            <pre><code><span class="cm">// ❌ 나쁜 예: null 비교 (오래된 방식)</span>
+<span class="cl">Member</span> member = memberRepository.<span class="mt">findByUsername</span>(username);
+<span class="kw">if</span> (member == <span class="kw">null</span>) {
+    <span class="kw">throw new</span> <span class="cl">Exception</span>(<span class="st">"없음"</span>);
+}
+
+<span class="cm">// ✅ 좋은 예: Optional 사용</span>
+<span class="cl">Member</span> member = memberRepository.<span class="mt">findByUsername</span>(username)
+    .<span class="mt">orElseThrow</span>(() -&gt; <span class="kw">new</span> <span class="cl">IllegalArgumentException</span>(<span class="st">"존재하지 않는 아이디입니다."</span>));
+
+<span class="cm">// Optional의 주요 메서드들:</span>
+Optional&lt;<span class="cl">Member</span>&gt; opt = memberRepository.<span class="mt">findById</span>(<span class="nm">1L</span>);
+
+opt.<span class="mt">isPresent</span>();                  <span class="cm">// 값이 있으면 true</span>
+opt.<span class="mt">isEmpty</span>();                     <span class="cm">// 값이 없으면 true</span>
+opt.<span class="mt">get</span>();                          <span class="cm">// 값 꺼냄 (없으면 예외!)</span>
+opt.<span class="mt">orElseThrow</span>();                  <span class="cm">// 없으면 NoSuchElementException</span>
+opt.<span class="mt">orElse</span>(<span class="kw">null</span>);                   <span class="cm">// 없으면 null 반환</span>
+opt.<span class="mt">orElseGet</span>(() -&gt; <span class="kw">new</span> <span class="cl">Member</span>()); <span class="cm">// 없으면 람다 실행</span></code></pre>
+          </div>
+        </div>
+      </div>
+
+      <!-- 8. 요약 -->
+      <div class="section">
+        <h2 class="section-title"><span class="icon">✅</span> 8. 챕터 핵심 요약</h2>
+        <div class="card">
+          <ul style="padding-left:20px;line-height:2;font-size:15px;">
+            <li><code>JpaRepository&lt;엔티티, PK타입&gt;</code> 상속만 해도 CRUD 메서드 자동 생성</li>
+            <li>메서드 이름 규칙: <code>findBy필드명</code> → <code>WHERE 필드 = ?</code> 쿼리 자동 생성</li>
+            <li><code>Optional&lt;T&gt;</code>: null-safe 결과 반환, <code>.orElseThrow()</code>로 예외 처리</li>
+            <li><code>@Query</code>: JPQL로 복잡한 쿼리 직접 작성</li>
+            <li><code>@Param</code>: JPQL 파라미터 바인딩</li>
+            <li>JPQL: SQL처럼 보이지만 테이블명 대신 클래스명, 컬럼명 대신 필드명 사용</li>
+          </ul>
+        </div>
+      </div>
+
+      <div style="text-align:center;padding:20px 0;">
+        <a href="quiz.html?ch=3" class="quiz-link-btn">🎯 Chapter 3 퀴즈 풀러 가기 (50문제)</a>
+      </div>
+      <div class="chapter-nav">
+        <a href="ch2.html" class="nav-btn">← Chapter 2: Entity</a>
+        <a href="ch4.html" class="nav-btn primary">Chapter 4: Service →</a>
+      </div>
+    </div>
+  </main>
+</div>
+<script src="nav.js"></script>
+</body>
+</html>

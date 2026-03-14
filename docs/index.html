@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>🌱 Spring Boot 학습 가이드</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+<div class="layout">
+  <!-- Sidebar -->
+  <nav class="sidebar" id="sidebar">
+    <div class="sidebar-logo">
+      <div class="logo-icon">🌱</div>
+      <h1>Spring Boot<br>학습 가이드</h1>
+      <p>초급자를 위한 단계별 완전정복</p>
+    </div>
+    <div class="sidebar-nav">
+      <div class="nav-section-title">시작하기</div>
+      <a href="index.html" class="active">🏠 홈 (학습 목차)</a>
+      <a href="quiz.html">🎯 챕터별 퀴즈</a>
+      <div class="nav-section-title">챕터별 학습</div>
+      <a href="ch1.html"><span class="ch-num">01</span> Spring Boot 기초</a>
+      <a href="ch2.html"><span class="ch-num">02</span> Entity / 도메인</a>
+      <a href="ch3.html"><span class="ch-num">03</span> Repository</a>
+      <a href="ch4.html"><span class="ch-num">04</span> Service</a>
+      <a href="ch5.html"><span class="ch-num">05</span> Controller</a>
+      <a href="ch6.html"><span class="ch-num">06</span> DTO 패턴</a>
+      <a href="ch7.html"><span class="ch-num">07</span> 설정 & 보안</a>
+      <a href="ch8.html"><span class="ch-num">08</span> Thymeleaf</a>
+      <a href="ch9.html"><span class="ch-num">09</span> Lombok & 유틸리티</a>
+      <a href="ch10.html"><span class="ch-num">10</span> 종합 정리</a>
+    </div>
+    <div class="sidebar-footer">Team SB Study © 2025</div>
+  </nav>
+  <div class="sidebar-overlay" id="overlay"></div>
+
+  <!-- Main -->
+  <main class="main-content">
+    <div class="topbar">
+      <div class="topbar-left">
+        <button class="hamburger" id="hamburger" aria-label="메뉴">
+          <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/>
+          </svg>
+        </button>
+        <span class="topbar-breadcrumb">🏠 <strong>학습 목차</strong></span>
+      </div>
+      <div class="topbar-actions">
+        <a href="quiz.html" class="nav-btn primary" style="padding:8px 16px;font-size:13px;">🎯 퀴즈 풀기</a>
+      </div>
+    </div>
+
+    <div class="page-content">
+      <!-- Hero -->
+      <div class="home-hero">
+        <div class="spring-logo">🌱</div>
+        <h1>Spring Boot<br><span>완전 정복</span> 학습 가이드</h1>
+        <p>실제 투어 앱, 커뮤니티 게시판 프로젝트 코드를 한 줄씩 분석하면서
+        Spring Boot를 체계적으로 익힙니다. 챕터별 50문제 퀴즈로 완벽 복습!</p>
+        <div class="hero-stats">
+          <div class="stat">
+            <div class="stat-num">10</div>
+            <div class="stat-label">챕터</div>
+          </div>
+          <div class="stat">
+            <div class="stat-num">500+</div>
+            <div class="stat-label">퀴즈 문제</div>
+          </div>
+          <div class="stat">
+            <div class="stat-num">2</div>
+            <div class="stat-label">실전 프로젝트</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- How to study -->
+      <div class="section">
+        <h2 class="section-title"><span class="icon">📖</span> 이 가이드의 학습 방법</h2>
+        <div class="card">
+          <ol class="step-list">
+            <li>
+              <div class="step-content">
+                <strong>챕터 순서대로 읽기</strong>
+                <p>챕터 1부터 10까지 순서대로 진행하세요. 뒤쪽 챕터는 앞 챕터의 개념을 전제로 합니다.</p>
+              </div>
+            </li>
+            <li>
+              <div class="step-content">
+                <strong>코드 직접 따라 타이핑</strong>
+                <p>예제 코드를 눈으로만 읽지 말고, 직접 타이핑하면서 외우는 것이 가장 효과적입니다.</p>
+              </div>
+            </li>
+            <li>
+              <div class="step-content">
+                <strong>퀴즈로 복습</strong>
+                <p>각 챕터 끝의 퀴즈를 풀어보세요. 50문제 중 랜덤으로 10문제가 출제됩니다. 점수가 80% 이상 될 때까지 반복하세요!</p>
+              </div>
+            </li>
+            <li>
+              <div class="step-content">
+                <strong>실제 프로젝트 코드 분석</strong>
+                <p>학습 후 직접 프로젝트의 소스 코드를 열어 확인하면 이해도가 크게 높아집니다.</p>
+              </div>
+            </li>
+          </ol>
+        </div>
+      </div>
+
+      <!-- Chapter Grid -->
+      <div class="section">
+        <h2 class="section-title"><span class="icon">📚</span> 전체 챕터 목록</h2>
+        <div class="chapter-grid">
+
+          <div class="chapter-card">
+            <div class="ch-number">Chapter 01</div>
+            <h3>🌱 Spring Boot 기초</h3>
+            <p>Spring Boot가 무엇인지, 프로젝트 구조, build.gradle, application.yml, @SpringBootApplication 어노테이션 이해</p>
+            <div class="card-footer">
+              <a href="ch1.html" class="study-link">학습 시작 →</a>
+              <span class="quiz-badge">퀴즈 50문제</span>
+            </div>
+          </div>
+
+          <div class="chapter-card">
+            <div class="ch-number">Chapter 02</div>
+            <h3>🗃️ Entity / 도메인</h3>
+            <p>JPA Entity 개념, @Entity, @Table, @Id, @Column, @OneToMany, @ManyToOne 등 데이터베이스 매핑 어노테이션</p>
+            <div class="card-footer">
+              <a href="ch2.html" class="study-link">학습 시작 →</a>
+              <span class="quiz-badge">퀴즈 50문제</span>
+            </div>
+          </div>
+
+          <div class="chapter-card">
+            <div class="ch-number">Chapter 03</div>
+            <h3>🔍 Repository</h3>
+            <p>Spring Data JPA, JpaRepository 인터페이스, 메서드명 기반 쿼리, @Query 어노테이션으로 데이터 접근</p>
+            <div class="card-footer">
+              <a href="ch3.html" class="study-link">학습 시작 →</a>
+              <span class="quiz-badge">퀴즈 50문제</span>
+            </div>
+          </div>
+
+          <div class="chapter-card">
+            <div class="ch-number">Chapter 04</div>
+            <h3>⚙️ Service</h3>
+            <p>@Service, @Transactional, 비즈니스 로직 구현, TourService·MemberService·BoardService 상세 분석</p>
+            <div class="card-footer">
+              <a href="ch4.html" class="study-link">학습 시작 →</a>
+              <span class="quiz-badge">퀴즈 50문제</span>
+            </div>
+          </div>
+
+          <div class="chapter-card">
+            <div class="ch-number">Chapter 05</div>
+            <h3>🌐 Controller</h3>
+            <p>@Controller, @GetMapping, @PostMapping, @PathVariable, @RequestParam, Model, HttpSession 완전 정복</p>
+            <div class="card-footer">
+              <a href="ch5.html" class="study-link">학습 시작 →</a>
+              <span class="quiz-badge">퀴즈 50문제</span>
+            </div>
+          </div>
+
+          <div class="chapter-card">
+            <div class="ch-number">Chapter 06</div>
+            <h3>📦 DTO 패턴</h3>
+            <p>DTO가 왜 필요한지, Entity와의 차이점, @Valid를 이용한 Bean Validation, Form DTO · Response DTO 분석</p>
+            <div class="card-footer">
+              <a href="ch6.html" class="study-link">학습 시작 →</a>
+              <span class="quiz-badge">퀴즈 50문제</span>
+            </div>
+          </div>
+
+          <div class="chapter-card">
+            <div class="ch-number">Chapter 07</div>
+            <h3>🔒 설정 & 보안</h3>
+            <p>@Configuration, @Bean, BCrypt 암호화, Interceptor 패턴, WebConfig, JpaConfig, 세션 보안 설정</p>
+            <div class="card-footer">
+              <a href="ch7.html" class="study-link">학습 시작 →</a>
+              <span class="quiz-badge">퀴즈 50문제</span>
+            </div>
+          </div>
+
+          <div class="chapter-card">
+            <div class="ch-number">Chapter 08</div>
+            <h3>🖥️ Thymeleaf</h3>
+            <p>Thymeleaf 템플릿 엔진, th:text, th:href, th:if, th:each, Form 처리, 세션 데이터 표시</p>
+            <div class="card-footer">
+              <a href="ch8.html" class="study-link">학습 시작 →</a>
+              <span class="quiz-badge">퀴즈 50문제</span>
+            </div>
+          </div>
+
+          <div class="chapter-card">
+            <div class="ch-number">Chapter 09</div>
+            <h3>🛠️ Lombok & 유틸리티</h3>
+            <p>Lombok 주요 어노테이션, 파일 업로드(UUID 활용), RatingUtil, ValidationUtil, 유틸리티 패턴</p>
+            <div class="card-footer">
+              <a href="ch9.html" class="study-link">학습 시작 →</a>
+              <span class="quiz-badge">퀴즈 50문제</span>
+            </div>
+          </div>
+
+          <div class="chapter-card">
+            <div class="ch-number">Chapter 10</div>
+            <h3>🎓 종합 정리 & 전체 흐름</h3>
+            <p>요청부터 응답까지 전체 흐름 정리, 두 프로젝트 비교, 보안 이슈, 실무 패턴 완전 정복</p>
+            <div class="card-footer">
+              <a href="ch10.html" class="study-link">학습 시작 →</a>
+              <span class="quiz-badge">퀴즈 50문제</span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Projects overview -->
+      <div class="section">
+        <h2 class="section-title"><span class="icon">🔬</span> 분석 대상 프로젝트</h2>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;flex-wrap:wrap;">
+          <div class="card">
+            <div class="card-title">🏖️ Tour 프로젝트 <span class="badge badge-blue">Port: 8084</span></div>
+            <p style="font-size:14px;color:var(--text-muted);margin-bottom:12px;">관광지 정보 관리 + 리뷰 시스템</p>
+            <ul style="font-size:13px;color:var(--text-muted);padding-left:16px;line-height:1.8;">
+              <li>DB: PostgreSQL <code>cheongdo</code></li>
+              <li>Entity: Tour, Member, Review</li>
+              <li>파일 업로드 (이미지)</li>
+              <li>별점 평균 계산</li>
+              <li>세션 기반 로그인</li>
+            </ul>
+          </div>
+          <div class="card">
+            <div class="card-title">💬 Demo 프로젝트 <span class="badge badge-orange">Port: 8201</span></div>
+            <p style="font-size:14px;color:var(--text-muted);margin-bottom:12px;">커뮤니티 게시판 + 관리자 패널</p>
+            <ul style="font-size:13px;color:var(--text-muted);padding-left:16px;line-height:1.8;">
+              <li>DB: PostgreSQL <code>busan</code></li>
+              <li>Entity: Member, Board</li>
+              <li>BCrypt 암호화</li>
+              <li>Interceptor 인증/인가</li>
+              <li>게시판: FREE / QNA / REPORT</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- CTA -->
+      <div style="text-align:center;padding:32px 0;">
+        <p style="font-size:16px;color:var(--text-muted);margin-bottom:16px;">준비가 됐다면 첫 챕터부터 시작해보세요!</p>
+        <a href="ch1.html" class="quiz-link-btn">🚀 Chapter 1 시작하기 →</a>
+        &nbsp;&nbsp;
+        <a href="quiz.html" class="nav-btn" style="display:inline-flex;">🎯 퀴즈 바로가기</a>
+      </div>
+    </div>
+  </main>
+</div>
+<script src="nav.js"></script>
+</body>
+</html>

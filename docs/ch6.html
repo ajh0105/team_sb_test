@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Chapter 6 - DTO 패턴 | 학습 가이드</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+<div class="layout">
+  <nav class="sidebar" id="sidebar">
+    <div class="sidebar-logo"><div class="logo-icon">🌱</div><h1>Spring Boot<br>학습 가이드</h1><p>초급자를 위한 단계별 완전정복</p></div>
+    <div class="sidebar-nav">
+      <div class="nav-section-title">시작하기</div>
+      <a href="index.html">🏠 홈 (학습 목차)</a><a href="quiz.html">🎯 챕터별 퀴즈</a>
+      <div class="nav-section-title">챕터별 학습</div>
+      <a href="ch1.html"><span class="ch-num">01</span> Spring Boot 기초</a>
+      <a href="ch2.html"><span class="ch-num">02</span> Entity / 도메인</a>
+      <a href="ch3.html"><span class="ch-num">03</span> Repository</a>
+      <a href="ch4.html"><span class="ch-num">04</span> Service</a>
+      <a href="ch5.html"><span class="ch-num">05</span> Controller</a>
+      <a href="ch6.html" class="active"><span class="ch-num">06</span> DTO 패턴</a>
+      <a href="ch7.html"><span class="ch-num">07</span> 설정 & 보안</a>
+      <a href="ch8.html"><span class="ch-num">08</span> Thymeleaf</a>
+      <a href="ch9.html"><span class="ch-num">09</span> Lombok & 유틸리티</a>
+      <a href="ch10.html"><span class="ch-num">10</span> 종합 정리</a>
+    </div>
+    <div class="sidebar-footer">Team SB Study © 2025</div>
+  </nav>
+  <div class="sidebar-overlay" id="overlay"></div>
+
+  <main class="main-content">
+    <div class="topbar">
+      <div class="topbar-left">
+        <button class="hamburger" id="hamburger"><svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button>
+        <span class="topbar-breadcrumb"><a href="index.html">홈</a> › <strong>Chapter 6. DTO 패턴</strong></span>
+      </div>
+      <a href="quiz.html?ch=6" class="nav-btn primary" style="padding:8px 16px;font-size:13px;">🎯 퀴즈 풀기</a>
+    </div>
+
+    <div class="page-content">
+      <div class="chapter-hero">
+        <div class="badge">📖 Chapter 06</div>
+        <h1>📦 DTO 패턴</h1>
+        <p>데이터 전송 객체(DTO)가 왜 필요한지, Entity와 어떻게 다른지, Bean Validation으로 입력값을 검증하는 방법을 배웁니다.</p>
+        <div class="hero-meta">
+          <span>⏱️ 예상 학습 시간: 40분</span>
+          <span>📝 핵심 어노테이션: 8개</span>
+          <span>🎯 퀴즈: 50문제</span>
+        </div>
+      </div>
+
+      <!-- 1. DTO란? -->
+      <div class="section">
+        <h2 class="section-title"><span class="icon">❓</span> 1. DTO란?</h2>
+        <div class="card">
+          <p><strong>DTO (Data Transfer Object)</strong> = 데이터 전송 객체. 계층 간 데이터를 주고받기 위한 전용 클래스입니다.</p>
+        </div>
+        <div class="callout callout-info">
+          <span class="callout-icon">🎯</span>
+          <div class="callout-content">
+            <h4>왜 Entity를 직접 사용하지 않을까?</h4>
+            <ul>
+              <li><strong>보안</strong>: Entity에는 password, role 등 민감한 정보가 있음. DTO로 필요한 필드만 노출</li>
+              <li><strong>유연성</strong>: 화면마다 필요한 데이터가 다름. Entity를 그대로 쓰면 불필요한 데이터까지 노출</li>
+              <li><strong>검증</strong>: 입력 폼 데이터의 유효성 검사를 DTO에서 담당</li>
+              <li><strong>독립성</strong>: DB 구조(Entity)가 바뀌어도 DTO는 독립적으로 유지 가능</li>
+            </ul>
+          </div>
+        </div>
+        <div class="flow-diagram">
+          <div class="flow-box">HTML Form</div>
+          <div class="flow-arrow">→</div>
+          <div class="flow-box">Form DTO<br><small>입력 검증</small></div>
+          <div class="flow-arrow">→</div>
+          <div class="flow-box">Service</div>
+          <div class="flow-arrow">→</div>
+          <div class="flow-box">Entity</div>
+          <div class="flow-arrow">→</div>
+          <div class="flow-box">DB</div>
+        </div>
+      </div>
+
+      <!-- 2. Entity vs DTO 비교 -->
+      <div class="section">
+        <h2 class="section-title"><span class="icon">⚖️</span> 2. Entity vs DTO 비교</h2>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>구분</th><th>Entity</th><th>DTO</th></tr></thead>
+            <tbody>
+              <tr><td>목적</td><td>DB 테이블 매핑</td><td>계층 간 데이터 전달</td></tr>
+              <tr><td>어노테이션</td><td>@Entity, @Table, @Column...</td><td>@Getter, @Setter, @NotBlank...</td></tr>
+              <tr><td>변경</td><td>DB 구조에 종속</td><td>화면/기능에 따라 자유롭게</td></tr>
+              <tr><td>노출</td><td>모든 DB 필드 포함</td><td>필요한 필드만 포함</td></tr>
+              <tr><td>네이밍</td><td>Tour, Member, Review</td><td>TourFormDto, TourResponseDto</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- 3. TourFormDto -->
+      <div class="section">
+        <h2 class="section-title"><span class="icon">📝</span> 3. Form DTO — 입력 데이터 수신</h2>
+        <div class="card">
+          <p>사용자가 폼에서 입력한 데이터를 받는 DTO입니다. Bean Validation 어노테이션으로 입력값을 검증합니다.</p>
+          <div class="code-wrapper">
+            <div class="code-title"><span class="dot dot-red"></span><span class="dot dot-yellow"></span><span class="dot dot-green"></span>TourFormDto.java</div>
+            <pre><code><span class="an">@Getter</span> <span class="an">@Setter</span>
+<span class="kw">public class</span> <span class="cl">TourFormDto</span> {
+
+    <span class="kw">private</span> Long id;  <span class="cm">// 수정 시 사용 (등록 시는 null)</span>
+
+    <span class="an">@NotBlank</span>(message = <span class="st">"이름은 필수입니다."</span>)   <span class="cm">// 빈 문자열 불가</span>
+    <span class="kw">private</span> String name;
+
+    <span class="an">@NotNull</span>(message = <span class="st">"카테고리를 선택하세요."</span>)  <span class="cm">// null 불가</span>
+    <span class="kw">private</span> <span class="cl">TourCategory</span> category;
+
+    <span class="kw">private</span> String address;
+    <span class="kw">private</span> String tel;
+    <span class="kw">private</span> String comment;
+
+    <span class="cm">// 파일 업로드용</span>
+    <span class="kw">private</span> <span class="cl">MultipartFile</span> file;  <span class="cm">// org.springframework.web.multipart.MultipartFile</span>
+
+    <span class="kw">private</span> String trafficMap;
+    <span class="kw">private</span> String tourMap;
+    <span class="kw">private</span> String foodMap;
+    <span class="kw">private</span> String bedMap;
+}</code></pre>
+          </div>
+        </div>
+      </div>
+
+      <!-- 4. TourResponseDto -->
+      <div class="section">
+        <h2 class="section-title"><span class="icon">📤</span> 4. Response DTO — 응답 데이터 전달</h2>
+        <div class="card">
+          <p>Service에서 View(HTML)로 데이터를 전달할 때 사용하는 DTO입니다. Entity에서 필요한 필드만 추출하고, 계산된 값(평균 별점)도 포함합니다.</p>
+          <div class="code-wrapper">
+            <div class="code-title"><span class="dot dot-red"></span><span class="dot dot-yellow"></span><span class="dot dot-green"></span>TourResponseDto.java</div>
+            <pre><code><span class="an">@Getter</span>
+<span class="kw">public class</span> <span class="cl">TourResponseDto</span> {
+
+    <span class="kw">private final</span> Long id;
+    <span class="kw">private final</span> String name;
+    <span class="kw">private final</span> <span class="cl">TourCategory</span> category;
+    <span class="kw">private final</span> String thumb;
+    <span class="kw">private final</span> String address;
+    <span class="kw">private final</span> String tel;
+    <span class="kw">private final</span> Double avgRating;  <span class="cm">// Entity에 없는 계산값!</span>
+
+    <span class="cm">// Entity → DTO 변환 생성자</span>
+    <span class="kw">public</span> <span class="cl">TourResponseDto</span>(<span class="cl">Tour</span> tour, Double avgRating) {
+        <span class="kw">this</span>.id = tour.<span class="mt">getId</span>();
+        <span class="kw">this</span>.name = tour.<span class="mt">getName</span>();
+        <span class="kw">this</span>.category = tour.<span class="mt">getCategory</span>();
+        <span class="kw">this</span>.thumb = tour.<span class="mt">getThumb</span>();
+        <span class="kw">this</span>.address = tour.<span class="mt">getAddress</span>();
+        <span class="kw">this</span>.tel = tour.<span class="mt">getTel</span>();
+        <span class="kw">this</span>.avgRating = avgRating;  <span class="cm">// 계산된 평균 별점</span>
+    }
+}</code></pre>
+          </div>
+        </div>
+        <div class="callout callout-tip">
+          <span class="callout-icon">💡</span>
+          <div class="callout-content">
+            <h4>DTO 이름 규칙</h4>
+            <ul>
+              <li><strong>XXXFormDto</strong>: 폼 데이터를 받을 때 (Controller → Service 방향)</li>
+              <li><strong>XXXResponseDto</strong>: 응답 데이터 (Service → Controller/View 방향)</li>
+              <li><strong>LoginDto</strong>: 로그인 전용 DTO</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- 5. Bean Validation -->
+      <div class="section">
+        <h2 class="section-title"><span class="icon">✔️</span> 5. Bean Validation (입력값 검증)</h2>
+        <div class="card">
+          <div class="code-wrapper">
+            <div class="code-title"><span class="dot dot-red"></span><span class="dot dot-yellow"></span><span class="dot dot-green"></span>MemberFormDto.java — 검증 어노테이션 예시</div>
+            <pre><code><span class="an">@Getter</span> <span class="an">@Setter</span>
+<span class="kw">public class</span> <span class="cl">MemberFormDto</span> {
+
+    <span class="an">@NotBlank</span>(message = <span class="st">"아이디를 입력하세요."</span>)
+    <span class="an">@Size</span>(min = <span class="nm">4</span>, max = <span class="nm">20</span>, message = <span class="st">"아이디는 4~20자입니다."</span>)
+    <span class="kw">private</span> String username;
+
+    <span class="an">@NotBlank</span>(message = <span class="st">"비밀번호를 입력하세요."</span>)
+    <span class="an">@Size</span>(min = <span class="nm">6</span>, message = <span class="st">"비밀번호는 6자 이상입니다."</span>)
+    <span class="kw">private</span> String password;
+
+    <span class="an">@NotBlank</span>(message = <span class="st">"이름을 입력하세요."</span>)
+    <span class="kw">private</span> String name;
+
+    <span class="an">@Email</span>(message = <span class="st">"이메일 형식이 아닙니다."</span>)
+    <span class="kw">private</span> String email;
+}
+
+<span class="cm">// Controller에서 @Valid로 검증 활성화</span>
+<span class="an">@PostMapping</span>(<span class="st">"/new"</span>)
+<span class="kw">public</span> String <span class="mt">save</span>(<span class="an">@Valid</span> <span class="cl">MemberFormDto</span> dto,    <span class="cm">// @Valid = 검증 실행</span>
+                    <span class="cl">BindingResult</span> bindingResult) { <span class="cm">// 검증 결과 저장</span>
+    <span class="kw">if</span> (bindingResult.<span class="mt">hasErrors</span>()) {
+        <span class="kw">return</span> <span class="st">"member/form"</span>;  <span class="cm">// 검증 실패 → 폼으로 돌아가기</span>
+    }
+    <span class="cm">// 검증 통과 → 저장 처리</span>
+}</code></pre>
+          </div>
+        </div>
+
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>어노테이션</th><th>의미</th><th>예시</th></tr></thead>
+            <tbody>
+              <tr><td><code>@NotNull</code></td><td>null 불가</td><td>Enum 타입 등</td></tr>
+              <tr><td><code>@NotBlank</code></td><td>null, 빈 문자열, 공백 불가</td><td>String 필드</td></tr>
+              <tr><td><code>@NotEmpty</code></td><td>null, 빈 문자열 불가 (공백 허용)</td><td>String 필드</td></tr>
+              <tr><td><code>@Size(min, max)</code></td><td>문자열 길이 범위</td><td>비밀번호, 아이디</td></tr>
+              <tr><td><code>@Email</code></td><td>이메일 형식 확인</td><td>이메일 필드</td></tr>
+              <tr><td><code>@Min(value)</code></td><td>최솟값</td><td>별점 >= 1</td></tr>
+              <tr><td><code>@Max(value)</code></td><td>최댓값</td><td>별점 <= 5</td></tr>
+              <tr><td><code>@Pattern(regexp)</code></td><td>정규식 패턴 확인</td><td>전화번호 형식</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- 6. 모든 DTO 요약 -->
+      <div class="section">
+        <h2 class="section-title"><span class="icon">📋</span> 6. 프로젝트 전체 DTO 목록</h2>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>DTO 클래스</th><th>방향</th><th>주요 필드</th></tr></thead>
+            <tbody>
+              <tr><td><code>TourFormDto</code></td><td>폼 → 서비스</td><td>name, category, address, tel, comment, file</td></tr>
+              <tr><td><code>TourResponseDto</code></td><td>서비스 → 뷰</td><td>id, name, category, thumb, avgRating</td></tr>
+              <tr><td><code>ReviewFormDto</code></td><td>폼 → 서비스</td><td>tourId, memberId, comment, starRate</td></tr>
+              <tr><td><code>ReviewResponseDto</code></td><td>서비스 → 뷰</td><td>username, comment, starRate, tourName</td></tr>
+              <tr><td><code>MemberFormDto</code></td><td>폼 → 서비스</td><td>username, password, name, email</td></tr>
+              <tr><td><code>LoginDto</code></td><td>폼 → 컨트롤러</td><td>username, password</td></tr>
+              <tr><td><code>BoardFormDto</code> (demo)</td><td>폼 → 서비스</td><td>title, content, boardType, secret</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- 7. 요약 -->
+      <div class="section">
+        <h2 class="section-title"><span class="icon">✅</span> 7. 챕터 핵심 요약</h2>
+        <div class="card">
+          <ul style="padding-left:20px;line-height:2;font-size:15px;">
+            <li>DTO = 계층 간 데이터를 주고받는 전용 클래스</li>
+            <li>Entity를 직접 쓰지 않는 이유: 보안, 유연성, 검증 분리</li>
+            <li>Form DTO: 사용자 입력 받기 + 검증</li>
+            <li>Response DTO: 뷰에 필요한 데이터만 추려서 전달</li>
+            <li><code>@Valid</code>: DTO의 Bean Validation 어노테이션 활성화</li>
+            <li><code>BindingResult</code>: 검증 결과 저장, <code>hasErrors()</code>로 오류 확인</li>
+            <li>주요 검증: <code>@NotBlank</code>, <code>@Size</code>, <code>@Email</code>, <code>@Min</code>, <code>@Max</code></li>
+          </ul>
+        </div>
+      </div>
+
+      <div style="text-align:center;padding:20px 0;">
+        <a href="quiz.html?ch=6" class="quiz-link-btn">🎯 Chapter 6 퀴즈 풀러 가기 (50문제)</a>
+      </div>
+      <div class="chapter-nav">
+        <a href="ch5.html" class="nav-btn">← Chapter 5: Controller</a>
+        <a href="ch7.html" class="nav-btn primary">Chapter 7: 설정 & 보안 →</a>
+      </div>
+    </div>
+  </main>
+</div>
+<script src="nav.js"></script>
+</body>
+</html>

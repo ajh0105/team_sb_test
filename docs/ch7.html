@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Chapter 7 - 설정 & 보안 | 학습 가이드</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+<div class="layout">
+  <nav class="sidebar" id="sidebar">
+    <div class="sidebar-logo"><div class="logo-icon">🌱</div><h1>Spring Boot<br>학습 가이드</h1><p>초급자를 위한 단계별 완전정복</p></div>
+    <div class="sidebar-nav">
+      <div class="nav-section-title">시작하기</div>
+      <a href="index.html">🏠 홈 (학습 목차)</a><a href="quiz.html">🎯 챕터별 퀴즈</a>
+      <div class="nav-section-title">챕터별 학습</div>
+      <a href="ch1.html"><span class="ch-num">01</span> Spring Boot 기초</a>
+      <a href="ch2.html"><span class="ch-num">02</span> Entity / 도메인</a>
+      <a href="ch3.html"><span class="ch-num">03</span> Repository</a>
+      <a href="ch4.html"><span class="ch-num">04</span> Service</a>
+      <a href="ch5.html"><span class="ch-num">05</span> Controller</a>
+      <a href="ch6.html"><span class="ch-num">06</span> DTO 패턴</a>
+      <a href="ch7.html" class="active"><span class="ch-num">07</span> 설정 & 보안</a>
+      <a href="ch8.html"><span class="ch-num">08</span> Thymeleaf</a>
+      <a href="ch9.html"><span class="ch-num">09</span> Lombok & 유틸리티</a>
+      <a href="ch10.html"><span class="ch-num">10</span> 종합 정리</a>
+    </div>
+    <div class="sidebar-footer">Team SB Study © 2025</div>
+  </nav>
+  <div class="sidebar-overlay" id="overlay"></div>
+
+  <main class="main-content">
+    <div class="topbar">
+      <div class="topbar-left">
+        <button class="hamburger" id="hamburger"><svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button>
+        <span class="topbar-breadcrumb"><a href="index.html">홈</a> › <strong>Chapter 7. 설정 & 보안</strong></span>
+      </div>
+      <a href="quiz.html?ch=7" class="nav-btn primary" style="padding:8px 16px;font-size:13px;">🎯 퀴즈 풀기</a>
+    </div>
+
+    <div class="page-content">
+      <div class="chapter-hero">
+        <div class="badge">📖 Chapter 07</div>
+        <h1>🔒 설정 & 보안</h1>
+        <p>@Configuration, @Bean으로 Spring 설정을 작성하는 방법, BCrypt 암호화, Interceptor 인증/인가 패턴을 학습합니다.</p>
+        <div class="hero-meta">
+          <span>⏱️ 예상 학습 시간: 50분</span>
+          <span>📝 핵심 클래스: 4개</span>
+          <span>🎯 퀴즈: 50문제</span>
+        </div>
+      </div>
+
+      <!-- 1. @Configuration & @Bean -->
+      <div class="section">
+        <h2 class="section-title"><span class="icon">⚙️</span> 1. @Configuration & @Bean</h2>
+        <div class="annotation-grid">
+          <div class="annotation-card">
+            <code>@Configuration</code>
+            <p>이 클래스가 Spring 설정 클래스임을 선언합니다. 내부의 <code>@Bean</code> 메서드들이 Spring 컨테이너에 등록됩니다.</p>
+          </div>
+          <div class="annotation-card">
+            <code>@Bean</code>
+            <p>메서드가 반환하는 객체를 Spring 컨테이너에 Bean으로 등록합니다. 다른 클래스에서 <code>@Autowired</code>나 생성자 주입으로 사용 가능합니다.</p>
+          </div>
+          <div class="annotation-card">
+            <code>@Value("${key}")</code>
+            <p>application.yml의 값을 가져옵니다.<br>예: <code>@Value("${file.upload-dir}")</code>는 yml의 <code>file.upload-dir</code> 값을 필드에 주입합니다.</p>
+          </div>
+          <div class="annotation-card">
+            <code>@EnableJpaAuditing</code>
+            <p>JPA 감사(Auditing) 기능 활성화. <code>@CreatedDate</code> 등 자동 시간 기록이 동작하려면 이 설정이 필요합니다.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2. FileConfig, JpaConfig -->
+      <div class="section">
+        <h2 class="section-title"><span class="icon">📁</span> 2. FileConfig & JpaConfig</h2>
+        <div class="card">
+          <div class="code-wrapper">
+            <div class="code-title"><span class="dot dot-red"></span><span class="dot dot-yellow"></span><span class="dot dot-green"></span>FileConfig.java</div>
+            <pre><code><span class="an">@Configuration</span>
+<span class="an">@Getter</span>
+<span class="kw">public class</span> <span class="cl">FileConfig</span> {
+
+    <span class="an">@Value</span>(<span class="st">"${file.upload-dir}"</span>)   <span class="cm">// application.yml의 값을 주입</span>
+    <span class="kw">public</span> String uploadDir;
+}</code></pre>
+          </div>
+          <br>
+          <div class="code-wrapper">
+            <div class="code-title"><span class="dot dot-red"></span><span class="dot dot-yellow"></span><span class="dot dot-green"></span>JpaConfig.java</div>
+            <pre><code><span class="an">@Configuration</span>
+<span class="an">@EnableJpaAuditing</span>  <span class="cm">// JPA 자동 시간 기록 활성화</span>
+<span class="kw">public class</span> <span class="cl">JpaConfig</span> {
+    <span class="cm">// 내용 없이 어노테이션만으로 기능 활성화</span>
+}</code></pre>
+          </div>
+        </div>
+      </div>
+
+      <!-- 3. PasswordConfig & BCrypt -->
+      <div class="section">
+        <h2 class="section-title"><span class="icon">🔐</span> 3. BCrypt 암호화 (PasswordConfig)</h2>
+        <div class="card">
+          <div class="code-wrapper">
+            <div class="code-title"><span class="dot dot-red"></span><span class="dot dot-yellow"></span><span class="dot dot-green"></span>PasswordConfig.java (demo 프로젝트)</div>
+            <pre><code><span class="an">@Configuration</span>
+<span class="kw">public class</span> <span class="cl">PasswordConfig</span> {
+
+    <span class="an">@Bean</span>   <span class="cm">// BCryptPasswordEncoder를 Spring Bean으로 등록</span>
+    <span class="kw">public</span> <span class="cl">PasswordEncoder</span> <span class="mt">passwordEncoder</span>() {
+        <span class="kw">return new</span> <span class="cl">BCryptPasswordEncoder</span>();  <span class="cm">// 가장 표준적인 암호화</span>
+    }
+}</code></pre>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">BCrypt 사용 방법</div>
+          <div class="code-wrapper">
+            <div class="code-title"><span class="dot dot-red"></span><span class="dot dot-yellow"></span><span class="dot dot-green"></span>MemberService.java (demo) — BCrypt 활용</div>
+            <pre><code><span class="an">@Service</span>
+<span class="an">@RequiredArgsConstructor</span>
+<span class="kw">public class</span> <span class="cl">MemberService</span> {
+
+    <span class="kw">private final</span> <span class="cl">MemberRepository</span> memberRepository;
+    <span class="kw">private final</span> <span class="cl">PasswordEncoder</span> passwordEncoder;  <span class="cm">// Bean 주입</span>
+
+    <span class="cm">// 회원 가입: 비밀번호 암호화 후 저장</span>
+    <span class="kw">public void</span> <span class="mt">join</span>(<span class="cl">MemberFormDto</span> dto) {
+        <span class="cl">Member</span> member = <span class="cl">Member</span>.<span class="mt">builder</span>()
+            .<span class="mt">email</span>(dto.<span class="mt">getEmail</span>())
+            .<span class="mt">password</span>(passwordEncoder.<span class="mt">encode</span>(dto.<span class="mt">getPassword</span>()))  <span class="cm">// ✅ 암호화</span>
+            .<span class="mt">role</span>(<span class="cl">Role</span>.<span class="cl">USER</span>)
+            .<span class="mt">build</span>();
+        memberRepository.<span class="mt">save</span>(member);
+    }
+
+    <span class="cm">// 로그인: BCrypt로 검증</span>
+    <span class="kw">public</span> <span class="cl">Member</span> <span class="mt">login</span>(<span class="cl">LoginDto</span> dto) {
+        <span class="cl">Member</span> member = memberRepository.<span class="mt">findByEmail</span>(dto.<span class="mt">getEmail</span>())
+            .<span class="mt">orElseThrow</span>(() -&gt; <span class="kw">new</span> <span class="cl">IllegalArgumentException</span>(<span class="st">"이메일 없음"</span>));
+
+        <span class="cm">// passwordEncoder.matches(입력 비밀번호, DB에 저장된 해시)</span>
+        <span class="kw">if</span> (!passwordEncoder.<span class="mt">matches</span>(dto.<span class="mt">getPassword</span>(), member.<span class="mt">getPassword</span>())) {
+            <span class="kw">throw new</span> <span class="cl">IllegalArgumentException</span>(<span class="st">"비밀번호 불일치"</span>);
+        }
+        <span class="kw">return</span> member;
+    }
+}</code></pre>
+          </div>
+        </div>
+
+        <div class="callout callout-danger">
+          <span class="callout-icon">🚨</span>
+          <div class="callout-content">
+            <h4>BCrypt가 중요한 이유</h4>
+            <p>DB가 해킹당해도 BCrypt 해시는 원본 비밀번호 복원이 거의 불가능합니다.<br>
+            <strong>tour 프로젝트</strong>: <code>password</code>를 평문 저장 → 보안 취약<br>
+            <strong>demo 프로젝트</strong>: BCrypt로 암호화 후 저장 → 올바른 방식<br>
+            실제 서비스에서는 반드시 demo 프로젝트 방식을 사용해야 합니다!</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 4. Interceptor -->
+      <div class="section">
+        <h2 class="section-title"><span class="icon">🛡️</span> 4. Interceptor — 인증/인가 처리</h2>
+        <div class="card">
+          <p>Interceptor는 Controller 실행 전후에 공통 처리를 삽입하는 패턴입니다. 로그인 확인, 권한 확인 등에 사용됩니다.</p>
+        </div>
+        <div class="flow-diagram">
+          <div class="flow-box">HTTP 요청</div>
+          <div class="flow-arrow">→</div>
+          <div class="flow-box" style="background:#d4700a;">Interceptor<br><small>preHandle()</small></div>
+          <div class="flow-arrow">→</div>
+          <div class="flow-box">Controller</div>
+          <div class="flow-arrow">→</div>
+          <div class="flow-box" style="background:#d4700a;">Interceptor<br><small>postHandle()</small></div>
+          <div class="flow-arrow">→</div>
+          <div class="flow-box">응답</div>
+        </div>
+
+        <div class="card">
+          <div class="code-wrapper">
+            <div class="code-title"><span class="dot dot-red"></span><span class="dot dot-yellow"></span><span class="dot dot-green"></span>LoginCheckInterceptor.java</div>
+            <pre><code><span class="an">@Slf4j</span>   <span class="cm">// log.info() 등 로깅 메서드 자동 생성</span>
+<span class="kw">public class</span> <span class="cl">LoginCheckInterceptor</span> <span class="kw">implements</span> <span class="cl">HandlerInterceptor</span> {
+
+    <span class="an">@Override</span>
+    <span class="kw">public boolean</span> <span class="mt">preHandle</span>(<span class="cl">HttpServletRequest</span> request,
+                              <span class="cl">HttpServletResponse</span> response,
+                              <span class="cl">Object</span> handler) <span class="kw">throws</span> Exception {
+
+        String requestURI = request.<span class="mt">getRequestURI</span>();  <span class="cm">// 요청 URL</span>
+
+        <span class="cm">// 세션 가져오기 (false = 새 세션 생성 안 함)</span>
+        <span class="cl">HttpSession</span> session = request.<span class="mt">getSession</span>(<span class="kw">false</span>);
+
+        <span class="cm">// 세션 없거나 로그인 정보 없으면 로그인 페이지로 이동</span>
+        <span class="kw">if</span> (session == <span class="kw">null</span> || session.<span class="mt">getAttribute</span>(<span class="st">"loginMember"</span>) == <span class="kw">null</span>) {
+            log.<span class="mt">info</span>(<span class="st">"미인증 사용자 요청 거부: {}"</span>, requestURI);
+            response.<span class="mt">sendRedirect</span>(<span class="st">"/login?redirectURL="</span> + requestURI);
+            <span class="kw">return false</span>;  <span class="cm">// ← false 반환 = 컨트롤러 실행 차단!</span>
+        }
+
+        <span class="kw">return true</span>;  <span class="cm">// ← true 반환 = 컨트롤러 정상 실행</span>
+    }
+}</code></pre>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="code-wrapper">
+            <div class="code-title"><span class="dot dot-red"></span><span class="dot dot-yellow"></span><span class="dot dot-green"></span>AdminCheckInterceptor.java</div>
+            <pre><code><span class="an">@Slf4j</span>
+<span class="kw">public class</span> <span class="cl">AdminCheckInterceptor</span> <span class="kw">implements</span> <span class="cl">HandlerInterceptor</span> {
+
+    <span class="an">@Override</span>
+    <span class="kw">public boolean</span> <span class="mt">preHandle</span>(<span class="cl">HttpServletRequest</span> req, <span class="cl">HttpServletResponse</span> res, <span class="cl">Object</span> handler) <span class="kw">throws</span> Exception {
+        <span class="cl">HttpSession</span> session = req.<span class="mt">getSession</span>(<span class="kw">false</span>);
+        <span class="kw">if</span> (session == <span class="kw">null</span>) {
+            res.<span class="mt">sendRedirect</span>(<span class="st">"/login"</span>);
+            <span class="kw">return false</span>;
+        }
+        <span class="cl">Member</span> member = (<span class="cl">Member</span>) session.<span class="mt">getAttribute</span>(<span class="st">"loginMember"</span>);
+        <span class="kw">if</span> (member == <span class="kw">null</span> || member.<span class="mt">getRole</span>() != <span class="cl">Role</span>.<span class="cl">ADMIN</span>) {  <span class="cm">// 관리자 확인</span>
+            res.<span class="mt">sendRedirect</span>(<span class="st">"/login"</span>);
+            <span class="kw">return false</span>;
+        }
+        <span class="kw">return true</span>;
+    }
+}</code></pre>
+          </div>
+        </div>
+      </div>
+
+      <!-- 5. WebConfig -->
+      <div class="section">
+        <h2 class="section-title"><span class="icon">🔧</span> 5. WebConfig — 인터셉터 등록</h2>
+        <div class="card">
+          <div class="code-wrapper">
+            <div class="code-title"><span class="dot dot-red"></span><span class="dot dot-yellow"></span><span class="dot dot-green"></span>WebConfig.java</div>
+            <pre><code><span class="an">@Configuration</span>
+<span class="kw">public class</span> <span class="cl">WebConfig</span> <span class="kw">implements</span> <span class="cl">WebMvcConfigurer</span> {
+
+    <span class="an">@Override</span>
+    <span class="kw">public void</span> <span class="mt">addInterceptors</span>(<span class="cl">InterceptorRegistry</span> registry) {
+
+        <span class="cm">// 로그인 체크 인터셉터</span>
+        registry.<span class="mt">addInterceptor</span>(<span class="kw">new</span> <span class="cl">LoginCheckInterceptor</span>())
+                .<span class="mt">order</span>(<span class="nm">1</span>)                    <span class="cm">// 실행 순서</span>
+                .<span class="mt">addPathPatterns</span>(<span class="st">"/**"</span>)        <span class="cm">// 모든 URL에 적용</span>
+                .<span class="mt">excludePathPatterns</span>(          <span class="cm">// 예외: 로그인 없이 접근 가능</span>
+                        <span class="st">"/"</span>, <span class="st">"/index"</span>, <span class="st">"/login"</span>, <span class="st">"/signup"</span>, <span class="st">"/logout"</span>,
+                        <span class="st">"/check-email"</span>,
+                        <span class="st">"/css/**"</span>, <span class="st">"/js/**"</span>, <span class="st">"/images/**"</span>  <span class="cm">// 정적 파일</span>
+                );
+
+        <span class="cm">// 관리자 전용 인터셉터</span>
+        registry.<span class="mt">addInterceptor</span>(<span class="kw">new</span> <span class="cl">AdminCheckInterceptor</span>())
+                .<span class="mt">order</span>(<span class="nm">2</span>)
+                .<span class="mt">addPathPatterns</span>(<span class="st">"/admin/**"</span>);  <span class="cm">// /admin/... URL만 적용</span>
+    }
+}</code></pre>
+          </div>
+        </div>
+        <div class="callout callout-tip">
+          <span class="callout-icon">💡</span>
+          <div class="callout-content">
+            <h4>인터셉터 동작 원리</h4>
+            <ul>
+              <li><code>order(1)</code>: 낮을수록 먼저 실행</li>
+              <li><code>addPathPatterns("/**")</code>: 모든 URL에 적용</li>
+              <li><code>excludePathPatterns()</code>: 인터셉터를 적용하지 않을 URL 목록</li>
+              <li><code>preHandle()</code> 반환값이 <code>false</code>이면 컨트롤러 실행 안 됨</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- 6. 세션 설정 -->
+      <div class="section">
+        <h2 class="section-title"><span class="icon">🍪</span> 6. 세션 보안 설정 (application.yml)</h2>
+        <div class="card">
+          <div class="code-wrapper">
+            <div class="code-title"><span class="dot dot-red"></span><span class="dot dot-yellow"></span><span class="dot dot-green"></span>application.yml (demo 프로젝트)</div>
+            <pre><code>server:
+  servlet:
+    session:
+      timeout: 30m          <span class="cm"># 세션 유효 시간 30분</span>
+      cookie:
+        name: BOARDSESSION  <span class="cm"># 세션 쿠키 이름</span>
+        http-only: true      <span class="cm"># JS에서 쿠키 접근 불가 (XSS 방어)</span></code></pre>
+          </div>
+        </div>
+        <div class="annotation-grid">
+          <div class="annotation-card">
+            <code>timeout: 30m</code>
+            <p>마지막 요청 후 30분 동안 활동이 없으면 세션이 자동 만료됩니다. 자동 로그아웃 효과입니다.</p>
+          </div>
+          <div class="annotation-card">
+            <code>http-only: true</code>
+            <p>JavaScript에서 쿠키에 접근할 수 없게 합니다. XSS(Cross-Site Scripting) 공격으로 세션을 탈취하는 것을 방어합니다.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 7. 요약 -->
+      <div class="section">
+        <h2 class="section-title"><span class="icon">✅</span> 7. 챕터 핵심 요약</h2>
+        <div class="card">
+          <ul style="padding-left:20px;line-height:2;font-size:15px;">
+            <li><code>@Configuration</code>: Spring 설정 클래스 선언</li>
+            <li><code>@Bean</code>: 메서드 반환 객체를 Spring 컨테이너에 등록</li>
+            <li><code>@Value("${yml.key}")</code>: application.yml 값 주입</li>
+            <li><code>BCryptPasswordEncoder</code>: 단방향 암호화. 실제 서비스 필수!</li>
+            <li><code>HandlerInterceptor</code>: 컨트롤러 실행 전/후 처리. 로그인/권한 확인에 사용</li>
+            <li><code>preHandle()</code>: true 반환 → 계속 실행, false 반환 → 차단</li>
+            <li><code>WebMvcConfigurer</code>: 인터셉터 등록, URL 패턴 설정</li>
+          </ul>
+        </div>
+      </div>
+
+      <div style="text-align:center;padding:20px 0;">
+        <a href="quiz.html?ch=7" class="quiz-link-btn">🎯 Chapter 7 퀴즈 풀러 가기 (50문제)</a>
+      </div>
+      <div class="chapter-nav">
+        <a href="ch6.html" class="nav-btn">← Chapter 6: DTO 패턴</a>
+        <a href="ch8.html" class="nav-btn primary">Chapter 8: Thymeleaf →</a>
+      </div>
+    </div>
+  </main>
+</div>
+<script src="nav.js"></script>
+</body>
+</html>

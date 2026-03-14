@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>챕터별 퀴즈 | Spring Boot 학습 가이드</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+<div class="layout">
+  <nav class="sidebar" id="sidebar">
+    <div class="sidebar-logo"><div class="logo-icon">🌱</div><h1>Spring Boot<br>학습 가이드</h1><p>초급자를 위한 단계별 완전정복</p></div>
+    <div class="sidebar-nav">
+      <div class="nav-section-title">시작하기</div>
+      <a href="index.html">🏠 홈 (학습 목차)</a>
+      <a href="quiz.html" class="active">🎯 챕터별 퀴즈</a>
+      <div class="nav-section-title">챕터별 학습</div>
+      <a href="ch1.html"><span class="ch-num">01</span> Spring Boot 기초</a>
+      <a href="ch2.html"><span class="ch-num">02</span> Entity / 도메인</a>
+      <a href="ch3.html"><span class="ch-num">03</span> Repository</a>
+      <a href="ch4.html"><span class="ch-num">04</span> Service</a>
+      <a href="ch5.html"><span class="ch-num">05</span> Controller</a>
+      <a href="ch6.html"><span class="ch-num">06</span> DTO 패턴</a>
+      <a href="ch7.html"><span class="ch-num">07</span> 설정 & 보안</a>
+      <a href="ch8.html"><span class="ch-num">08</span> Thymeleaf</a>
+      <a href="ch9.html"><span class="ch-num">09</span> Lombok & 유틸리티</a>
+      <a href="ch10.html"><span class="ch-num">10</span> 종합 정리</a>
+    </div>
+    <div class="sidebar-footer">Team SB Study © 2025</div>
+  </nav>
+  <div class="sidebar-overlay" id="overlay"></div>
+
+  <main class="main-content">
+    <div class="topbar">
+      <div class="topbar-left">
+        <button class="hamburger" id="hamburger"><svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button>
+        <span class="topbar-breadcrumb"><a href="index.html">홈</a> › <strong>챕터별 퀴즈</strong></span>
+      </div>
+    </div>
+
+    <div class="page-content" style="max-width:760px;">
+      <div class="chapter-hero">
+        <div class="badge">🎯 퀴즈 센터</div>
+        <h1>챕터별 복습 퀴즈</h1>
+        <p>챕터를 선택하면 50문제 중 랜덤 10문제가 출제됩니다. 80% 이상 맞힐 때까지 반복 도전해보세요!</p>
+        <div class="hero-meta">
+          <span>📚 총 10개 챕터</span>
+          <span>❓ 챕터당 50문제</span>
+          <span>🎲 랜덤 10문제 출제</span>
+        </div>
+      </div>
+
+      <!-- Chapter Selection -->
+      <div id="chapter-select-area">
+        <h2 style="font-size:20px;font-weight:700;margin-bottom:16px;">📖 챕터 선택</h2>
+        <div class="quiz-selector">
+          <button class="quiz-chapter-btn" onclick="selectChapter(1)">
+            <div class="btn-ch">Chapter 01</div>
+            <span class="btn-title">🌱 Spring Boot 기초</span>
+          </button>
+          <button class="quiz-chapter-btn" onclick="selectChapter(2)">
+            <div class="btn-ch">Chapter 02</div>
+            <span class="btn-title">🗃️ Entity / 도메인</span>
+          </button>
+          <button class="quiz-chapter-btn" onclick="selectChapter(3)">
+            <div class="btn-ch">Chapter 03</div>
+            <span class="btn-title">🔍 Repository</span>
+          </button>
+          <button class="quiz-chapter-btn" onclick="selectChapter(4)">
+            <div class="btn-ch">Chapter 04</div>
+            <span class="btn-title">⚙️ Service</span>
+          </button>
+          <button class="quiz-chapter-btn" onclick="selectChapter(5)">
+            <div class="btn-ch">Chapter 05</div>
+            <span class="btn-title">🌐 Controller</span>
+          </button>
+          <button class="quiz-chapter-btn" onclick="selectChapter(6)">
+            <div class="btn-ch">Chapter 06</div>
+            <span class="btn-title">📦 DTO 패턴</span>
+          </button>
+          <button class="quiz-chapter-btn" onclick="selectChapter(7)">
+            <div class="btn-ch">Chapter 07</div>
+            <span class="btn-title">🔒 설정 & 보안</span>
+          </button>
+          <button class="quiz-chapter-btn" onclick="selectChapter(8)">
+            <div class="btn-ch">Chapter 08</div>
+            <span class="btn-title">🖥️ Thymeleaf</span>
+          </button>
+          <button class="quiz-chapter-btn" onclick="selectChapter(9)">
+            <div class="btn-ch">Chapter 09</div>
+            <span class="btn-title">🛠️ Lombok & 유틸</span>
+          </button>
+          <button class="quiz-chapter-btn" onclick="selectChapter(10)">
+            <div class="btn-ch">Chapter 10</div>
+            <span class="btn-title">🎓 종합 정리</span>
+          </button>
+        </div>
+
+        <div style="margin-top:24px;text-align:center;">
+          <button class="quiz-btn quiz-btn-primary" onclick="selectChapter('all')" style="font-size:16px;padding:14px 32px;">
+            🎲 전체 랜덤 퀴즈 (10개 챕터 혼합)
+          </button>
+        </div>
+      </div>
+
+      <!-- Quiz Area -->
+      <div id="quiz-area" style="display:none;margin-top:24px;">
+        <div class="quiz-header">
+          <span class="quiz-progress-text" id="progress-text">문제 1 / 10</span>
+          <span class="quiz-score-text" id="score-text">점수: 0 / 0</span>
+        </div>
+        <div class="progress-bar-wrap">
+          <div class="progress-bar" id="progress-bar" style="width:0%"></div>
+        </div>
+
+        <div id="question-container">
+          <div class="question-num" id="question-num">Q1</div>
+          <div class="question-text" id="question-text"></div>
+          <div class="question-code" id="question-code" style="display:none;"></div>
+          <ul class="options-list" id="options-list"></ul>
+          <div class="explanation-box" id="explanation-box">
+            <strong>📖 해설:</strong> <span id="explanation-text"></span>
+          </div>
+          <div style="display:flex;gap:12px;flex-wrap:wrap;">
+            <button class="quiz-btn quiz-btn-primary" id="next-btn" style="display:none;" onclick="nextQuestion()">
+              다음 문제 →
+            </button>
+          </div>
+        </div>
+
+        <!-- Result Area -->
+        <div class="result-area" id="result-area" style="display:none;">
+          <div class="result-score" id="result-score">0/10</div>
+          <div class="result-label">맞은 개수</div>
+          <div class="result-message" id="result-message">잘하셨어요!</div>
+          <div class="result-detail" id="result-detail"></div>
+          <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;">
+            <button class="quiz-btn quiz-btn-primary" onclick="retryQuiz()">🔄 다시 풀기</button>
+            <button class="quiz-btn quiz-btn-secondary" onclick="backToSelect()">📖 챕터 선택</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<script src="nav.js"></script>
+<script src="quiz-data.js"></script>
+<script>
+// ===== QUIZ ENGINE =====
+let currentQuestions = [];
+let currentIndex = 0;
+let score = 0;
+let answered = false;
+let selectedChapter = null;
+
+const CHAPTER_NAMES = {
+  1: 'Spring Boot 기초',
+  2: 'Entity / 도메인',
+  3: 'Repository',
+  4: 'Service',
+  5: 'Controller',
+  6: 'DTO 패턴',
+  7: '설정 & 보안',
+  8: 'Thymeleaf',
+  9: 'Lombok & 유틸리티',
+  10: '종합 정리'
+};
+
+function shuffle(array) {
+  const arr = [...array];
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return arr;
+}
+
+function selectChapter(ch) {
+  selectedChapter = ch;
+  // Highlight selected button
+  document.querySelectorAll('.quiz-chapter-btn').forEach(btn => btn.classList.remove('selected'));
+
+  let pool = [];
+  if (ch === 'all') {
+    for (let i = 1; i <= 10; i++) {
+      if (QUIZ_DATA && QUIZ_DATA[i]) {
+        pool = pool.concat(QUIZ_DATA[i].map(q => ({...q, chapter: i})));
+      }
+    }
+  } else {
+    if (QUIZ_DATA && QUIZ_DATA[ch]) {
+      pool = QUIZ_DATA[ch].map(q => ({...q, chapter: ch}));
+    }
+  }
+
+  if (pool.length === 0) {
+    alert('퀴즈 데이터를 불러올 수 없습니다.');
+    return;
+  }
+
+  currentQuestions = shuffle(pool).slice(0, 10);
+  currentIndex = 0;
+  score = 0;
+
+  document.getElementById('chapter-select-area').style.display = 'none';
+  const quizArea = document.getElementById('quiz-area');
+  quizArea.style.display = 'block';
+  document.getElementById('result-area').style.display = 'none';
+  document.getElementById('question-container').style.display = 'block';
+
+  showQuestion();
+}
+
+function showQuestion() {
+  answered = false;
+  const q = currentQuestions[currentIndex];
+
+  // Update progress
+  document.getElementById('progress-text').textContent = `문제 ${currentIndex + 1} / ${currentQuestions.length}`;
+  document.getElementById('score-text').textContent = `점수: ${score} / ${currentIndex}`;
+  document.getElementById('progress-bar').style.width = `${(currentIndex / currentQuestions.length) * 100}%`;
+  document.getElementById('question-num').textContent = `Q${currentIndex + 1}`;
+
+  // Chapter badge
+  let chBadge = '';
+  if (q.chapter) {
+    chBadge = `<span style="font-size:11px;background:#e8f0e0;color:#4a7c26;padding:2px 8px;border-radius:10px;font-weight:700;margin-bottom:8px;display:inline-block;">Chapter ${q.chapter}</span><br>`;
+  }
+
+  document.getElementById('question-text').innerHTML = chBadge + q.q;
+
+  // Code block
+  const codeEl = document.getElementById('question-code');
+  if (q.code) {
+    codeEl.style.display = 'block';
+    codeEl.textContent = q.code;
+  } else {
+    codeEl.style.display = 'none';
+  }
+
+  // Options
+  const optsList = document.getElementById('options-list');
+  optsList.innerHTML = '';
+  const letters = ['A', 'B', 'C', 'D'];
+  q.opts.forEach((opt, i) => {
+    const li = document.createElement('li');
+    li.innerHTML = `
+      <button class="option-btn" onclick="selectAnswer(${i})">
+        <span class="opt-letter">${letters[i]}</span>
+        <span>${opt}</span>
+      </button>
+    `;
+    optsList.appendChild(li);
+  });
+
+  // Hide explanation and next button
+  document.getElementById('explanation-box').classList.remove('show');
+  document.getElementById('next-btn').style.display = 'none';
+}
+
+function selectAnswer(idx) {
+  if (answered) return;
+  answered = true;
+
+  const q = currentQuestions[currentIndex];
+  const btns = document.querySelectorAll('.option-btn');
+
+  btns.forEach((btn, i) => {
+    btn.disabled = true;
+    if (i === q.ans) {
+      btn.classList.add('correct');
+    } else if (i === idx && i !== q.ans) {
+      btn.classList.add('wrong');
+    }
+  });
+
+  if (idx === q.ans) {
+    score++;
+  }
+
+  // Show explanation
+  document.getElementById('explanation-text').textContent = q.exp;
+  document.getElementById('explanation-box').classList.add('show');
+
+  // Show next button
+  document.getElementById('next-btn').style.display = 'inline-flex';
+  document.getElementById('next-btn').textContent =
+    currentIndex < currentQuestions.length - 1 ? '다음 문제 →' : '결과 보기 🏆';
+}
+
+function nextQuestion() {
+  currentIndex++;
+  if (currentIndex >= currentQuestions.length) {
+    showResult();
+  } else {
+    showQuestion();
+  }
+}
+
+function showResult() {
+  document.getElementById('question-container').style.display = 'none';
+  document.getElementById('result-area').style.display = 'block';
+  document.getElementById('progress-bar').style.width = '100%';
+
+  const total = currentQuestions.length;
+  const pct = Math.round((score / total) * 100);
+
+  document.getElementById('result-score').textContent = `${score}/${total}`;
+  document.getElementById('score-text').textContent = `점수: ${score} / ${total}`;
+  document.getElementById('progress-text').textContent = `완료!`;
+
+  let msg, detail;
+  if (pct === 100) {
+    msg = '🏆 완벽합니다! 만점!';
+    detail = '모든 개념을 완벽하게 이해하고 있습니다!';
+  } else if (pct >= 80) {
+    msg = '🌟 훌륭해요! 거의 다 알고 있어요!';
+    detail = `${pct}% 달성! 조금만 더 복습하면 완벽해집니다.`;
+  } else if (pct >= 60) {
+    msg = '👍 잘하고 있어요!';
+    detail = `${pct}% 달성! 해설을 다시 읽고 복습해보세요.`;
+  } else {
+    msg = '📖 조금 더 공부가 필요해요!';
+    detail = `${pct}% 달성. 챕터를 다시 읽고 도전해보세요!`;
+  }
+
+  document.getElementById('result-message').textContent = msg;
+  document.getElementById('result-detail').textContent = detail;
+}
+
+function retryQuiz() {
+  selectChapter(selectedChapter);
+}
+
+function backToSelect() {
+  document.getElementById('chapter-select-area').style.display = 'block';
+  document.getElementById('quiz-area').style.display = 'none';
+  document.querySelectorAll('.quiz-chapter-btn').forEach(btn => btn.classList.remove('selected'));
+}
+
+// Auto-select chapter from URL parameter
+window.addEventListener('DOMContentLoaded', () => {
+  const params = new URLSearchParams(window.location.search);
+  const ch = params.get('ch');
+  if (ch && parseInt(ch) >= 1 && parseInt(ch) <= 10) {
+    selectChapter(parseInt(ch));
+  }
+});
+</script>
+</body>
+</html>
